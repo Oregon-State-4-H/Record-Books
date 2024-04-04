@@ -1,8 +1,9 @@
-import Navbar from './components/Navbar'
+import Navbar from '@/app/components/Navbar'
 import { getSession } from "@auth0/nextjs-auth0";
 
 
-export default async function Home() {
+const DashboardLayout = async ({ children }) => {
+
   const session = await getSession();
   let isAuth = false;
 
@@ -10,14 +11,12 @@ export default async function Home() {
     isAuth = true;
   }
 
-  console.log(session);
-
   return (
     <>
       <Navbar isBasic={true} isAuth={isAuth} />
-      <main>
-        <h1>Pubic Start Site</h1>
-      </main>
+        {children}
     </>
   )
 }
+
+export default DashboardLayout

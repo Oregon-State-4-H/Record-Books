@@ -3,21 +3,36 @@ import { MdContentPaste, MdOutlineDescription, MdOutlineHome, MdOutlineAccountCi
 
 export default function Navbar(props){
   var isBasic = props.isBasic;
+  var isAuth = props.isAuth;
 
   if (isBasic) {
-    return (
-      <nav className='basicNavBar'>
-        <Link href='/' className='navTitle'>
-          <h1>4-H Record Books</h1>
-        </Link>
-  
-        <div className='navGroup'>
-          <Link href='/about' className='navItem'>About</Link>
-          <Link href='/dashboard' className='navItem'>Go to Dashboard</Link>
-          <Link href='/auth/sign-up' className='navItem'>Sign up/Sign in</Link>
-        </div>
-      </nav>
-    )
+    if (isAuth) {
+      return (
+        <nav className='basicNavBar'>
+          <Link href='/' className='navTitle'>
+            <h1>4-H Record Books</h1>
+          </Link>
+    
+          <div className='navGroup'>
+            <Link href='/about' className='navItem'>About</Link>
+            <Link href='/dashboard' className='navItem'>Go to Dashboard</Link>
+          </div>
+        </nav>
+      )
+    } else {
+      return (
+        <nav className='basicNavBar'>
+          <Link href='/' className='navTitle'>
+            <h1>4-H Record Books</h1>
+          </Link>
+    
+          <div className='navGroup'>
+            <Link href='/about' className='navItem'>About</Link>
+            <Link href='/api/auth/login' className='navItem'>Sign up/Sign in</Link>
+          </div>
+        </nav>
+      )
+    }
   } else {
     return (
       <nav className='dashNavBar'>
