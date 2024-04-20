@@ -10,8 +10,6 @@ export default async function Home() {
     isAuth = true;
   }
 
-  console.log(session);
-
   return (
     <>
       <Navbar isBasic={true} isAuth={isAuth} />

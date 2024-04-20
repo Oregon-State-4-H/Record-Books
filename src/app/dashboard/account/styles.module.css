@@ -1,0 +1,41 @@
+.summaryCard {
+    background: var(--bg-secondary);
+    border-radius: 5px;
+    width: 30vw;
+    padding: 10px;
+}
+
+.cardTitle {
+    padding: 10px;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--beaver-orange);
+}
+
+.accountCardItems {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    color: var(--text-primary);
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+}
+
+.accountCardItems:hover {
+  background: lightgrey;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 480px) {
+    .accountCard {
+        width: 100%;
+    }
+
+    .summaryCard {
+        width: 100%;
+    }
+}
