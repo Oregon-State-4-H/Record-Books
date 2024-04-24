@@ -1,7 +1,9 @@
+"use client";
+
 import Link from 'next/link'
 import styles from "./styles.module.css"
 import ActionBar from '@/app/components/ActionBar';
-import { getSession } from "@auth0/nextjs-auth0";
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { redirect } from "next/navigation";
 
 
@@ -16,9 +18,10 @@ function Card(props) {
   )
 }
 
-export default async function Dashboard() {
-  const session = await getSession();
-  if (!session?.user) {
+export default function Dashboard() {
+  const { user, error, isLoading } = useUser();
+
+  if (!user) {
     redirect("/api/auth/login");
   }
 

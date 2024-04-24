@@ -1,61 +1,137 @@
 "use client";
-import classes from './styles.module.css';
-import { useState } from 'react';
-import ActionBar from '@/app/components/ActionBar';
-import Link from 'next/link';
 
-function Card(props) {
-    var text = props.text;
-    var input = props.input;
-    const [value, setValue] = useState(input);
+import classes from "./styles.module.css";
+import ActionBar from "@/app/components/ActionBar";
+import Link from "next/link";
+import { getUserProfile, updateUserProfile } from "@/app/_db/srvactions/UserProfile";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { redirect } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useFormState } from "react-dom";
 
-    return (
-        <label className={classes.label}>
-            {text}
-            <input className={classes.textInputBox} type="text" value={value} onChange={event => {setValue(event.target.value)}} placeholder={input} />
-        </label>
-    )
+const UserProfile = {
+  _id: null,
+  email: null,
+  family_name: null,
+  given_name: null,
+  picture: null,
+  sub: null,
+  birthdate: null,
+  first_name: null,
+  middle_name_initial: null,
+  last_name_initial: null,
+  county_name: null,
+  join_date: null,
 }
 
-function NumberCard(props) {
-    var text = props.text;
-    var numInput = props.numInput;
-    const [num, setNum] = useState(numInput);
+function FormInputLabel(props) {
+  var label = props.label;
+  var formItem = props.formItem;
 
-    return (
-        <label className={classes.label}>
-            {text}
-            <input className={classes.textInputBox} type="date" value={num} onChange={event => {setNum(event.target.value)}} placeholder={numInput} />
-            {/* <input className={classes.textInputBox} type="number" value={num} onChange={event => {setNum(event.target.value)}} placeholder={numInput} /> */}
-        </label>
-    )
+  return (
+    <label className={classes.label}>
+      {label}
+      {formItem}
+    </label>
+  );
 }
 
 export default function Profile() {
+  const { user, error, isLoading } = useUser();
 
-    return (
-        <main>
-            <ActionBar title="Edit Profile" />
-            {/* <h1><b>Edit Profile</b></h1> */}
-            <form className={classes.profileForm}>
-                <Card text="First Name" input="John" />
-                <Card text="Middle Name Initial" input="J" />
-                <Card text="Last Name Initial" input="D" />
+  const [formState, formAction] = useFormState(updateUserProfile, UserProfile);
 
-                <NumberCard text="Date of Birth" numInput="2014-02-22" />
-                
-                <Card text="County" input="Benton" />
-                
-                <NumberCard text="When I Joined 4-H" numInput="2016-06-15" />
+  const [userInfo, setUserInfo] = useState(UserProfile);
+  var userDoc = UserProfile;
 
-                <div className={classes.btns}>
-                    <button type="submit" className={classes.submitBtn}>Update Profile</button>
-                    <Link href={{pathname: "/dashboard/account/"}}>
-                        <button type="submit" className={classes.submitBtn}>Cancel</button>
-                    </Link>
-                </div>
+  useEffect(() => {
+    try {
+      getUserProfile(user.sub.substring(6)).then((data) => {
+        setUserInfo(data);
+        userDoc = data;
+      });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, []);
 
-            </form>
-        </main>
-    )
+  const handleChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  }
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  return (
+    <main>
+      <ActionBar title="Edit Profile" />
+      <form className={classes.profileForm} action={formAction}>
+        <FormInputLabel label="First Name"
+          formItem = { <input className={classes.formInput}
+            type="text"
+            name="first_name"
+            value={userInfo?.given_name || ""}
+            onChange={handleChange}
+            placeholder="First Name"/>
+          }/>
+
+        <FormInputLabel label="Middle Name Initial"
+          formItem = { <input className={classes.formInput}
+            type="text"
+            name="middle_name_initial"
+            value={userInfo?.middle_name_initial || ""}
+            onChange={handleChange}
+            placeholder="Middle Name"/>
+          } />
+
+        <FormInputLabel label="Last Name Initial"
+          formItem = { <input className={classes.formInput}
+            type="text"
+            name="last_name_initial"
+            value={userInfo?.last_name_initial || ""}
+            onChange={handleChange}
+            placeholder="Last Name"/>
+          } />
+
+        <FormInputLabel label="Birthdate"
+          formItem = { <input className={classes.formInput}
+            type="date"
+            name="birthdate"
+            value={userInfo ? new Date(userInfo.birthdate).toISOString().split('T')[0] : ""}
+            onChange={handleChange}
+            placeholder="Birthdate"/>
+          } />
+
+        <FormInputLabel label="County"
+          formItem = { <input className={classes.formInput}
+            type="text"
+            name="county_name"
+            value={userInfo?.county_name || ""}
+            onChange={handleChange}
+            placeholder="County"/>
+          } />
+
+        <FormInputLabel label="When I Joined 4-H"
+          formItem = { <input className={classes.formInput}
+            type="date"
+            name="join_date"
+            value={userInfo ? new Date(userInfo.join_date).toISOString().split('T')[0] : ""}
+            onChange={handleChange}
+            placeholder="Join Date"/>
+          } />
+
+        <div className={classes.btns}>
+          <button type="submit" className={classes.submitBtn}>
+            Update Profile
+          </button>
+          <Link href={{ pathname: "/dashboard/account/" }}>
+            <button type="submit" className={classes.submitBtn}>
+              Cancel
+            </button>
+          </Link>
+        </div>
+      </form>
+    </main>
+  );
 }

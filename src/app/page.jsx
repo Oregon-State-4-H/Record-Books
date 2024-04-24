@@ -1,12 +1,14 @@
+"use client";
+
 import Navbar from './components/Navbar'
-import { getSession } from "@auth0/nextjs-auth0";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 
-export default async function Home() {
-  const session = await getSession();
+export default function Home() {
+  const { user, error, isLoading } = useUser();
   let isAuth = false;
 
-  if (session?.user) {
+  if (user) {
     isAuth = true;
   }
 

@@ -1,13 +1,14 @@
+"use client"
+
 import Navbar from '@/app/components/Navbar'
-import { getSession } from "@auth0/nextjs-auth0";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
+const DashboardLayout = ({ children }) => {
 
-const DashboardLayout = async ({ children }) => {
-
-  const session = await getSession();
+  const { user, error, isLoading } = useUser();
   let isAuth = false;
 
-  if (session?.user) {
+  if (user) {
     isAuth = true;
   }
 
