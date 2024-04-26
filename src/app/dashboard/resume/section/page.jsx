@@ -4,12 +4,9 @@ import { useState, useEffect } from 'react';
 import ActionBar from '@/app/components/ActionBar';
 import styles from './styles.module.css';
 import { IoMdAdd } from "react-icons/io";
-
-import demoData from "../../../demoData.json"
-import formOutline from "./formOutline.json"
+import sectionOutline from "./sectionOutline.json"
 import { useFormState } from "react-dom";
 import { addSection1, getSection1Docs } from '@/app/_db/srvactions/resume/Section1';
-
 
 function TableCard({ title, data, headers, handleClick }) {
   return (
@@ -23,159 +20,37 @@ function TableCard({ title, data, headers, handleClick }) {
       </div>
 
       <table className={styles.table}>
-        <thead >
+        <thead>
           <tr>
             {headers.map((header, headerID) => (
-              <th key={headerID}>{header}</th>
+              <th key={headerID}>{header.name}</th>
             ))}
           </tr>
         </thead>
         
-        if (data === null) {
+        {data && (
           <tbody>
             {data.map((rowData, rowID) => (
               <tr key={rowID}>
-                {Object.keys(rowData).map((item, colID) => (
+                {headers.map((header, colID) => (
                   <td key={colID}>
-                    {Array.isArray(rowData[item]) ? (
+                    {Array.isArray(rowData[header.key]) ? (
                       <ul>
-                        {rowData[item].map((value, index) => (
+                        {rowData[header.key].map((value, index) => (
                           <li key={index}>{value}</li>
                         ))}
                       </ul>
-                    ) : rowData[item]}
+                    ) : rowData[header.key]}
                   </td>
                 ))}
               </tr>
             ))}
           </tbody>
-        }
+        )}
       </table>
     </>
   )
 }
-
-/*
-function FormCard({ onClose, children }) {
-  return (
-    <div className={styles.overlay}>
-      <form className={styles.formCard}>
-        <button id={styles.closeBtn} onClick={onClose}>X</button>
-        <div className={styles.children}>
-          {children}
-        </div>
-        <button type="submit" className={styles.submitBtn}>Submit</button>
-      </form>
-    </div>
-  )
-}
-
-function StringCard(props) {
-  var text = props.text;
-  var input_name = props.input_name;
-  var onChangeHandler = props.onChangeHandler;
-
-  return (
-      <label className={styles.label}>
-          {text}
-          <input className={styles.textInputBox} 
-          type="text"
-          name={input_name}
-          onChange={onChangeHandler}
-          placeholder={text}
-        />
-      </label>
-  )
-}
-
-function TextAreaCard(props) {
-  var text = props.text;
-
-  return (
-      <label className={styles.label}>
-          {text}
-          <textarea className={styles.textInputBox} type="text" />
-      </label>
-  )
-}
-
-function NumberCard(props) {
-  var text = props.text;
-  var input_name = props.input_name;
-  var onChangeHandler = props.onChangeHandler;
-
-  return (
-      <label className={styles.label}>
-          {text}
-          <input className={styles.textInputBox} 
-            type="number"
-            name={input_name}
-            onChange={onChangeHandler}
-            placeholder={text}
-          />
-      </label>
-  )
-}
-
-function DropdownCard(props) {
-  const [data, setData] = useState(undefined);
-  var options = props.options;
-
-  const onOptionChangeHandler = (event) => {
-    setData(event.target.value);
-  }
-
-  return (
-    <select className={styles.dropdownBtn} onChange={onOptionChangeHandler}>
-      <option>Please choose one option</option>
-      {options.map((option, index) => {
-        return (
-          <option key={index}>
-            {option}
-          </option>
-        )
-      })}
-    </select>
-  )
-}
-
-function addInfo3Columns(closeModal, col2, col3) {
-  return (
-    <FormCard onClose={closeModal}>
-      <StringCard text="Year" />
-      <TextAreaCard text={col2} />
-      {col3 && <TextAreaCard text={col3} />}
-    </FormCard>
-  )
-}
-
-function addInfo5Cols(closeModal, col2, col3, col4, col5) {
-  return (
-    <FormCard onClose={closeModal}>
-      <StringCard text="Year" />
-
-      <TextAreaCard text={col2} />
-      {col5 && <TextAreaCard text={col5} />}
-      
-      <NumberCard text={col3} />
-      <NumberCard text={col4} />
-    </FormCard>
-  )
-}
-
-function addInfoDropDownSections(closeModal, activity, text, arr) {
-  return (
-    <FormCard onClose={closeModal}>
-      <StringCard text="Year" />
-
-      <StringCard text={activity} />
-      <StringCard text={text} />
-
-      <DropdownCard options={arr} />
-    </FormCard>
-  )
-}
-*/
 
 function FormInput({ type, label, name, placeholder, onChangeHandler }) {
   return (
@@ -191,34 +66,21 @@ function FormInput({ type, label, name, placeholder, onChangeHandler }) {
   )
 }
 
-
-function Section1() {
-  const headers = ["Year", "Grade", "Name of Club/Group", "Number in Club/Group", "Club/Group Leader or Advisor", "Meetings Held", "Meetings Attended"]
-  const data = demoData.section1
-  const [tableData, setTableData] = useState(null);
+export default function Section({ searchParams: {section} }) {
+  const [tableData, setTableData] = useState(undefined);
   const [showFormCard, setShowFormCard] = useState(false);
-  const inputs = formOutline.section1.form;
-
-  const showForm = () => {
-    setShowFormCard(true);
-  }
-
-  const hideForm = () => {
-    setShowFormCard(false);
-  }
-
-  const formBlueprint = {
-    year: null,
-    grade: null,
-    clubName: null,
-    numInClub: null,
-    clubLeader: null,
-    meetingsHeld: null,
-    meetingsAttended: null
-  }
+  var headers = {}
+  var inputs = {}
+  var pageTitle = ""
+  var _srvActAdd = () => {}
+  var _srvActGet = () => {}
+  var formBlueprint = {}
 
   const [formState, formAction] = useFormState(addSection1, formBlueprint);
   const [formInfo, setFormInfo] = useState(formBlueprint);
+
+  const showForm = () => { setShowFormCard(true); }
+  const hideForm = () => { setShowFormCard(false); }
 
   const handleChange = (e) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
@@ -226,7 +88,7 @@ function Section1() {
 
   useEffect(() => {
     try {
-      getSection1Docs()
+      _srvActGet()
         .then((data) => {
           setTableData(data);
         });
@@ -234,14 +96,30 @@ function Section1() {
       console.error("Error fetching table data:", error);
     }
   }, []);
-    
+
+
+  switch (section) {
+    case '1':
+      _srvActAdd = addSection1;
+      _srvActGet = getSection1Docs;
+      headers = sectionOutline.section1.headers;
+      inputs = sectionOutline.section1.form;
+      pageTitle = sectionOutline.section1.title;
+      formBlueprint = headers.reduce((acc, header) => {
+        acc[header.key] = null;
+        return acc;
+      }, {});
+      break;
+  }
+
   return (
-    <>
-      <TableCard title="4-H Involvement" data={tableData} headers={headers} handleClick={() => showForm()} />
+    <main>
+      <ActionBar title={"Section " + section} />
+      <TableCard title={pageTitle} data={tableData} headers={headers} handleClick={() => showForm()} />
       {showFormCard && (
         <div className={styles.overlay}>
           <form className={styles.formCard} action={formAction}>
-            <button id={styles.closeBtn} onClick={hideForm}>X</button>
+            <button type="cancel" id={styles.closeBtn} onClick={hideForm}>X</button>
             <div className={styles.children}>
               {inputs.map((input, index) => {
                 return (
@@ -253,24 +131,6 @@ function Section1() {
           </form>
         </div>
       )}
-    </>
-  )
-}
-
-function getSection(section) {
-  switch (section) {
-    case '1':
-      return Section1();
-    default:
-      return null;
-  }
-}
-
-export default function Section({ searchParams: {section} }) {
-  return (
-    <main>
-        <ActionBar title={"Section " + section} />
-        {getSection(section)}
     </main>
   )
 }

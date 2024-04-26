@@ -1,0 +1,83 @@
+.sectionBtn {
+    /* border: 1px solid lightgrey; */
+    padding: 10px;
+    width: 40vw;
+}
+
+.sectionBtn:hover {
+    border-radius: 5px;
+    background: lightgrey;
+}
+
+.documentContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.sectionTitle {
+    padding: 10px;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--beaver-orange);
+}
+
+.sectionGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--bg-secondary);
+    min-width: 325px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 30vw;
+}
+
+.sectionsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.cardItem {
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+    color: var(--text-primary);
+    width: 28vw;
+}
+
+.cardItem:hover {
+    background: lightgrey;
+    border-radius: 5px;
+}
+
+
+@media screen and (max-width: 480px) {
+    .sectionBtn {
+        width: 100%;
+    }
+    .btnTitle {
+        text-align: left;
+    }
+    .btnList {
+        margin-bottom: 100px;
+    }
+
+    .sectionsContainer {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    .cardItem {
+        width: 100%;
+    }
+
+    .sectionGroup {
+        width: 100%;
+    }
+}

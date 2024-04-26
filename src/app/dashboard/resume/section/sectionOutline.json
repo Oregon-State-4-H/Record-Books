@@ -1,0 +1,23 @@
+{
+    "section1": {
+        "title": "4-H Involvement",
+        "headers": [
+            { "name": "Year", "key": "year"}, 
+            { "name": "Grade", "key": "grade"}, 
+            { "name": "Name of Club/Group", "key": "clubName"}, 
+            { "name": "Number in Club/Group", "key": "numInClub"}, 
+            { "name": "Club/Group Leader or Advisor", "key": "clubLeader"}, 
+            { "name": "Meetings Held", "key": "meetingsHeld"}, 
+            { "name": "Meetings Attended", "key": "meetingsAttended"}
+        ],
+        "form": [
+            { "type": "text", "label": "Year", "name": "year", "placeholder": "Ex. 2016-17" },
+            { "type": "number", "label": "Grade", "name": "grade", "placeholder": "Ex. 9" },
+            { "type": "text", "label": "Name of Club/Group", "name": "clubName", "placeholder": "Ex. Oak Grove Clothing Club" },
+            { "type": "number", "label": "Number in Club/Group", "name": "numInClub", "placeholder": "Ex. 9" },
+            { "type": "text", "label": "Club/Group Leader or Advisor", "name": "clubLeader", "placeholder": "Ex. Mrs. L Jones" },
+            { "type": "number", "label": "Meetings Held", "name": "meetingsHeld", "placeholder": "Ex. 15" },
+            { "type": "number", "label": "Meetings Attended", "name": "meetingsAttended", "placeholder": "Ex. 12" }
+        ]
+    }
+}
