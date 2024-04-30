@@ -42,13 +42,11 @@ export default function Profile() {
   const [formState, formAction] = useFormState(updateUserProfile, UserProfile);
 
   const [userInfo, setUserInfo] = useState(UserProfile);
-  var userDoc = UserProfile;
 
   useEffect(() => {
     try {
       getUserProfile(user.sub.substring(6)).then((data) => {
         setUserInfo(data);
-        userDoc = data;
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
