@@ -45,7 +45,8 @@ export default function Profile() {
 
   useEffect(() => {
     try {
-      getUserProfile(user.sub.substring(6)).then((data) => {
+      getUserProfile(user.sub.substring(6))
+      .then((data) => {
         setUserInfo(data);
       });
     } catch (error) {

@@ -45,7 +45,7 @@ export default function Account() {
     <main>
       <ActionBar title="Account" disableBack={true} />
 
-      <h1><b>{userDoc?.given_name} {userDoc?.family_name}</b></h1>
+      <h1><b>{userDoc?.first_name} {userDoc?.last_name_initial}</b></h1>
       <p>{userDoc?.email}</p>
 
       <br></br>
