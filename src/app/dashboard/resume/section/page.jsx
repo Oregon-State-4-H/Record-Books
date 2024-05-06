@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import ActionBar from '@/app/components/ActionBar';
 import styles from './styles.module.css';
 import { IoMdAdd } from "react-icons/io";
 import sectionOutline from "./sectionOutline.json"
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { addSection1, getSection1Docs } from '@/app/_db/srvactions/resume/Section1';
 import { addSection2, getSection2Docs } from '@/app/_db/srvactions/resume/Section2';
 import { addSection3, getSection3Docs } from '@/app/_db/srvactions/resume/Section3';
@@ -20,6 +20,7 @@ import { addSection11, getSection11Docs } from '@/app/_db/srvactions/resume/Sect
 import { addSection12, getSection12Docs } from '@/app/_db/srvactions/resume/Section12';
 import { addSection13, getSection13Docs } from '@/app/_db/srvactions/resume/Section13';
 import { addSection14, getSection14Docs } from '@/app/_db/srvactions/resume/Section14';
+import CloverLoader from '@/app/components/CloverLoader';
 
 function TableCard({ title, data, headers, handleClick }) {
   return (
@@ -65,7 +66,7 @@ function TableCard({ title, data, headers, handleClick }) {
   )
 }
 
-function FormInput({ type, label, name, placeholder, onChangeHandler, options }) {
+function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue }) {
 
   if (type == "select" && options != undefined) {
     return (
@@ -76,9 +77,8 @@ function FormInput({ type, label, name, placeholder, onChangeHandler, options })
           onChange={onChangeHandler}
           required
         >
-          <option key="0" value="-1">Select an option</option>
           {options.map((option, index) => (
-            <option key={index+1} value={option.value}>{option.label}</option>
+            <option key={index}>{option}</option>
           ))}
         </select>
       </label>
@@ -99,6 +99,25 @@ function FormInput({ type, label, name, placeholder, onChangeHandler, options })
   }
 }
 
+function StatusButton({handleSubmit}){
+  const { pending } = useFormStatus();
+  const [submitStarted, setSubmitStarted] = useState(false);
+
+  useEffect(() => {
+    if (pending) {
+      setSubmitStarted(true);
+    }
+    else if (submitStarted && !pending)
+      handleSubmit();
+  }, [pending]);
+
+  return (
+    <button type="submit" className={styles.submitBtn} disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </button>
+  )
+}
+
 export default function Section({ searchParams: {section} }) {
   const [tableData, setTableData] = useState(undefined);
   const [showFormCard, setShowFormCard] = useState(false);
@@ -109,9 +128,10 @@ export default function Section({ searchParams: {section} }) {
   var _srvActAdd = () => {}
   var _srvActGet = () => {}
   var formBlueprint = {}
-
-  const [formState, formAction] = useFormState(addSection1, formBlueprint);
+  
+  const [isLoading, setIsLoading] = useState(true);
   const [formInfo, setFormInfo] = useState(formBlueprint);
+  const [invalidateData, setInvalidateData] = useState(false);
 
   const showForm = () => { setShowFormCard(true); }
   const hideForm = () => { setShowFormCard(false); }
@@ -120,17 +140,23 @@ export default function Section({ searchParams: {section} }) {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
   }
 
+  const handleFormState = () => {
+    hideForm();
+    setInvalidateData(true);
+  }
+
   useEffect(() => {
     try {
       _srvActGet()
         .then((data) => {
           setTableData(data);
+          setIsLoading(false);
+          setInvalidateData(false);
         });
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
-  }, []);
-
+  }, [invalidateData]);
 
   switch (section) {
     case '1':
@@ -222,6 +248,8 @@ export default function Section({ searchParams: {section} }) {
     )
   }
 
+  const [formState, formAction] = useFormState(_srvActAdd, formBlueprint);
+
   headers = sectionObj.headers;
   inputs = sectionObj.form;
   pageTitle = sectionObj.title;
@@ -234,6 +262,9 @@ export default function Section({ searchParams: {section} }) {
     <main>
       <ActionBar title={"Section " + section} />
       <TableCard title={pageTitle} data={tableData} headers={headers} handleClick={() => showForm()} />
+      {isLoading && <div className={styles.loaderContainer}>
+        <CloverLoader />
+      </div>}
       {showFormCard && (
         <div className={styles.overlay}>
           <form className={styles.formCard} action={formAction}>
@@ -245,7 +276,7 @@ export default function Section({ searchParams: {section} }) {
                 )
               })}
             </div>
-            <button type="submit" className={styles.submitBtn}>Submit</button>
+            <StatusButton handleSubmit={handleFormState} />
           </form>
         </div>
       )}

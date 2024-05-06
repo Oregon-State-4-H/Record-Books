@@ -92,7 +92,7 @@
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 15px;
-    width: 47vw;
+    width: 35vw;
 }
 
 .submitBtn {
@@ -125,6 +125,12 @@
     width: 35vw;
     border-bottom: 1px solid lightgrey;
     background: none;
+}
+
+.loaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 @media screen and (max-width: 480px) {

@@ -18,54 +18,143 @@ export const section2Model = mongoose.Schema({
     year: String,
     projectName: String,
     projectScope: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section3Model = mongoose.Schema({
-    
+    year: String,
+    activityKind: String,
+    thingsLearned: String,
+    level: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section4Model = mongoose.Schema({
-    
+    year: String,
+    activityKind: String,
+    scope: String,
+    level: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section5Model = mongoose.Schema({
-    
+    year: String,
+    leadershipRole: String,
+    hoursSpent: Number,
+    numPeopleReached: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section6Model = mongoose.Schema({
-    
+    year: String,
+    organizationName: String,
+    leadershipRole: String,
+    hoursSpent: Number,
+    numPeopleReached: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section7Model = mongoose.Schema({
-    
+    year: String,
+    clubMemberActivities: String,
+    hoursSpent: Number,
+    numPeopleReached: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section8Model = mongoose.Schema({
-    
+    year: String,
+    individualGroupActivities: String,
+    hoursSpent: Number,
+    numPeopleReached: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section9Model = mongoose.Schema({
-    
+    year: String,
+    communicationType: String,
+    topic: String,
+    timesGiven: Number,
+    location: String,
+    audienceSize: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section10Model = mongoose.Schema({
-    
+    year: String,
+    communicationType: String,
+    topic: String,
+    timesGiven: Number,
+    location: String,
+    audienceSize: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section11Model = mongoose.Schema({
-    
+    year: String,
+    eventAndLevel: String,
+    exhibitsOrDivision: String,
+    ribbonOrPlacings: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section12Model = mongoose.Schema({
-    
+    year: String,
+    contestOrEvent: String,
+    recognitionReceived: String,
+    level: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section13Model = mongoose.Schema({
-    
+    year: String,
+    recognitionType: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const section14Model = mongoose.Schema({
-    
+    year: String,
+    recognitionType: String,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 });
 
 export const Section1 = mongoose.models.section1 || mongoose.model("section1", section1Model);
