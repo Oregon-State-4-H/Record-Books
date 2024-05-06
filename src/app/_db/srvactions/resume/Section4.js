@@ -48,7 +48,7 @@ export async function addSection4(prevState, formData){
             uid: userID,
             year: formData.get("year"),
             activityKind: formData.get("activityKind"),
-            thingsLearned: formData.get("“activityTime”"),
+            scope: formData.get("scope"),
             level: formData.get("level")
         });
 
