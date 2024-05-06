@@ -234,6 +234,8 @@ export default function Section({ searchParams: {section} }) {
       break;
   }
 
+  const [formState, formAction] = useFormState(_srvActAdd, formBlueprint);
+
   if (sectionObj == null) {
     return (
       <main>
@@ -248,7 +250,6 @@ export default function Section({ searchParams: {section} }) {
     )
   }
 
-  const [formState, formAction] = useFormState(_srvActAdd, formBlueprint);
 
   headers = sectionObj.headers;
   inputs = sectionObj.form;
