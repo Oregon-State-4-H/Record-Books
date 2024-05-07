@@ -12,13 +12,12 @@ var bestResumelist = [
   <Text key="li4">Be careful in your use of abbreviations and/or acronyms. Someone reading your record might not be familiar with those you use, and some have multiple meanings.</Text>,
   <Text key="li5">{"Remember that quality is more important than quantity. Don't put things in your record just to fill up space."}</Text>
 ]
-
 function Section0(props) {
-  const userData = props.userData[0];
-  var name = userData.name;
-  var dob = userData.dob;
-  var county = userData.county;
-  var dateJoined = userData.dateJoined;
+  const userData = props.userData;
+  var name = (userData?.first_name + " " + userData?.middle_name_initial + " " + userData?.last_name_initial) || "N/A";
+  var dob = new Date(userData?.birthdate).toISOString().split('T')[0] || "N/A";
+  var county = userData?.county_name || "N/A";
+  var dateJoined = new Date(userData?.join_date).toISOString().split('T')[0] || "N/A";
 
   return (
     <Page size="LETTER" style={ReportStyles.body}>

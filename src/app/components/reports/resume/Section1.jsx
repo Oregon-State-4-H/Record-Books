@@ -137,7 +137,7 @@ function addPageBreaks() {
 
 function Section1(props) {
   const tableData = props.tableData;
-  rows = tableData.map((row, index) => {
+  rows = tableData?.map((row, index) => {
     return (
       <View key={index} style={styles.tableRow}>
         <View style={[styles.col1, ReportStyles.tableColAlignCenter]}>
@@ -150,7 +150,7 @@ function Section1(props) {
           <Text>{row.clubName}</Text>
         </View>
         <View style={[styles.col4, ReportStyles.tableColAlignCenter]}>
-          <Text>{row.clubSize}</Text>
+          <Text>{row.numInClub}</Text>
         </View>
         <View style={[styles.col5, ReportStyles.tableColAlignLeft]}>
           <Text>{row.clubLeader}</Text>
@@ -162,7 +162,7 @@ function Section1(props) {
     )
   });
 
-  if (tableData.length > 23)
+  if (tableData?.length > 23)
     addPageBreaks();
 
   return (

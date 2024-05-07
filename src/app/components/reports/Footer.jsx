@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   footerText: {
     flex: 1,
     textAlign: "left",
-    fontFamily: "Kievit",
+    // fontFamily: "Kievit",
     fontWeight: "normal",
   },
 });

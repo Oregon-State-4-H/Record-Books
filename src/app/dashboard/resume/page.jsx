@@ -4,7 +4,12 @@ import Link from 'next/link';
 import classes from './styles.module.css';
 import styles from './styles.module.css';
 import ActionBar from '@/app/components/ActionBar';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFFile from '@/app/components/reports/resume/Resume.jsx';
+import { useState, useEffect } from 'react';
+import { getResumeDocs } from '@/app/_db/srvactions/resume/resume';
+import dynamic from 'next/dynamic';
+import { PDFViewer } from "@react-pdf/renderer";
 
 function Card(props) {
   var title = props.title;
@@ -18,11 +23,32 @@ function Card(props) {
   )
 }
 
+export default function Resume() {
+  const [isComplete, setIsComplete] = useState(false); // State to manage completeness
+  const [resumeData, setResumeData] = useState({});
 
-const Resume = () => {
+  useEffect(() => {
+    getResumeDocs().then((data) => {
+      setResumeData(data);
+      setIsComplete(true);
+    });
+  }, []);
+
   return (
     <main>
       <ActionBar title="My 4-H Resume" disableBack={true} />
+
+      <div className={styles.documentContainer}>
+        {/* <Link href={'resume/preview'} style={{textDecoration:"underline"}}>Preview Resume</Link> */}
+        {/* <br /> */}
+
+        {/* Render PDFDownloadLink only if isComplete is true */}
+        { isComplete && (
+          <PDFDownloadLink document={<PDFFile resumeData={resumeData} />} filename="FORM">
+            {({loading}) => (loading ? <button>Loading Document...</button> : <button>Download Resume</button> )}
+          </PDFDownloadLink>
+        )}
+      </div>
 
       <div className={classes.sectionsContainer}>
         <div className={styles.sectionGroup}>
@@ -67,9 +93,6 @@ const Resume = () => {
           <Card title="Section 14: Other" section="14" />
         </div>
       </div>
-
     </main>
   )
 }
-
-export default Resume;

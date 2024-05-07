@@ -1,4 +1,4 @@
-import '../../_fonts/fonts';
+// import '../../_fonts/fonts';
 import { StyleSheet } from "@react-pdf/renderer";
 
 var pageMargin = 60;
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingBottom: 95,
     backgroundColor: "white",
     fontSize: 12,
-    fontFamily: "Kievit",
+    // fontFamily: "Kiexvit",
     fontWeight: "normal",
   },
   content: {
@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 30,
     color: beavOrange,
-    fontFamily: "Stratum2",
+    // fontFamily: "Stratum2",
     fontWeight: "light"
   },
   h1: {
     fontSize: 18,
     marginBottom: 10,
     color: beavOrange,
-    fontFamily: "Stratum2",
+    // fontFamily: "Stratum2",
     alignSelf: "center",
   },
   h2: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
     color: beavOrange,
-    fontFamily: "Stratum2"
+    // fontFamily: "Stratum2"
   },
   bold: {
     fontWeight: "bold" 

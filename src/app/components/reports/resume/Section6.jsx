@@ -121,29 +121,29 @@ function addPageBreaks() {
 
 function Section6(props) {
   const tableData = props.tableData;
-  rows = tableData.map((row, index) => {
+  rows = tableData?.map((row, index) => {
     return (
       <View key={index} style={styles.tableRow}>
         <View style={[styles.col1, ReportStyles.tableColAlignCenter]}>
           <Text>{row.year}</Text>
         </View>
         <View style={[styles.col2, ReportStyles.tableColAlignCenter]}>
-          <Text>{row.organization}</Text>
+          <Text>{row.organizationName}</Text>
         </View>
         <View style={[styles.col3, ReportStyles.tableColAlignLeft]}>
-          <Text>{row.description}</Text>
+          <Text>{row.leadershipRole}</Text>
         </View>
         <View style={[styles.col4, ReportStyles.tableColAlignCenter]}>
-          <Text>{row.hours}</Text>
+          <Text>{row.hoursSpent}</Text>
         </View>
         <View style={[styles.col5, ReportStyles.tableColAlignCenter]}>
-          <Text>{row.people}</Text>
+          <Text>{row.numPeopleReached}</Text>
         </View>
       </View>
     )
   });
 
-  if (tableData.length > 23)
+  if (tableData?.length > 23)
     addPageBreaks();
 
   return (

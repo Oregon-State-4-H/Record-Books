@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import ActionBar from '@/app/components/ActionBar';
 import styles from './styles.module.css';
 import { IoMdAdd } from "react-icons/io";
