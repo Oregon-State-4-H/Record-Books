@@ -12,12 +12,21 @@ import { useState, useEffect } from 'react';
 function Card(props) {
   var title = props.title;
   var url = props.url;
+  var newTab = props.newTab;
 
-  return (
-    <Link href={url} className={classes.accountCardItems}>
-      <button type="button" className={classes.btn}>{title}</button>
-    </Link>
-  )
+  if (newTab) {
+    return (
+      <Link href={url} className={classes.accountCardItems} rel="noopener noreferrer" target="_blank">
+        <button type="button" className={classes.btn}>{title}</button>
+      </Link>
+    )
+  } else {
+    return (
+      <Link href={url} className={classes.accountCardItems}>
+        <button type="button" className={classes.btn}>{title}</button>
+      </Link>
+    )
+  }
 }
 
 export default function Account() {
@@ -53,7 +62,7 @@ export default function Account() {
       <div className={classes.summaryCard}>
         <div className={classes.cardTitle}>Account</div>
         <div className={classes.accountCard}>
-          <Card title="Edit Profile" url="/dashboard/account/profile" />
+          <Card title="Edit Profile - Coming soon" url="/dashboard/account" />
         </div>
       </div>
         
@@ -62,12 +71,9 @@ export default function Account() {
       <div className={classes.summaryCard}>
         <div className={classes.cardTitle}>General</div>
         <div className={classes.accountCard}>
-          <div>Support</div>
-          <div>Terms of Services</div>
-          <div>Invite Friends</div>
-          {/* <Card title="Support"/>
-          <Card title="Terms of Service"/>
-          <Card title="Invite Friends"/> */}
+          <Card title="Email Support - Coming soon" url="/dashboard/account" />
+          <Card title="Terms of Service - Coming soon" url="/dashboard/account" />
+          <Card title="Invite Friends - Coming soon" url="/dashboard/account" />
         </div>
       </div>
 

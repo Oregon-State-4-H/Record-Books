@@ -40,48 +40,74 @@ import Section12 from '@/app/components/reports/resume/Section12';
 import Section13 from '@/app/components/reports/resume/Section13';
 import Section14 from '@/app/components/reports/resume/Section14';
 
-function TableCard({ title, data, headers, handleClick }) {
-  return (
-    <>
+function TableCard({ title, data, headers, handleClick, dataLoaded }) {
+
+  if (!dataLoaded) {
+    return (
       <div className={styles.sectionHeader}>
         <span className={styles.sectionTitle}>{title}</span>
-        <button className={styles.addInfoContainer} onClick={handleClick}>
-          <IoMdAdd />
-          <span id={styles.addInfo}>Add Info</span>
-        </button>
       </div>
+    )
+  } else if ((!data || data.length == 0) && dataLoaded) {
+    return (
+      <>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionTitle}>{title}</span>
+        </div>
 
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            {headers.map((header, headerID) => (
-              <th key={headerID}>{header.name}</th>
-            ))}
-          </tr>
-        </thead>
-        
-        {data && (
-          <tbody>
-            {data.map((rowData, rowID) => (
-              <tr key={rowID}>
-                {headers.map((header, colID) => (
-                  <td key={colID}>
-                    {Array.isArray(rowData[header.key]) ? (
-                      <ul>
-                        {rowData[header.key].map((value, index) => (
-                          <li key={index}>{value}</li>
-                        ))}
-                      </ul>
-                    ) : rowData[header.key]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
-    </>
-  )
+        <div className={styles.infoSection}>
+          <h1 className={styles.infoSectionHeader}>Hmm... your log is empty!</h1>
+          <p>Let's fix that! Add your first entry below.</p>
+          <button className={styles.infoSectionBtn} onClick={handleClick}>
+            <IoMdAdd />
+            Add Info
+          </button>
+        </div>
+      </>
+    )
+  }
+
+    return (
+      <>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionTitle}>{title}</span>
+          <button className={styles.addInfoContainer} onClick={handleClick}>
+            <IoMdAdd />
+            <span id={styles.addInfo}>Add Info</span>
+          </button>
+        </div>
+  
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              {headers.map((header, headerID) => (
+                <th key={headerID}>{header.name}</th>
+              ))}
+            </tr>
+          </thead>
+          
+          {data && (
+            <tbody>
+              {data.map((rowData, rowID) => (
+                <tr key={rowID}>
+                  {headers.map((header, colID) => (
+                    <td key={colID}>
+                      {Array.isArray(rowData[header.key]) ? (
+                        <ul>
+                          {rowData[header.key].map((value, index) => (
+                            <li key={index}>{value}</li>
+                          ))}
+                        </ul>
+                      ) : rowData[header.key]}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
+      </>
+    )
 }
 
 function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue }) {
@@ -282,8 +308,10 @@ export default function Section({ searchParams: {section} }) {
         <div className={styles.sectionHeader}>
           <span className={styles.sectionTitle}>Section {section}</span>
         </div>
-        <div className={styles.table}>
-          <p>Section {section} does not exist</p>
+        <div className={styles.infoSection}>
+          <h1 className={styles.infoSectionHeader}>Oh No!</h1>
+          <p>It seems that the section you are looking for does not exist.</p>
+          <p>Please check the URL and try again.</p>
         </div>
       </main>
     )
@@ -302,7 +330,7 @@ export default function Section({ searchParams: {section} }) {
     <main>
       <ActionBar title={"Section " + section} />
 
-      { isComplete &&
+      { isComplete && (tableData && tableData.length > 0) &&
         <div className={styles.documentContainer}>
           <button className={styles.pdfBtn} onClick={() => setShowPreview(true)}>
             <MdOutlinePreview className={styles.pdfIcon} />
@@ -340,7 +368,7 @@ export default function Section({ searchParams: {section} }) {
         </div>
       }
 
-      <TableCard title={pageTitle} data={tableData} headers={headers} handleClick={() => showForm()} />
+      <TableCard title={pageTitle} data={tableData} headers={headers} handleClick={() => showForm()} dataLoaded={!isLoading} />
       {isLoading && <div className={styles.loaderContainer}>
         <CloverLoader />
       </div>}
