@@ -3,19 +3,11 @@
 import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
-import { getCurrentProjects } from '@/app/_db/srvactions/projects';
+import BackNavBtn from '@/app/components/BackNavBtn';
+import { getProjects } from '@/app/_db/srvactions/projects';
 import CloverLoader from '@/app/components/CloverLoader';
 import { useState, useEffect } from 'react';
-import styles from './styles.module.css';
 
-const Project = {
-  year: null,
-  projectName: null,
-  description: null,
-  type: null,
-  startDate: null,
-  endDate: null,
-}
 
 export default function Projects() {
   const [projects, setProjects] = useState(undefined);
@@ -23,7 +15,7 @@ export default function Projects() {
 
   useEffect(() => {
     try {
-      getCurrentProjects()
+      getProjects()
       .then((data) => {
         setProjects(data);
         setIsLoading(false);
@@ -33,28 +25,34 @@ export default function Projects() {
     }
   });
 
+
   return (
     <main>
-      <ActionBar title="Projects" disableBack={true} />
+      <ActionBar title="All Projects" disableBack={false} />
       
       <div className={classes.header}>
-        <div className={classes.title}>Current Projects</div>
-        <Link href={{pathname: "projects/previous"}} className={classes.btn} id='previousBtn'>View All Projects</Link>
+        <BackNavBtn /> 
+        <div className={classes.title}>All Projects</div>
       </div>
+
 
       <div className={classes.cardContainer}>
         { projects?.map((project, index) => {
             return (
               <Link href={{pathname: "projects/" + project.type + "/overview", query: {project: project._id}}} key={index} className={classes.card}>
-                <div className={classes.cardTitle}>{project.name}</div>
+                <div className={classes.cardHeader}>
+                  <div className={classes.cardTitle}>{project.name}</div>
+                  <div className={classes.cardDescription}>{"(" + project.year + ")"}</div>
+                </div>
                 <div className={classes.cardDescription}>{project.description}</div>
               </Link>
         )})}
       </div>
 
-      {isLoading && <div className={styles.loaderContainer}>
+      {isLoading && <div className={classes.loaderContainer}>
         <CloverLoader />
       </div>}
+
     </main>
   );
 }
