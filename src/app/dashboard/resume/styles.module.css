@@ -55,6 +55,58 @@
     border-radius: 5px;
 }
 
+.pdfBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--beaver-orange);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pdfBtn:hover {
+    background-color: lightgrey;
+}
+
+.pdfIcon {
+    margin-right: 5px;
+    font-size: 1.5rem;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+.previewContainer {
+    background-color: var(--bg-secondary);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 @media screen and (max-width: 480px) {
     .sectionBtn {
@@ -78,6 +130,14 @@
     }
 
     .sectionGroup {
+        width: 100%;
+    }
+
+    .pdfBtn {
+        flex: 1;
+    }
+
+    .documentContainer {
         width: 100%;
     }
 }

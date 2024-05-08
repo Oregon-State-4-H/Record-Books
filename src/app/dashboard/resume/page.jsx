@@ -1,15 +1,16 @@
 "use client";
 
 import Link from 'next/link';
-import classes from './styles.module.css';
 import styles from './styles.module.css';
 import ActionBar from '@/app/components/ActionBar';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFFile from '@/app/components/reports/resume/Resume.jsx';
 import { useState, useEffect } from 'react';
 import { getResumeDocs } from '@/app/_db/srvactions/resume/resume';
-import dynamic from 'next/dynamic';
 import { PDFViewer } from "@react-pdf/renderer";
+import { FaDownload } from "react-icons/fa";
+import { MdOutlinePreview } from "react-icons/md";
+
 
 function Card(props) {
   var title = props.title;
@@ -26,6 +27,7 @@ function Card(props) {
 export default function Resume() {
   const [isComplete, setIsComplete] = useState(false); // State to manage completeness
   const [resumeData, setResumeData] = useState({});
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     getResumeDocs().then((data) => {
@@ -38,19 +40,40 @@ export default function Resume() {
     <main>
       <ActionBar title="My 4-H Resume" disableBack={true} />
 
-      <div className={styles.documentContainer}>
-        {/* <Link href={'resume/preview'} style={{textDecoration:"underline"}}>Preview Resume</Link> */}
-        {/* <br /> */}
+      { isComplete &&
+        <div className={styles.documentContainer}>
+          <button className={styles.pdfBtn} onClick={() => setShowPreview(true)}>
+            <MdOutlinePreview className={styles.pdfIcon} />
+            Preview Resume
+          </button>
 
-        {/* Render PDFDownloadLink only if isComplete is true */}
-        { isComplete && (
-          <PDFDownloadLink document={<PDFFile resumeData={resumeData} />} filename="FORM">
-            {({loading}) => (loading ? <button>Loading Document...</button> : <button>Download Resume</button> )}
+          <PDFDownloadLink className={styles.pdfBtn} document={<PDFFile resumeData={resumeData} />} fileName={"My 4-H Resume.pdf"}>
+            {({loading}) => (loading ? 
+              (<>
+                <FaDownload className={styles.pdfIcon} />
+                <button>Loading Document...</button> 
+              </>) : (
+              <>
+                <FaDownload className={styles.pdfIcon} style={{fontSize: "1.25rem"}} />
+                <button>Download Resume</button>
+              </> )
+            )}
           </PDFDownloadLink>
-        )}
-      </div>
+        </div>
+      }
 
-      <div className={classes.sectionsContainer}>
+      { showPreview &&
+        <div className={styles.overlay} onClick={() => setShowPreview(false)}>
+          <div className={styles.previewContainer}>
+            <PDFViewer width="100%" height="100%">
+              <PDFFile resumeData={resumeData} />
+            </PDFViewer>
+            <button onClick={() => setShowPreview(false)}>Close Preview</button>
+          </div>
+        </div>
+      }
+
+      <div className={styles.sectionsContainer}>
         <div className={styles.sectionGroup}>
           <div className={styles.sectionTitle}>Involvement</div>
           <Card title="Section 1: 4-H Involvement" section="1" />

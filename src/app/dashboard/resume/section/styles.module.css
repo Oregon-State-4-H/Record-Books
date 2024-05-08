@@ -133,6 +133,52 @@
     justify-content: center;
 }
 
+.pdfBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--beaver-orange);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pdfBtn:hover {
+    background-color: lightgrey;
+}
+
+.pdfIcon {
+    margin-right: 5px;
+    font-size: 1.5rem;
+}
+
+.previewContainer {
+    background-color: var(--bg-secondary);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.documentContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
 @media screen and (max-width: 480px) {
     .formCard {
         top: 5%;
