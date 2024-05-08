@@ -143,6 +143,25 @@ function FormInput({ type, label, name, placeholder, onChangeHandler, options, d
   }
 }
 
+function StatusButton({handleSubmit}){
+  const { pending } = useFormStatus();
+  const [submitStarted, setSubmitStarted] = useState(false);
+
+  useEffect(() => {
+    if (pending) {
+      setSubmitStarted(true);
+    }
+    else if (submitStarted && !pending)
+      handleSubmit();
+  }, [pending]);
+
+  return (
+    <button type="submit" className={styles.submitBtn} disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </button>
+  )
+}
+
 const sectionComponents = {
   '1': Section1,
   '2': Section2,
@@ -183,6 +202,11 @@ export default function Section({ searchParams: {section} }) {
 
   const handleChange = (e) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+  }
+
+  const handleFormState = () => {
+    hideForm();
+    setInvalidateData(true);
   }
 
   useEffect(() => {
@@ -359,7 +383,7 @@ export default function Section({ searchParams: {section} }) {
                 )
               })}
             </div>
-            <button type="submit" className={styles.submitBtn} onClick={hideForm}>Submit</button>
+            <StatusButton handleSubmit={handleFormState} />
           </form>
         </div>
       )}
