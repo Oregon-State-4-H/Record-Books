@@ -89,6 +89,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     borderColor: "black",
     padding: 3,
+  },
+  noData: {
+    alignSelf: "center",
+    marginTop: 10,
   }
 });
 

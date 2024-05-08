@@ -174,6 +174,8 @@ function Section1(props) {
 
         {rows}
 
+        { (!rows || rows.length == 0) && <Text style={ReportStyles.noData}>No data available</Text> }
+
       <Footer />
     </Page>
   )

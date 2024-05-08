@@ -14,10 +14,10 @@ var bestResumelist = [
 ]
 function Section0(props) {
   const userData = props.userData;
-  var name = (userData?.first_name + " " + userData?.middle_name_initial + " " + userData?.last_name_initial) || "N/A";
-  var dob = userData?.birthdate ? new Date(userData?.birthdate).toISOString().split('T')[0] : "N/A";
-  var county = userData?.county_name || "N/A";
-  var dateJoined = userData?.join_date ? new Date(userData?.join_date).toISOString().split('T')[0] : "N/A";
+  var name = (userData?.first_name + " " + userData?.middle_name_initial + " " + userData?.last_name_initial) || "";
+  var dob = userData?.birthdate ? new Date(userData?.birthdate).toISOString().split('T')[0] : "";
+  var county = userData?.county_name || "";
+  var dateJoined = userData?.join_date ? new Date(userData?.join_date).toISOString().split('T')[0] : "";
 
   return (
     <Page size="LETTER" style={ReportStyles.body}>
