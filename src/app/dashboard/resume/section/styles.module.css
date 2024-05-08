@@ -253,4 +253,9 @@
     .textInputBox {
         width: 100%;
     }
+
+    .infoSection {
+        width: 90vw;
+        height: 300px;
+    }
 }

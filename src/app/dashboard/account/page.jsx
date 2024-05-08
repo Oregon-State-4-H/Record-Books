@@ -44,7 +44,7 @@ export default function Account() {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, []);
+  }, [user]);
 
   if (!user) {
     redirect("../api/auth/login");

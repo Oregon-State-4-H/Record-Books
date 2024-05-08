@@ -76,6 +76,10 @@ body {
     right: 0;
     height: var(--nav-bar-height-mob);
   }
+
+  @media (max-width: 380px) {
+    font-size: 0.8rem;
+  }
 }
 
 .navGroup {
