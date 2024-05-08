@@ -57,7 +57,7 @@ function TableCard({ title, data, headers, handleClick, dataLoaded }) {
 
         <div className={styles.infoSection}>
           <h1 className={styles.infoSectionHeader}>Hmm... your log is empty!</h1>
-          <p>Let's fix that! Add your first entry below.</p>
+          <p>{"Let's fix that! Add your first entry below."}</p>
           <button className={styles.infoSectionBtn} onClick={handleClick}>
             <IoMdAdd />
             Add Info
@@ -143,25 +143,6 @@ function FormInput({ type, label, name, placeholder, onChangeHandler, options, d
   }
 }
 
-function StatusButton({handleSubmit}){
-  const { pending } = useFormStatus();
-  const [submitStarted, setSubmitStarted] = useState(false);
-
-  useEffect(() => {
-    if (pending) {
-      setSubmitStarted(true);
-    }
-    else if (submitStarted && !pending)
-      handleSubmit();
-  }, [pending]);
-
-  return (
-    <button type="submit" className={styles.submitBtn} disabled={pending}>
-      {pending ? "Submitting..." : "Submit"}
-    </button>
-  )
-}
-
 const sectionComponents = {
   '1': Section1,
   '2': Section2,
@@ -202,11 +183,6 @@ export default function Section({ searchParams: {section} }) {
 
   const handleChange = (e) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
-  }
-
-  const handleFormState = () => {
-    hideForm();
-    setInvalidateData(true);
   }
 
   useEffect(() => {
@@ -383,7 +359,7 @@ export default function Section({ searchParams: {section} }) {
                 )
               })}
             </div>
-            <StatusButton handleSubmit={handleFormState} />
+            <button type="submit" className={styles.submitBtn} onClick={hideForm}>Submit</button>
           </form>
         </div>
       )}
