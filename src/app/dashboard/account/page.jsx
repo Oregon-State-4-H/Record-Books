@@ -3,7 +3,7 @@
 import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
-import { getUserProfile } from '@/app/_db/srvactions/UserProfile';
+import { getUserProfile } from '@/app/_db/srvactions/user';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { redirect } from "next/navigation";
 import { useState, useEffect } from 'react';

@@ -3,7 +3,7 @@
 import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
-import { getCurrentProjects } from '@/app/_db/srvactions/projects';
+import { getCurrentProjects } from '@/app/_db/srvactions/project';
 import CloverLoader from '@/app/components/CloverLoader';
 import { useState, useEffect } from 'react';
 import styles from './styles.module.css';

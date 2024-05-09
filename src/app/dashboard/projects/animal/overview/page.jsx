@@ -9,7 +9,7 @@ import BackNavBtn from '@/app/components/BackNavBtn';
 import { redirect } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useFormState } from "react-dom";
-import { getProject, updateProject } from "@/app/_db/srvactions/projects";
+import { getProject, updateProject } from "@/app/_db/srvactions/project";
 import { CiEdit } from "react-icons/ci";
 
 const ProjectInfo = {

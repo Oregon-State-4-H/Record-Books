@@ -4,7 +4,7 @@ import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
 import BackNavBtn from '@/app/components/BackNavBtn';
-import { getProjects } from '@/app/_db/srvactions/projects';
+import { getProjects } from '@/app/_db/srvactions/project';
 import CloverLoader from '@/app/components/CloverLoader';
 import { useState, useEffect } from 'react';
 
