@@ -6,8 +6,14 @@ import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
 import { getSession } from "@auth0/nextjs-auth0";
 
-export async function getUserProfile(uid) {
+/**
+ * @async Gets the user profile document by its ID
+ * @returns {object} A user profile document
+ */
+export async function getUserProfile() {
     try {
+        const session = await getSession();
+        const uid = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
         const user = await User.findOne({ _id: uid });
         return JSON.parse(JSON.stringify(user));
@@ -17,9 +23,14 @@ export async function getUserProfile(uid) {
     }
 }
 
+/**
+ * @async Updates the user profile document
+ * @param {object} prevState - The previous state of the user profile document
+ * @param {object} formData - The new state of the user profile document
+ * @returns {object} A user profile document
+ */
 export async function updateUserProfile(prevState, formData) {
     const session = await getSession();
-
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
 
     const data = {

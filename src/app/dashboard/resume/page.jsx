@@ -6,7 +6,7 @@ import ActionBar from '@/app/components/ActionBar';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFFile from '@/app/components/reports/resume/Resume.jsx';
 import { useState, useEffect } from 'react';
-import { getResumeDocs } from '@/app/_db/srvactions/resume/resume';
+import { getResumeDocs } from '@/app/_db/srvactions/resume';
 import { PDFViewer } from "@react-pdf/renderer";
 import { FaDownload } from "react-icons/fa";
 import { MdOutlinePreview } from "react-icons/md";

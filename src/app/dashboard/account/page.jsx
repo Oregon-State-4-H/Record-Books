@@ -37,7 +37,7 @@ export default function Account() {
 
   useEffect(() => {
     try {
-      getUserProfile(user.sub.substring(6))
+      getUserProfile()
         .then((data) => {
           setUserDoc(data);
         });

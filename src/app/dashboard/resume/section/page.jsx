@@ -8,20 +8,16 @@ import { FaDownload } from "react-icons/fa";
 import { MdOutlinePreview } from "react-icons/md";
 import sectionOutline from "./sectionOutline.json"
 import { useFormState, useFormStatus } from "react-dom";
-import { addSection1, getSection1Docs } from '@/app/_db/srvactions/resume/Section1';
-import { addSection2, getSection2Docs } from '@/app/_db/srvactions/resume/Section2';
-import { addSection3, getSection3Docs } from '@/app/_db/srvactions/resume/Section3';
-import { addSection4, getSection4Docs } from '@/app/_db/srvactions/resume/Section4';
-import { addSection5, getSection5Docs } from '@/app/_db/srvactions/resume/Section5';
-import { addSection6, getSection6Docs } from '@/app/_db/srvactions/resume/Section6';
-import { addSection7, getSection7Docs } from '@/app/_db/srvactions/resume/Section7';
-import { addSection8, getSection8Docs } from '@/app/_db/srvactions/resume/Section8';
-import { addSection9, getSection9Docs } from '@/app/_db/srvactions/resume/Section9';
-import { addSection10, getSection10Docs } from '@/app/_db/srvactions/resume/Section10';
-import { addSection11, getSection11Docs } from '@/app/_db/srvactions/resume/Section11';
-import { addSection12, getSection12Docs } from '@/app/_db/srvactions/resume/Section12';
-import { addSection13, getSection13Docs } from '@/app/_db/srvactions/resume/Section13';
-import { addSection14, getSection14Docs } from '@/app/_db/srvactions/resume/Section14';
+
+import { 
+  addSection1, getSection1Docs, addSection2, getSection2Docs,
+  addSection3, getSection3Docs, addSection4, getSection4Docs,
+  addSection5, getSection5Docs, addSection6, getSection6Docs,
+  addSection7, getSection7Docs, addSection8, getSection8Docs,
+  addSection9, getSection9Docs, addSection10, getSection10Docs,
+  addSection11, getSection11Docs, addSection12, getSection12Docs,
+  addSection13, getSection13Docs, addSection14, getSection14Docs
+} from '@/app/_db/srvactions/resume';
 import CloverLoader from '@/app/components/CloverLoader';
 import { PDFDownloadLink, Document } from '@react-pdf/renderer';
 import { PDFViewer } from "@react-pdf/renderer";
