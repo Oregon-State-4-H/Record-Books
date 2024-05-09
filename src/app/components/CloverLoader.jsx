@@ -21,7 +21,10 @@ export const Loader = styled.div`
   animation: ${spin} 1.0s linear infinite;
 `;
 
-
+/**
+ * Custom 4-H Clover loader
+ * @returns {JSX.Element}
+ */
 export function CloverLoader() {
     return (
         <div style={{position: 'relative',width: '100px', height: '100px', marginTop: '30px'}}>

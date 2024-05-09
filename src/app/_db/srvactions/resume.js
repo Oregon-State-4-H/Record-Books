@@ -9,6 +9,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 /**
  * @async Get all resume documents for the current user.
  * @returns {object} An object containing all resume section documents
+ * @see {@link User} for section 0 object structure
  */
 export async function getResumeDocs(){
     try {
@@ -68,6 +69,7 @@ export async function getResumeDocs(){
  * @async Get a section 1 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 1 document object
+ * @see {@link Section1} for object structure
  */
 export async function getSection1(docId) {
     try {
@@ -86,6 +88,7 @@ export async function getSection1(docId) {
 /**
  * @async Get all section 1 documents from database for the current user.
  * @returns {array} Array of section 1 document objects
+ * @see {@link Section1} for object structure
  */
 export async function getSection1Docs(){
     try {
@@ -106,6 +109,7 @@ export async function getSection1Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 1 document object
+ * @see {@link Section1} for object structure
  */
 export async function addSection1(prevState, formData){
     const session = await getSession();
@@ -142,6 +146,7 @@ export async function addSection1(prevState, formData){
  * @async Get a section 2 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 2 document object
+ * @see {@link Section2} for object structure
  */
 export async function getSection2(docId) {
     try {
@@ -159,6 +164,7 @@ export async function getSection2(docId) {
 /**
  * @async Get all section 2 documents from database for the current user.
  * @returns {array} Array of section 2 document objects
+ * @see {@link Section2} for object structure
  */
 export async function getSection2Docs(){
     try {
@@ -179,6 +185,7 @@ export async function getSection2Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 2 document object
+ * @see {@link Section2} for object structure
  */
 export async function addSection2(prevState, formData){
     const session = await getSession();
@@ -211,6 +218,7 @@ export async function addSection2(prevState, formData){
  * @async Get a section 3 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 3 document object
+ * @see {@link Section3} for object structure
  */
 export async function getSection3(docId) {
     try {
@@ -228,6 +236,7 @@ export async function getSection3(docId) {
 /**
  * @async Get all section 3 documents from database for the current user.
  * @returns {array} Array of section 3 document objects
+ * @see {@link Section3} for object structure
  */
 export async function getSection3Docs(){
     try {
@@ -248,6 +257,7 @@ export async function getSection3Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 3 document object
+ * @see {@link Section3} for object structure
  */
 export async function addSection3(prevState, formData){
     const session = await getSession();
@@ -281,6 +291,7 @@ export async function addSection3(prevState, formData){
  * @async Get a section 4 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 4 document object
+ * @see {@link Section4} for object structure
  */
 export async function getSection4(docId) {
     try {
@@ -298,6 +309,7 @@ export async function getSection4(docId) {
 /**
  * @async Get all section 4 documents from database for the current user.
  * @returns {array} Array of section 4 document objects
+ * @see {@link Section4} for object structure
  */
 export async function getSection4Docs(){
     try {
@@ -318,6 +330,7 @@ export async function getSection4Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 4 document object
+ * @see {@link Section4} for object structure
  */
 export async function addSection4(prevState, formData){
     const session = await getSession();
@@ -351,6 +364,7 @@ export async function addSection4(prevState, formData){
  * @async Get a section 5 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 5 document object
+ * @see {@link Section5} for object structure
  */
 export async function getSection5(docId) {
     try {
@@ -368,6 +382,7 @@ export async function getSection5(docId) {
 /**
  * @async Get all section 5 documents from database for the current user.
  * @returns {array} Array of section 5 document objects
+ * @see {@link Section5} for object structure
  */
 export async function getSection5Docs(){
     try {
@@ -388,6 +403,7 @@ export async function getSection5Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 5 document object
+ * @see {@link Section5} for object structure
  */
 export async function addSection5(prevState, formData){
     const session = await getSession();
@@ -421,6 +437,7 @@ export async function addSection5(prevState, formData){
  * @async Get a section 6 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 6 document object
+ * @see {@link Section6} for object structure
  */
 export async function getSection6(docId) {
     try {
@@ -438,6 +455,7 @@ export async function getSection6(docId) {
 /**
  * @async Get all section 6 documents from database for the current user.
  * @returns {array} Array of section 6 document objects
+ * @see {@link Section6} for object structure
  */
 export async function getSection6Docs(){
     try {
@@ -458,6 +476,7 @@ export async function getSection6Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 6 document object
+ * @see {@link Section6} for object structure
  */
 export async function addSection6(prevState, formData){
     const session = await getSession();
@@ -492,6 +511,7 @@ export async function addSection6(prevState, formData){
  * @async Get a section 7 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 7 document object
+ * @see {@link Section7} for object structure
  */
 export async function getSection7(docId) {
     try {
@@ -509,6 +529,7 @@ export async function getSection7(docId) {
 /**
  * @async Get all section 7 documents from database for the current user.
  * @returns {array} Array of section 7 document objects
+ * @see {@link Section7} for object structure
  */
 export async function getSection7Docs(){
     try {
@@ -529,6 +550,7 @@ export async function getSection7Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 7 document object
+ * @see {@link Section7} for object structure
  */
 export async function addSection7(prevState, formData){
     const session = await getSession();
@@ -562,6 +584,7 @@ export async function addSection7(prevState, formData){
  * @async Get a section 8 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 8 document object
+ * @see {@link Section8} for object structure
  */
 export async function getSection8(docId) {
     try {
@@ -579,6 +602,7 @@ export async function getSection8(docId) {
 /**
  * @async Get all section 8 documents from database for the current user.
  * @returns {array} Array of section 8 document objects
+ * @see {@link Section8} for object structure
  */
 export async function getSection8Docs(){
     try {
@@ -599,6 +623,7 @@ export async function getSection8Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 8 document object
+ * @see {@link Section8} for object structure
  */
 export async function addSection8(prevState, formData){
     const session = await getSession();
@@ -632,6 +657,7 @@ export async function addSection8(prevState, formData){
  * @async Get a section 9 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 9 document object
+ * @see {@link Section9} for object structure
  */
 export async function getSection9(docId) {
     try {
@@ -649,6 +675,7 @@ export async function getSection9(docId) {
 /**
  * @async Get all section 9 documents from database for the current user.
  * @returns {array} Array of section 9 document objects
+ * @see {@link Section9} for object structure
  */
 export async function getSection9Docs(){
     try {
@@ -669,6 +696,7 @@ export async function getSection9Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 9 document object
+ * @see {@link Section9} for object structure
  */
 export async function addSection9(prevState, formData){
     const session = await getSession();
@@ -704,6 +732,7 @@ export async function addSection9(prevState, formData){
  * @async Get a section 10 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 10 document object
+ * @see {@link Section10} for object structure
  */
 export async function getSection10(docId) {
     try {
@@ -721,6 +750,7 @@ export async function getSection10(docId) {
 /**
  * @async Get all section 10 documents from database for the current user.
  * @returns {array} Array of section 10 document objects
+ * @see {@link Section10} for object structure
  */
 export async function getSection10Docs(){
     try {
@@ -741,6 +771,7 @@ export async function getSection10Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 10 document object
+ * @see {@link Section10} for object structure
  */
 export async function addSection10(prevState, formData){
     const session = await getSession();
@@ -776,6 +807,7 @@ export async function addSection10(prevState, formData){
  * @async Get a section 11 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 11 document object
+ * @see {@link Section11} for object structure
  */
 export async function getSection11(docId) {
     try {
@@ -793,6 +825,7 @@ export async function getSection11(docId) {
 /**
  * @async Get all section 11 documents from database for the current user.
  * @returns {array} Array of section 11 document objects
+ * @see {@link Section11} for object structure
  */
 export async function getSection11Docs(){
     try {
@@ -813,6 +846,7 @@ export async function getSection11Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 11 document object
+ * @see {@link Section11} for object structure
  */
 export async function addSection11(prevState, formData){
     const session = await getSession();
@@ -846,6 +880,7 @@ export async function addSection11(prevState, formData){
  * @async Get a section 12 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 12 document object
+ * @see {@link Section12} for object structure
  */
 export async function getSection12(docId) {
     try {
@@ -863,6 +898,7 @@ export async function getSection12(docId) {
 /**
  * @async Get all section 12 documents from database for the current user.
  * @returns {array} Array of section 12 document objects
+ * @see {@link Section12} for object structure
  */
 export async function getSection12Docs(){
     try {
@@ -883,6 +919,7 @@ export async function getSection12Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 12 document object
+ * @see {@link Section12} for object structure
  */
 export async function addSection12(prevState, formData){
     const session = await getSession();
@@ -916,6 +953,7 @@ export async function addSection12(prevState, formData){
  * @async Get a section 13 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 13 document object
+ * @see {@link Section13} for object structure
  */
 export async function getSection13(docId) {
     try {
@@ -933,6 +971,7 @@ export async function getSection13(docId) {
 /**
  * @async Get all section 13 documents from database for the current user.
  * @returns {array} Array of section 13 document objects
+ * @see {@link Section13} for object structure
  */
 export async function getSection13Docs(){
     try {
@@ -953,6 +992,7 @@ export async function getSection13Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 13 document object
+ * @see {@link Section13} for object structure
  */
 export async function addSection13(prevState, formData){
     const session = await getSession();
@@ -984,6 +1024,7 @@ export async function addSection13(prevState, formData){
  * @async Get a section 14 document from database by document id.
  * @param {string} docId MongoDB document id
  * @returns {object} Section 14 document object
+ * @see {@link Section14} for object structure
  */
 export async function getSection14(docId) {
     try {
@@ -1001,6 +1042,7 @@ export async function getSection14(docId) {
 /**
  * @async Get all section 14 documents from database for the current user.
  * @returns {array} Array of section 14 document objects
+ * @see {@link Section14} for object structure
  */
 export async function getSection14Docs(){
     try {
@@ -1021,6 +1063,7 @@ export async function getSection14Docs(){
  * @param {object} prevState Previous form state
  * @param {object} formData Form data
  * @returns {object} New section 14 document object
+ * @see {@link Section14} for object structure
  */
 export async function addSection14(prevState, formData){
     const session = await getSession();

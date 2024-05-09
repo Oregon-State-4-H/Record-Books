@@ -9,6 +9,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 /**
  * @async Gets the user profile document by its ID
  * @returns {object} A user profile document
+ * @see {@link User} for object structure
  */
 export async function getUserProfile() {
     try {
@@ -28,6 +29,7 @@ export async function getUserProfile() {
  * @param {object} prevState - The previous state of the user profile document
  * @param {object} formData - The new state of the user profile document
  * @returns {object} A user profile document
+ * @see {@link User} for object structure
  */
 export async function updateUserProfile(prevState, formData) {
     const session = await getSession();

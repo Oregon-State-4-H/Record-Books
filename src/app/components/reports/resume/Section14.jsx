@@ -86,7 +86,14 @@ function addPageBreaks() {
 }
 
 
-function Section14(props) {
+/**
+ * PDF page for Section 14 of the 4-H Resume
+ * @param {Object} tableData - Section 14 data
+ * @returns {JSX.Element}
+ * @see{@link 'src/app/_db/models/resumeSections/section14Model'} for object structure
+ * @example <Section14 tableData={section14Data}/>
+ */
+export default function Section14(props) {
   const tableData = props.tableData;
   rows = tableData?.map((row, index) => {
     return (
@@ -119,5 +126,3 @@ function Section14(props) {
     </Page>
   )
 };
-
-export default Section14;

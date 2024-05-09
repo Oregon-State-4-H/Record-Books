@@ -12,7 +12,15 @@ var bestResumelist = [
   <Text key="li4">Be careful in your use of abbreviations and/or acronyms. Someone reading your record might not be familiar with those you use, and some have multiple meanings.</Text>,
   <Text key="li5">{"Remember that quality is more important than quantity. Don't put things in your record just to fill up space."}</Text>
 ]
-function Section0(props) {
+
+/**
+ * PDF page for Section 0 of the 4-H Resume
+ * @param {Object} userData - User data
+ * @returns {JSX.Element}
+ * @see {@link 'src/app/_db/models/userModel'} for object structure
+ * @example <Section0 userData={userDoc}/>
+ */
+export default function Section0(props) {
   const userData = props.userData;
   var name = (userData?.first_name + " " + userData?.middle_name_initial + " " + userData?.last_name_initial) || "";
   var dob = userData?.birthdate ? new Date(userData?.birthdate).toISOString().split('T')[0] : "";
@@ -56,5 +64,3 @@ function Section0(props) {
     </Page>
   )
 };
-
-export default Section0;

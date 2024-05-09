@@ -20,8 +20,14 @@ const styles = StyleSheet.create({
   }
 });
 
-
-const OrderedList = ({items, spaceAfter = false}) => {
+/**
+ * Ordered list component
+ * @param {Array} items - List of items to display
+ * @param {Boolean} spaceAfter - (Optional) Add space after each item. Default is false
+ * @returns {JSX.Element}
+ * @example <OrderedList items={['Item 1', 'Item 2'], spaceAfter={true}}/>
+ */
+export default function OrderedList({items, spaceAfter = false}) {
   if (spaceAfter) {
     return (
       <View>
@@ -46,5 +52,3 @@ const OrderedList = ({items, spaceAfter = false}) => {
     )
   }
 };
-  
-export default OrderedList;

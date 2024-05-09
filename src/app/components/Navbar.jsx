@@ -1,6 +1,13 @@
 import Link from 'next/link'
 import { MdContentPaste, MdOutlineDescription, MdOutlineHome, MdOutlineAccountCircle } from "react-icons/md"
 
+/**
+ * Navbar component
+ * @param {Boolean} isBasic - Whether to show the basic landing page navbar or the dashboard navbar
+ * @param {Boolean} isAuth - Whether the user is authenticated or not
+ * @returns {JSX.Element} Navbar component
+ * @example <Navbar isBasic={true} isAuth={true}/>
+ */
 export default function Navbar(props){
   var isBasic = props.isBasic;
   var isAuth = props.isAuth;

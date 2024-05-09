@@ -15,7 +15,11 @@ import Section12 from "./Section12.jsx";
 import Section13 from "./Section13.jsx";
 import Section14 from "./Section14.jsx";
 
-
+/**
+ * Compleate PDF file for the 4-H resume
+ * @param {Object} resumeData - resume data for all 14 sections
+ * @returns {JSX.Element}
+ */
 export default function PDFFile(resumeData) {
   var data = resumeData.resumeData;
   return (
