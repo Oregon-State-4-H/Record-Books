@@ -154,7 +154,7 @@ function FormCard({ title, onClose, options }) {
   )
 }
 
-export default function Overview() {
+export default function Overview({ searchParams: {project} }) {
     const [showModal, setShowModal] = useState(false);
     const [showEditInfoModal, setShowEditInfoModal] = useState(false);
     const animalData = demoData.animals;
@@ -176,20 +176,30 @@ export default function Overview() {
             
             <div className={classes.cardContainer}>
                 <div className={classes.cardGroup}>
+                    {/* ANIMAL INVENTORY AND PURCHASES */}
                     <Card title = "Animal Inventory and Purchases" />
                     
-                    <Link href={{pathname: "overview/supplyInventory"}}>
+                    {/* EQUIPMENT, SUPPLIES, AND FEED INVENTORY */}
+                    <Link href={{pathname: "animal/overview/supplyInventory"}}>
                         <Card title = "Equipment, Supplies, and Feed Inventory" />
                     </Link>
 
+                    {/* OTHER EXPENSES */}
                     <Card title = "Other Expenses" />
 
+                    {/* FEED RECORD */}
                     <div onClick={() => setShowModal(true)}>
                       <Card title = "Feed Record" />
                     </div>
+
                     {showModal && (
                       <FormCard title="Select an Animal" onClose={() => setShowModal(false)} options={animalData} />
                     )}
+
+                    {/* FEED INVENTORY */}
+                    <Link href={{pathname: "overview/feedInventory", query: {project: project}}}>
+                        <Card title = "Feed Inventory" />
+                    </Link>
                 </div>
             </div>
         </main>

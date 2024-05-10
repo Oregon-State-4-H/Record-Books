@@ -41,7 +41,7 @@ export default function Projects() {
             return (
               <Link href={{pathname: "projects/" + project.type + "/overview", query: {project: project._id}}} key={index} className={classes.card}>
                 <div className={classes.cardHeader}>
-                  <div className={classes.cardTitle}>{project.name}</div>
+                  <div className={classes.cardTitle}>{project.projectName}</div>
                   <div className={classes.cardDescription}>{"(" + project.year + ")"}</div>
                 </div>
                 <div className={classes.cardDescription}>{project.description}</div>
