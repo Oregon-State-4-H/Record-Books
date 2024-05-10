@@ -183,6 +183,33 @@ export async function addFeed(prevState, formData) {
 }
 
 /**
+ * @async Add a new feed document to the database
+ * @param {object} prevState Previous form state
+ * @param {object} formData Form data
+ * @returns {object} New feed document object
+ * @see {@link Feed} for object structure
+ */
+export async function addFeedNoForm(feedName, projectId) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    
+    try {
+        const db = await connectDB();
+        const feed = new Feed({
+            name: feedName,
+            projectId: ObjectId.createFromHexString(projectId),
+            uid: userID
+        });
+
+        await feed.save();
+        return feed;
+    } catch (error) {
+        console.error("addFeed:", error);
+        Error(error);
+    }
+}
+
+/**
  * @async Update a feed document in the database
  * @param {object} prevState Previous form state
  * @param {object} formData Form data

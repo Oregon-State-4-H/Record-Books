@@ -1,0 +1,120 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+import styles from './styles.module.css';
+import { useFormStatus } from "react-dom";
+import { OverlayModel } from './OverlayModel';
+
+/**
+ * FormInput component
+ * @param {string} type - The input type
+ * @param {string} label - The input label
+ * @param {string} name - The input name
+ * @param {string} placeholder - The input placeholder
+ * @param {function} onChangeHandler - The function to handle input changes
+ * @param {array} options - (Optional) The select input options
+ * @param {string} defaultValue - (Optional) The default value for the input
+ * @param {boolean} required - (Optional) The input required status. Default is true.
+ * @returns {JSX.Element} A form input element
+ */
+export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required }) {
+  if (type == "select") {
+    if (required != undefined && required == false) {
+      return (
+        <label className={styles.inputLabel}>{label}
+          <select className={styles.inputDropdown} name={name} onChange={onChangeHandler} defaultValue={defaultValue}>
+            {options?.map((option, index) => (
+              <option key={index}>{option}</option>
+            ))}
+          </select>
+        </label>
+      )
+    } else {
+      return (
+        <label className={styles.inputLabel}>{label}
+          <select className={styles.inputDropdown} name={name} onChange={onChangeHandler} defaultValue={defaultValue} required>
+            {options?.map((option, index) => (
+              <option key={index}>{option}</option>
+            ))}
+          </select>
+        </label>
+      )
+    }
+  } else {
+    if (required != undefined && required == false) {
+      return (
+        <label className={styles.inputLabel}>{label}
+          <input className={styles.inputField}
+            type={type}
+            name={name}
+            onChange={onChangeHandler}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+          />
+        </label>
+      )
+    } else {
+      return (
+        <label className={styles.inputLabel}>{label}
+          <input className={styles.inputField}
+            type={type}
+            name={name}
+            onChange={onChangeHandler}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            required
+          />
+        </label>
+      )
+    }
+  }
+}
+
+/**
+ * StatusButton component
+ * @param {function} handleSubmit - The function to handle form submission
+ * @returns {JSX.Element} A button element
+ */
+export function StatusButton({postAction}){
+  const { pending } = useFormStatus();
+  const [submitStarted, setSubmitStarted] = useState(false);
+
+  useEffect(() => {
+    if (pending) {
+      setSubmitStarted(true);
+    } else if (submitStarted && !pending)
+      postAction();
+  }, [pending]);
+
+  return (
+    <button type="submit" className={styles.formBtn} disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </button>
+  )
+}
+
+/**
+ * An Form Model with overlay
+ * @param {object} inputs - The form input fields
+ * @param {function} hideForm - The function to hide the form
+ * @param {function} inputChangeHandler - The function to handle input changes
+ * @param {function} formAction - The function to handle form submission
+ * @param {function} postSubmitAction - The function to handle what happens after form submission
+ * @returns {JSX.Element} A model element
+ */
+export default function FormModel({ title, inputs, hideForm, inputChangeHandler, formAction, postSubmitAction}) {
+  return (
+    <OverlayModel title={title} handleClose={hideForm} children={
+      <form className={styles.form} action={formAction}>
+        <div className={styles.formInputs}>
+          {inputs?.map((input, index) => {
+            return <FormInput key={index} {...input} onChangeHandler={inputChangeHandler} />
+          })}
+        </div>
+        <div className={styles.formBtns}>
+          <StatusButton postAction={postSubmitAction} />
+        </div>
+      </form>
+    }/>
+  )
+}

@@ -35,6 +35,7 @@ import Section11 from '@/app/components/reports/resume/Section11';
 import Section12 from '@/app/components/reports/resume/Section12';
 import Section13 from '@/app/components/reports/resume/Section13';
 import Section14 from '@/app/components/reports/resume/Section14';
+import FormModel from '@/app/components/models/DynamicFormModel';
 
 function TableCard({ title, data, headers, handleClick, dataLoaded }) {
 
@@ -106,57 +107,57 @@ function TableCard({ title, data, headers, handleClick, dataLoaded }) {
     )
 }
 
-function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue }) {
+// function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue }) {
 
-  if (type == "select" && options != undefined) {
-    return (
-      <label className={styles.label}>
-        {label}
-        <select className={styles.dropdownBtn}
-          name={name}
-          onChange={onChangeHandler}
-          required
-        >
-          {options.map((option, index) => (
-            <option key={index}>{option}</option>
-          ))}
-        </select>
-      </label>
-    )
-  } else {
-    return (
-      <label className={styles.label}>
-        {label}
-        <input className={styles.textInputBox}
-          type={type}
-          name={name}
-          onChange={onChangeHandler}
-          placeholder={placeholder}
-          required
-        />
-      </label>
-    )
-  }
-}
+//   if (type == "select" && options != undefined) {
+//     return (
+//       <label className={styles.label}>
+//         {label}
+//         <select className={styles.dropdownBtn}
+//           name={name}
+//           onChange={onChangeHandler}
+//           required
+//         >
+//           {options.map((option, index) => (
+//             <option key={index}>{option}</option>
+//           ))}
+//         </select>
+//       </label>
+//     )
+//   } else {
+//     return (
+//       <label className={styles.label}>
+//         {label}
+//         <input className={styles.textInputBox}
+//           type={type}
+//           name={name}
+//           onChange={onChangeHandler}
+//           placeholder={placeholder}
+//           required
+//         />
+//       </label>
+//     )
+//   }
+// }
 
-function StatusButton({handleSubmit}){
-  const { pending } = useFormStatus();
-  const [submitStarted, setSubmitStarted] = useState(false);
+// function StatusButton({handleSubmit}){
+//   const { pending } = useFormStatus();
+//   const [submitStarted, setSubmitStarted] = useState(false);
 
-  useEffect(() => {
-    if (pending) {
-      setSubmitStarted(true);
-    }
-    else if (submitStarted && !pending)
-      handleSubmit();
-  }, [pending]);
+//   useEffect(() => {
+//     if (pending) {
+//       setSubmitStarted(true);
+//     }
+//     else if (submitStarted && !pending)
+//       handleSubmit();
+//   }, [pending]);
 
-  return (
-    <button type="submit" className={styles.submitBtn} disabled={pending}>
-      {pending ? "Submitting..." : "Submit"}
-    </button>
-  )
-}
+//   return (
+//     <button type="submit" className={styles.submitBtn} disabled={pending}>
+//       {pending ? "Submitting..." : "Submit"}
+//     </button>
+//   )
+// }
 
 const sectionComponents = {
   '1': Section1,
@@ -368,21 +369,8 @@ export default function Section({ searchParams: {section} }) {
       {isLoading && <div className={styles.loaderContainer}>
         <CloverLoader />
       </div>}
-      {showFormCard && (
-        <div className={styles.overlay}>
-          <form className={styles.formCard} action={formAction}>
-            <button type="cancel" id={styles.closeBtn} onClick={hideForm}>X</button>
-            <div className={styles.children}>
-              {inputs.map((input, index) => {
-                return (
-                  <FormInput key={index} {...input} onChangeHandler={handleChange} />
-                )
-              })}
-            </div>
-            <StatusButton handleSubmit={handleFormState} />
-          </form>
-        </div>
-      )}
+      
+      {showFormCard && ( <FormModel title={"Log new section " + section + " entry"} hideForm={hideForm} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormState} inputs={inputs} />)}
     </main>
   )
 }
