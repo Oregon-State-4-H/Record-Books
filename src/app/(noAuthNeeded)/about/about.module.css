@@ -1,3 +1,60 @@
 .reducedPaddingMain {
     padding: 0px;
 }
+
+.sectionHeading {
+    color: var(--beaver-orange);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.memberCardContainer {
+    display: flex;
+    flex-direction: grid;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.memberCard {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid var(--beaver-orange);
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    width: 350px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--txt-primary);
+}
+
+.memberCard img {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.memberName {
+    color: var(--beaver-orange);
+    font-size: 1.5rem;
+}
+
+.cardSection {
+    margin-top: 15px;
+}
+
+/* member link should be at the bottom of the container and pushed
+all the way to the right */
+.memberLink {
+    color: var(--beaver-orange);
+    align-self: flex-end;
+    margin-top: auto;
+}
