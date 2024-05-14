@@ -75,7 +75,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
  * @param {function} handleSubmit - The function to handle form submission
  * @returns {JSX.Element} A button element
  */
-export function StatusButton({postAction}){
+export function StatusButton({postAction, buttonText, pendingText}){
   const { pending } = useFormStatus();
   const [submitStarted, setSubmitStarted] = useState(false);
 
@@ -88,7 +88,7 @@ export function StatusButton({postAction}){
 
   return (
     <button type="submit" className={styles.formBtn} disabled={pending}>
-      {pending ? "Submitting..." : "Submit"}
+      {pending ? (pendingText ? pendingText: "Submitting..." ) : (buttonText ? buttonText : "Submit")}
     </button>
   )
 }
@@ -100,9 +100,11 @@ export function StatusButton({postAction}){
  * @param {function} inputChangeHandler - The function to handle input changes
  * @param {function} formAction - The function to handle form submission
  * @param {function} postSubmitAction - The function to handle what happens after form submission
+ * @param {string} submitButtonText - The text to display on the submit button
+ * @param {string} submitPendingText - The text to display on the submit button when submit action is pending
  * @returns {JSX.Element} A model element
  */
-export default function FormModel({ title, inputs, hideForm, inputChangeHandler, formAction, postSubmitAction}) {
+export default function FormModel({ title, inputs, hideForm, inputChangeHandler, formAction, postSubmitAction, submitButtonText, submitPendingText}) {
   return (
     <OverlayModel title={title} handleClose={hideForm} children={
       <form className={styles.form} action={formAction}>
@@ -112,7 +114,7 @@ export default function FormModel({ title, inputs, hideForm, inputChangeHandler,
           })}
         </div>
         <div className={styles.formBtns}>
-          <StatusButton postAction={postSubmitAction} />
+          <StatusButton postAction={postSubmitAction} buttonText={submitButtonText} pendingText={submitPendingText}/>
         </div>
       </form>
     }/>
