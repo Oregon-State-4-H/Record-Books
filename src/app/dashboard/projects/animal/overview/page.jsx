@@ -23,6 +23,7 @@ const ProjectInfo = {
   year: null
 }
 
+/*
 function FormInputLabel(props) {
   var label = props.label;
   var formItem = props.formItem;
@@ -34,7 +35,7 @@ function FormInputLabel(props) {
     </label>
   );
 }
-/*
+
 function EditProjectForm({ onClose }) {
   const { project, error, isLoading } = useUser();
 
@@ -165,9 +166,8 @@ export default function Overview({ searchParams: {project} }) {
     const [projectData, setProjectData] = useState(undefined);
     const [animalData, setAnimalData] = useState(undefined);
 
-    var formBlueprint = {}
-    const [formInfo, setFormInfo] = useState(formBlueprint);
-    const [formState, formAction] = useFormState(updateProject, formBlueprint);
+    const [formInfo, setFormInfo] = useState(ProjectInfo);
+    const [formState, formAction] = useFormState(updateProject, ProjectInfo);
 
     const handleChange = (e) => {
       setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
@@ -182,8 +182,6 @@ export default function Overview({ searchParams: {project} }) {
         setAnimalData(data);
       });
     }, []);
-
-
 
     return (
         <main>
