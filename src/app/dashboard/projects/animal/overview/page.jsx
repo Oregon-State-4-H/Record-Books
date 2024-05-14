@@ -11,6 +11,8 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useFormState } from "react-dom";
 import { getProject, updateProject } from "@/app/_db/srvactions/project";
 import { CiEdit } from "react-icons/ci";
+import { getAnimalDocs } from '@/app/_db/srvactions/projects/animalProject';
+import FormModel from '@/app/components/models/DynamicFormModel';
 
 const ProjectInfo = {
   _id: null,
@@ -32,7 +34,7 @@ function FormInputLabel(props) {
     </label>
   );
 }
-
+/*
 function EditProjectForm({ onClose }) {
   const { project, error, isLoading } = useUser();
 
@@ -46,6 +48,7 @@ function EditProjectForm({ onClose }) {
       getProject(project.sub.substring(6)).then((data) => {
         setProjectInfo(data);
         projectDoc = data;
+        console.log("Project data:", data);
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -114,6 +117,7 @@ function EditProjectForm({ onClose }) {
     </div>
   );
 }
+*/
 
 function Card(props) {
     var title = props.title;
@@ -157,7 +161,29 @@ function FormCard({ title, onClose, options }) {
 export default function Overview({ searchParams: {project} }) {
     const [showModal, setShowModal] = useState(false);
     const [showEditInfoModal, setShowEditInfoModal] = useState(false);
-    const animalData = demoData.animals;
+    // const animalData = demoData.animals;
+    const [projectData, setProjectData] = useState(undefined);
+    const [animalData, setAnimalData] = useState(undefined);
+
+    var formBlueprint = {}
+    const [formInfo, setFormInfo] = useState(formBlueprint);
+    const [formState, formAction] = useFormState(updateProject, formBlueprint);
+
+    const handleChange = (e) => {
+      setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+    }
+
+    useEffect(() => {
+      getProject(project).then((data) => {
+        setProjectData(data);
+      });
+
+      getAnimalDocs(project).then((data) => {
+        setAnimalData(data);
+      });
+    }, []);
+
+
 
     return (
         <main>
@@ -170,7 +196,18 @@ export default function Overview({ searchParams: {project} }) {
                 <span id={classes.editInfo}>Edit Project Info</span>
               </button>
               {showEditInfoModal && (
-                <EditProjectForm onClose={() => setShowEditInfoModal(false)}/>
+                // <EditProjectForm onClose={() => setShowEditInfoModal(false)}/>
+                <FormModel title="Edit Project Info" hideForm={() => setShowEditInfoModal(false)} imputChangeHandler={handleChange} 
+                  formAction={formAction} postSubmitAction={() => setShowEditInfoModal(false)} submitButtonText="Update Project Info" submitPendingText="Updating..."
+                  inputs={[
+                    {type: "hidden", name: "_id", defaultValue: projectData?._id},
+                    {type: "hidden", name: "type", defaultValue: projectData?.type},
+                    {type: "text", name: "projectName", label: "Project Name", placeholder: "Project Name", defaultValue: projectData?.projectName},
+                    {type: "text", name: "description", label: "Description", placeholder: "Description", defaultValue: projectData?.description},
+                    {type: "date", name: "startDate", label: "Start Date", defaultValue: projectData?.startDate},
+                    {type: "date", name: "endDate", label: "Start Date", defaultValue: projectData?.endDate},
+                  ]
+                }/>
               )}
             </div>
             
