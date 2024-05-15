@@ -2,6 +2,34 @@ import ActionBar from '@/app/components/ActionBar'
 import styles from './about.module.css'
 import Link from 'next/link'
 
+function BioCard({name, role, bio, linkedin, image}) {
+  return (
+    <div className={styles.memberCard}>
+      <img src={image} alt={ name + " Profile Picture"} />
+      <h3 className={styles.memberName}>{name}</h3>
+      <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Roles</p>
+      <p className={styles.memberRole}>{role}</p>
+
+      <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Bio</p>
+      <p className={styles.memberRole}>{bio}</p>
+      <Link href={linkedin} className={styles.memberLink} rel="noopener noreferrer" target="_blank">{"View on LinkedIn ->"}</Link>
+    </div>
+  )
+}
+
+function QuoteCard({quote, author}) {
+  return (
+    <div className={styles.quoteCard}>
+      <div className={styles.quote}>
+        <p className={styles.quoteOpen}>" </p>
+        <p className={styles.quoteText}>{quote}</p>
+        <p className={styles.quoteClose}> "</p>
+      </div>
+      <p className={styles.quoteAuthor}>- {author}</p>
+    </div>
+  )
+}
+
 export default function About() {
   return (
     <main className={styles.reducedPaddingMain}>
@@ -18,38 +46,26 @@ export default function About() {
       </p>
 
       <div className={styles.memberCardContainer}>
-        <div className={styles.memberCard}>
-          <img src="/images/placeholder.png" alt="Placeholder" />
-          <h3 className={styles.memberName}>Byron Ojua-Nice</h3>
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Roles</p>
-          <p className={styles.memberRole}>Project Manager, Documentation, Swiss Army Knife</p>
+        <BioCard name="Byron Ojua-Nice" role="Project Manager, Documentation, Swiss Army Knife" 
+          linkedin="https://www.linkedin.com/in/byron-ojua-nice/" image="/assets/photos/byron_profile.jpeg"
+          bio="Placeholder bio"
+        />
 
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Bio</p>
-          <p className={styles.memberRole}>Placeholder bio</p>
-          <Link href="https://www.linkedin.com/in/byron-ojua-nice/" className={styles.memberLink} rel="noopener noreferrer" target="_blank">{"View Byron on LinkedIn ->"}</Link>
-        </div>
+        <BioCard name="Michelle Nguyen" role="UI Design, Frontend Developer" 
+          linkedin="https://www.linkedin.com/in/michellehuyen/" image="/assets/photos/michelle_profile.jpeg"
+          bio="Placeholder bio"
+        />
 
-        <div className={styles.memberCard}>
-          <img src="/assets/photos/michelle_profile.jpeg" alt="Michelle Profile Picture" />
-          <h3 className={styles.memberName}>Michelle Nguyen</h3>
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Roles</p>
-          <p className={styles.memberRole}>UI Design, Frontend Developer</p>
+        <BioCard name="Javier Garcia Ramirez" role="Backend Developer, Database Manager" 
+          linkedin="https://www.linkedin.com/in/javi-g/" image="/assets/photos/javier_profile.jpeg"
+          bio="Placeholder bio"
+        />
+      </div>
 
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Bio</p>
-          <p className={styles.memberRole}>Placeholder bio</p>
-          <Link href="https://www.linkedin.com/in/michellehuyen/" className={styles.memberLink} rel="noopener noreferrer" target="_blank">{"View Michelle on LinkedIn ->"}</Link>
-        </div>
-
-        <div className={styles.memberCard}>
-        <img src="/assets/photos/javier_profile.jpeg" alt="Javier Profile Picture" />
-          <h3 className={styles.memberName}>Javier Garcia Ramirez</h3>
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Roles</p>
-          <p className={styles.memberRole}>Backend Developer, Database Manager</p>
-
-          <p className={styles.cardSection} style={{fontWeight: 'bold'}}>Bio</p>
-          <p className={styles.memberRole}>Placeholder bio</p>
-          <Link href="https://www.linkedin.com/in/javi-g/" className={styles.memberLink} rel="noopener noreferrer" target="_blank">{"View Javier on LinkedIn ->"}</Link>
-        </div>
+      <div className={styles.quoteCardContainer}>
+        <QuoteCard quote="Placeholder quote" author="Byron Ojua-Nice" />
+        <QuoteCard quote="Placeholder quote" author="Michelle Nguyen" />
+        <QuoteCard quote="Placeholder quote" author="Javier Garcia Ramirez" />
       </div>
     </main>
   )

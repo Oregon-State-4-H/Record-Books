@@ -119,18 +119,17 @@ export async function updateProject(prevState, formData) {
         const db = await connectDB();
         const project = await Project.findOne({ _id: formData.get("_id"), uid: userID });
 
-        // project.year = formData.get("year");
-        // project.projectName = formData.get("projectName");
-        // project.description = formData.get("description");
-        // project.type = formData.get("type");
-        // project.startDate = formData.get("startDate");
-        // project.endDate = formData.get("endDate");
+        project.year = formData.get("year");
+        project.projectName = formData.get("projectName");
+        project.description = formData.get("description");
+        project.type = formData.get("type");
+        project.startDate = formData.get("startDate");
+        project.endDate = formData.get("endDate");
 
         await project.save();
 
         return JSON.parse(JSON.stringify(project));
     } catch (error) {
-        console.error("updateProject:", error);
         Error(error);
     }
 }

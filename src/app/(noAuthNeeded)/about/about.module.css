@@ -58,3 +58,61 @@ all the way to the right */
     align-self: flex-end;
     margin-top: auto;
 }
+
+.quoteCardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.quoteCard {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid var(--beaver-orange);
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--txt-primary);
+}
+
+.quote {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.quoteText {
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+.quoteAuthor {
+    font-size: 1.25rem;
+    /* font-weight: bold; */
+    color: var(--beaver-orange);
+    align-self: flex-end;
+    margin-right: 50px;
+}
+
+.quoteOpen {
+    font-size: 4rem;
+    font-style: italic;
+    color: var(--beaver-orange);
+    margin-right: 10px;
+}
+
+.quoteClose {
+    font-size: 4rem;
+    font-style: italic;
+    color: var(--beaver-orange);
+    margin-left: 10px;
+}

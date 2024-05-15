@@ -23,103 +23,6 @@ const ProjectInfo = {
   year: null
 }
 
-/*
-function FormInputLabel(props) {
-  var label = props.label;
-  var formItem = props.formItem;
-
-  return (
-    <label className={classes.label}>
-      {label}
-      {formItem}
-    </label>
-  );
-}
-
-function EditProjectForm({ onClose }) {
-  const { project, error, isLoading } = useUser();
-
-  const [formState, formAction] = useFormState(updateProject, ProjectInfo);
-
-  const [projectInfo, setProjectInfo] = useState(ProjectInfo);
-  var projectDoc = ProjectInfo;
-
-  useEffect(() => {
-    try {
-      getProject(project.sub.substring(6)).then((data) => {
-        setProjectInfo(data);
-        projectDoc = data;
-        console.log("Project data:", data);
-      });
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }, []);
-
-  const handleChange = (e) => {
-    setProjectInfo({ ...projectInfo, [e.target.name]: e.target.value });
-  }
-
-  return (
-    <div className={classes.overlay}>
-      <form className={classes.formCard} id={classes.editInfoFormCard} action={formAction}>
-        <div className={classes.formHeader}>
-          <span className={classes.formTitle}>Edit Project Info</span>
-          <button className={classes.closeBtn} onClick={onClose}>X</button>
-        </div>
-
-        <FormInputLabel label="Project Name"
-          formItem = { <input className={classes.formInput}
-            type="text"
-            name="name"
-            value={projectInfo?.name || ""}
-            onChange={handleChange}
-            placeholder="Project Name"/>
-          }/>
-
-        <FormInputLabel label="Description"
-          formItem = { <input className={classes.formInput}
-            type="text"
-            name="description"
-            value={projectInfo?.description || ""}
-            onChange={handleChange}
-            placeholder="Description"/>
-          } />
-
-        <FormInputLabel label="Short Description"
-          formItem = { <input className={classes.formInput}
-            type="text"
-            name="short_description"
-            value={projectInfo?.short_description || ""}
-            onChange={handleChange}
-            placeholder="Short Description"/>
-          } />
-
-        <FormInputLabel label="Year"
-          formItem = { <input className={classes.formInput}
-            type="text"
-            name="year"
-            value={projectInfo?.year || ""}
-            onChange={handleChange}
-            placeholder="Year"/>
-          } />
-
-        <div className={classes.btns}>
-          <button type="submit" className={classes.submitBtn} id={classes.updateInfoSubmitBtn}>
-            Update Project Info
-          </button>
-          <Link href={{ pathname: "/dashboard/account/" }}>
-            <button type="submit" className={classes.submitBtn} id={classes.cancelInfoSubmitBtn}>
-              Cancel
-            </button>
-          </Link>
-        </div>
-      </form>
-    </div>
-  );
-}
-*/
-
 function Card(props) {
     var title = props.title;
     
@@ -129,7 +32,7 @@ function Card(props) {
 }
 
 function FormCard({ title, onClose, options }) {
-  const [data, setData] = useState(options[0]._id);
+  const [data, setData] = useState(options[0]?._id);
 
   const onOptionChangeHandler = (event) => {
     setData(event.target.value);
@@ -159,29 +62,50 @@ function FormCard({ title, onClose, options }) {
   )
 }
 
+const formatDate = (date) => {
+  if (!date) return '';
+  const d = new Date(date);
+  const month = ('0' + (d.getMonth() + 1)).slice(-2);
+  const day = ('0' + d.getDate()).slice(-2);
+  return `${d.getFullYear()}-${month}-${day}`;
+};
+
+
 export default function Overview({ searchParams: {project} }) {
     const [showModal, setShowModal] = useState(false);
     const [showEditInfoModal, setShowEditInfoModal] = useState(false);
-    // const animalData = demoData.animals;
     const [projectData, setProjectData] = useState(undefined);
     const [animalData, setAnimalData] = useState(undefined);
+    const [invalidateData, setInvalidateData] = useState(false);
+
+    
 
     const [formInfo, setFormInfo] = useState(ProjectInfo);
     const [formState, formAction] = useFormState(updateProject, ProjectInfo);
+    
 
     const handleChange = (e) => {
       setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
     }
 
+    const handleFormSubmit = () => {
+      setShowEditInfoModal(false);
+      setInvalidateData(true);
+    }
+
     useEffect(() => {
       getProject(project).then((data) => {
         setProjectData(data);
+        setInvalidateData(false);
       });
 
       getAnimalDocs(project).then((data) => {
         setAnimalData(data);
+        console.log(data);
       });
-    }, []);
+    }, [invalidateData]);
+
+    
 
     return (
         <main>
@@ -194,16 +118,16 @@ export default function Overview({ searchParams: {project} }) {
                 <span id={classes.editInfo}>Edit Project Info</span>
               </button>
               {showEditInfoModal && (
-                // <EditProjectForm onClose={() => setShowEditInfoModal(false)}/>
                 <FormModel title="Edit Project Info" hideForm={() => setShowEditInfoModal(false)} imputChangeHandler={handleChange} 
-                  formAction={formAction} postSubmitAction={() => setShowEditInfoModal(false)} submitButtonText="Update Project Info" submitPendingText="Updating..."
+                  formAction={formAction} postSubmitAction={handleFormSubmit} submitButtonText="Update Project Info" submitPendingText="Updating..."
                   inputs={[
                     {type: "hidden", name: "_id", defaultValue: projectData?._id},
                     {type: "hidden", name: "type", defaultValue: projectData?.type},
+                    {type: "text", name: "year", label: "Year", placeholder: "Year", defaultValue: projectData?.year},
                     {type: "text", name: "projectName", label: "Project Name", placeholder: "Project Name", defaultValue: projectData?.projectName},
                     {type: "text", name: "description", label: "Description", placeholder: "Description", defaultValue: projectData?.description},
-                    {type: "date", name: "startDate", label: "Start Date", defaultValue: projectData?.startDate},
-                    {type: "date", name: "endDate", label: "Start Date", defaultValue: projectData?.endDate},
+                    {type: "date", name: "startDate", label: "Start Date", defaultValue: formatDate(projectData?.startDate)},
+                    {type: "date", name: "endDate", label: "End Date", defaultValue: formatDate(projectData?.endDate)},
                   ]
                 }/>
               )}
@@ -215,12 +139,14 @@ export default function Overview({ searchParams: {project} }) {
                     <Card title = "Animal Inventory and Purchases" />
                     
                     {/* EQUIPMENT, SUPPLIES, AND FEED INVENTORY */}
-                    <Link href={{pathname: "animal/overview/supplyInventory"}}>
+                    <Link href={{pathname: "overview/supplyInventory"}}>
                         <Card title = "Equipment, Supplies, and Feed Inventory" />
                     </Link>
 
                     {/* OTHER EXPENSES */}
-                    <Card title = "Other Expenses" />
+                    <Link href={{pathname: "overview/expenses", query: {project: project}}}>
+                      <Card title = "Other Expenses" />
+                    </Link>
 
                     {/* FEED RECORD */}
                     <div onClick={() => setShowModal(true)}>

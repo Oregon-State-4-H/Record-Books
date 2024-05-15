@@ -77,7 +77,23 @@ export const dailyFeedModel = mongoose.Schema({
     }
 });
 
+export const expensesModel = mongoose.Schema({
+    date: Date,
+    items: String,
+    quantity: Number,
+    cost: Number,
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    },
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "projects"
+    }]
+});
+
 export const Animal = mongoose.models.animals || mongoose.model("animals", animalModel);
 export const Feed = mongoose.models.feed || mongoose.model("feed", feedModel);
 export const DailyFeed = mongoose.models.dailyFeed || mongoose.model("dailyFeed", dailyFeedModel);
 export const FeedPurchase = mongoose.models.feedPurchase || mongoose.model("feedPurchase", feedPurchaseModel);
+export const Expenses = mongoose.models.expenses || mongoose.model("expenses", expensesModel);

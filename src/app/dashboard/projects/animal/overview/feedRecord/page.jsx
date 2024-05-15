@@ -2,17 +2,37 @@
 
 import classes from './styles.module.css';
 import { useState, useEffect } from 'react';
-import demoData from '@/app/demoData.json';
-import { IoMdAdd } from "react-icons/io";
-import ActionBar from '@/app/components/ActionBar';
+import { useFormState, useFormStatus } from 'react-dom';
 
-function TableCard({ id }) {
-  const feed = demoData.feed;
+import ActionBar from '@/app/components/ActionBar';
+import FormModel from '@/app/components/models/DynamicFormModel';
+import CloverLoader from '@/app/components/CloverLoader';
+
+import { IoMdAdd } from "react-icons/io";
+
+const formBlueprint = {
+  feedType: null,
+  amountFed: null,
+}
+
+function TableCard({ id, data, dataLoaded }) {
+  // const feed = demoData.feed;
   const [feedData, setFeedData] = useState([]);
+
+  if ((!data || data.length == 0) && dataLoaded) {
+    return (
+      <>
+        <div className={classes.infoSection}>
+          <h1 className={classes.infoSectionHeader}>Hmm... your log is empty!</h1>
+          <p>{"Let's fix that! Add your first entry above."}</p>
+        </div>
+      </>
+    )
+  }
 
   useEffect(() => {
     if (id) {
-      const feedData = feed.filter((feed) => feed.animalID === id);
+      const feedData = feedData.filter((feed) => feed.animalID === id);
       if (feedData) {
         setFeedData(feedData);
       }
@@ -88,9 +108,24 @@ function FormCard({ title, onClose, options }) {
 }
 
 export default function FeedRecord({ searchParams: {id} }) {
-  const animals = demoData.animals;
   const [animalData, setAnimalData] = useState(undefined);
-  const [showModal, setShowModal] = useState(false);
+  const [showFormCard, setShowFormCard] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [formInfo, setFormInfo] = useState(formBlueprint);
+
+  const [formState, formAction] = useFormState(formBlueprint);
+  // const [formState, formAction] = useFormState(addFeed, formBlueprint);
+  const [invalidateData, setInvalidateData] = useState(false);
+
+  const handleChange = (e) => {
+      setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+  }
+
+  const handleFormSubmit = () => {
+      setShowFormCard(false);
+      setInvalidateData(true);
+  }
 
   useEffect(() => {
     if (id) {
@@ -107,17 +142,27 @@ export default function FeedRecord({ searchParams: {id} }) {
       
       <div className={classes.sectionHeader}>
         <span className={classes.sectionTitle}>Daily Feed Log</span>
-        <button className={classes.addInfoContainer} onClick={() => setShowModal(true)}>
+        <button className={classes.addInfoContainer} onClick={() => setShowFormCard(true)}>
           <IoMdAdd />
           <span id={classes.addInfo}>Add Feeding Data</span>
         </button>
       </div>
 
-      {showModal && (
-        <FormCard title="Add Feed Record" onClose={() => setShowModal(false)} options={animals} />
+      {showFormCard && (
+        // <FormCard title="Add Feed Record" onClose={() => setShowFormCard(false)} options={animals} />
+        <FormModel title="Add Feed Record" hideForm={() => setShowFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
+          [
+            {type: "select", label: "Feed Type", name:"feedType", placeholder: "Ex. hay"},
+            {type: "number", label: "Amount Fed", name: "amountFed", placeholder: "2"},
+            {type: "text", label: "Unit", name: "unit", placeholder: "lbs"},
+          ]
+        } />
       )}
 
-      <TableCard id={id} />
+      <TableCard id={id} data={animalData} dataLoaded={!isLoading} />
+      {isLoading && <div className={classes.loaderContainer}>
+        <CloverLoader />
+      </div>}
     </>
   )
 }

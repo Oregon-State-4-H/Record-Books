@@ -7,7 +7,7 @@ import { IoMdAdd } from "react-icons/io";
 import { FaDownload } from "react-icons/fa";
 import { MdOutlinePreview } from "react-icons/md";
 import sectionOutline from "./sectionOutline.json"
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { 
   addSection1, getSection1Docs, addSection2, getSection2Docs,
@@ -106,58 +106,6 @@ function TableCard({ title, data, headers, handleClick, dataLoaded }) {
       </>
     )
 }
-
-// function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue }) {
-
-//   if (type == "select" && options != undefined) {
-//     return (
-//       <label className={styles.label}>
-//         {label}
-//         <select className={styles.dropdownBtn}
-//           name={name}
-//           onChange={onChangeHandler}
-//           required
-//         >
-//           {options.map((option, index) => (
-//             <option key={index}>{option}</option>
-//           ))}
-//         </select>
-//       </label>
-//     )
-//   } else {
-//     return (
-//       <label className={styles.label}>
-//         {label}
-//         <input className={styles.textInputBox}
-//           type={type}
-//           name={name}
-//           onChange={onChangeHandler}
-//           placeholder={placeholder}
-//           required
-//         />
-//       </label>
-//     )
-//   }
-// }
-
-// function StatusButton({handleSubmit}){
-//   const { pending } = useFormStatus();
-//   const [submitStarted, setSubmitStarted] = useState(false);
-
-//   useEffect(() => {
-//     if (pending) {
-//       setSubmitStarted(true);
-//     }
-//     else if (submitStarted && !pending)
-//       handleSubmit();
-//   }, [pending]);
-
-//   return (
-//     <button type="submit" className={styles.submitBtn} disabled={pending}>
-//       {pending ? "Submitting..." : "Submit"}
-//     </button>
-//   )
-// }
 
 const sectionComponents = {
   '1': Section1,

@@ -39,7 +39,7 @@ export default function Projects() {
       <div className={classes.cardContainer}>
         { projects?.map((project, index) => {
             return (
-              <Link href={{pathname: "projects/" + project.type + "/overview", query: {project: project._id}}} key={index} className={classes.card}>
+              <Link href={{pathname: project.type + "/overview", query: {project: project._id}}} key={index} className={classes.card}>
                 <div className={classes.cardHeader}>
                   <div className={classes.cardTitle}>{project.projectName}</div>
                   <div className={classes.cardDescription}>{"(" + project.year + ")"}</div>

@@ -1,6 +1,6 @@
 "use server"
 
-import { Animal, Feed, FeedPurchase, DailyFeed } from "@/app/_db/models/projects/animalProject";
+import { Animal, Feed, FeedPurchase, DailyFeed, Expenses } from "@/app/_db/models/projects/animalProject";
 import connectDB from "@/app/_db/mongodb";
 import { ObjectId } from "mongodb";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -20,7 +20,7 @@ export async function getAnimalDocs(projectId) {
         const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
 
-        const animals = await Animal.find({ projectId: ObjectId.createFromHexString(projectId), uid: userID });
+        const animals = await Animal.find({ projects: { $in: [projectId] }, uid: userID });
         return JSON.parse(JSON.stringify(animals));
     } catch (error) {
         console.error("getAnimals:", error);
@@ -437,6 +437,80 @@ export async function updateDailyFeed(prevState, formData) {
         return dailyFeed;
     } catch (error) {
         console.error("updateDailyFeed:", error);
+        Error(error);
+    }
+}
+
+
+/* ================== EXPENSES ==================
+* Database CRUD operations for expenses documents.
+*/
+
+/**
+ * @async Gets all expenses documents for a animal project
+ * @returns {object} An array of expenses documents
+ * @see {@link Expenses} for object structure
+ */
+export async function getExpenseDocs(projectId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+
+        const expenses = await Expenses.find({ projectId: projectId, uid: userID });
+        return JSON.parse(JSON.stringify(expenses));
+    } catch (error) {
+        console.error("getExpenses:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Gets a expenses document by its ID
+ * @param {string} expensesId - The ID of the expenses document
+ * @returns {object} A expenses document
+ * @see {@link Expenses} for object structure
+ */
+export async function getExpense(expenseId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+
+        const expense = await Expenses.findOne({ _id: expenseId, uid: userID });
+        return JSON.parse(JSON.stringify(expense));
+    } catch (error) {
+        console.error("getExpense:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Add a new expenses document to the database
+ * @param {object} prevState Previous form state
+ * @param {object} formData Form data
+ * @returns {object} New expenses document object
+ * @see {@link Expenses} for object structure
+ */
+export async function addExpense(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const expense = new Expenses({
+            date: formData.get("date"),
+            items: formData.get("items"),
+            quantity: formData.get("quantity"),
+            cost: formData.get("cost"),
+            projectId: ObjectId.createFromHexString(formData.get("projectId")),
+            uid: userID
+        });
+
+        await expense.save();
+        return expense;
+    } catch (error) {
+        console.error("addExpense:", error);
         Error(error);
     }
 }

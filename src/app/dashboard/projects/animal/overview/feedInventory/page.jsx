@@ -2,11 +2,21 @@
 
 import classes from "./styles.module.css";
 import { useState, useEffect } from "react";
+import { useFormState, useFormStatus } from 'react-dom';
+
+// import demoData from "@/app/demoData.json";
+import ActionBar from "@/app/components/ActionBar";
+import FormModel from '@/app/components/models/DynamicFormModel';
+import { addFeedNoForm, getFeedDocs, getFeedPurchaseDocs, addFeedPurchase } from "@/app/_db/srvactions/projects/animalProject";
+import CloverLoader from '@/app/components/CloverLoader';
+
 import { IoMdAdd } from "react-icons/io";
 
-import demoData from "@/app/demoData.json";
-import ActionBar from "@/app/components/ActionBar";
-import { addFeedNoForm, getFeedDocs, getFeedPurchaseDocs, addFeedPurchase } from "@/app/_db/srvactions/projects/animalProject";
+const formBlueprint = {
+  feedType: null,
+  cost: null,
+  amountPurchased: null,
+}
 
 function TableCard() {
   return (
