@@ -65,7 +65,7 @@ export default function Resume() {
       { showPreview &&
         <div className={styles.overlay} onClick={() => setShowPreview(false)}>
           <div className={styles.previewContainer}>
-            <PDFViewer width="100%" height="100%">
+            <PDFViewer style={{width: '100%', height: '100%'}} >
               <PDFFile resumeData={resumeData} />
             </PDFViewer>
             <button onClick={() => setShowPreview(false)}>Close Preview</button>
