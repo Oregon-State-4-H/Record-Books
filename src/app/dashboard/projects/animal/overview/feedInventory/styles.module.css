@@ -1,136 +1,80 @@
-.sectionHeader {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 15px;
-}
-
 .sectionTitle {
     color: var(--text-primary);
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
-    flex-grow: 1;
-}
-
-#addInfo {
-    margin-left: 5px;
+    padding-top: 10px;
 }
 
 .addInfoContainer {
-    font-size: 18px;
-    padding-top: 10px;
-    position: absolute;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
-    right: 0;
-    left: 0;
-}
-
-.overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
 }
 
-.formCard {
-    background-color: var(--bg-secondary);
-    position: absolute;
-    top: 20%;
+.btnContainer {
+    padding: 0;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.addInfoContainer:hover {
+    background-color: var(--beaver-orange);
+}
+
+.loaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.infoSection {
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
-    padding: 20px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    margin-top: 20px;
     width: 60vw;
+    height: 60vh;
     margin-left: auto;
     margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
 }
 
-.formHeader {
-    width: 55vw;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.formTitle {
-    color: var(--text-primary);
-    font-size: 1.5rem;
+.infoSectionHeader {
+    color: var(--beaver-orange);
+    font-size: 2rem;
     font-weight: bold;
     text-align: center;
-    flex-grow: 1;
+    margin-top: 20px;
 }
 
-.closeBtn {
-    border: none;
-    background-color: transparent;
-    font-size: 18px;
+.table {
+    width: 100%;
+    background-color: var(--bg-secondary);
 }
 
-.dropdownBtn {
-    background: darkgrey;
-    border-radius: 5px;
-    padding: 10px;
-    width: 30vw;
-}
-
-.label {
-    font-size: 18px;
-    display: grid;
-    grid-template-columns: 18ch auto;
-    grid-gap: 1rem;
-    grid-auto-flow: row;
-    align-items: center;
-    padding: 10px 0px;
-}
-
-.feedTypeContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-#addFeed {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    right: 0;
-    left: 0;
-}
-
-#addFeed:hover {
-    color: var(--beaver-orange);
-}
-
-.numInputBox {
-    padding: 10px 0px 10px 5px;
-    border: none;
-    width: 30vw;
-    border-bottom: 1px solid lightgrey;
-    background: none;
-}
-
-.submitBtn {
-    border: 1px solid var(--beaver-orange);
-    background: var(--beaver-orange);
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 10px;
+.table th {
     text-align: center;
-    width: 30vw;
+    background-color: var(--beaver-orange);
+}
+  
+.table th, .table td {
+    border: 1px solid lightgrey;
+    padding: 10px;
+}
+
+.table li {
+    padding: 5px;
 }

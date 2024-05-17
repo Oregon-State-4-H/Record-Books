@@ -18,13 +18,14 @@ import { OverlayModel } from './OverlayModel';
  * @returns {JSX.Element} A form input element
  */
 export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required }) {
+  console.log("options: ", options)
   if (type == "select") {
     if (required != undefined && required == false) {
       return (
         <label className={styles.inputLabel}>{label}
           <select className={styles.inputDropdown} name={name} onChange={onChangeHandler} defaultValue={defaultValue}>
-            {options?.map((option, index) => (
-              <option key={index}>{option}</option>
+            {options.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
             ))}
           </select>
         </label>
@@ -33,8 +34,8 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
       return (
         <label className={styles.inputLabel}>{label}
           <select className={styles.inputDropdown} name={name} onChange={onChangeHandler} defaultValue={defaultValue} required>
-            {options?.map((option, index) => (
-              <option key={index}>{option}</option>
+            {options.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
             ))}
           </select>
         </label>
@@ -50,6 +51,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             onChange={onChangeHandler}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            value={defaultValue}
           />
         </label>
       )
@@ -62,6 +64,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             onChange={onChangeHandler}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            value={defaultValue}
             required
           />
         </label>

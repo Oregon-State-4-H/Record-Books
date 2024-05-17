@@ -1,3 +1,4 @@
+// ./src/app/components/NavBar.jsx
 import Link from 'next/link'
 import { MdContentPaste, MdOutlineDescription, MdOutlineHome, MdOutlineAccountCircle } from "react-icons/md"
 

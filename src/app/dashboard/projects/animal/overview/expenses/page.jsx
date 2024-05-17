@@ -111,19 +111,21 @@ export default function Expenses({ searchParams: {project} }) {
             {showFormCard && (
                 <FormModel title="Add Expenses" hideForm={() => setShowFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
                     [
-                        {type: "hidden", name: "projectId", value: project},
+                        {type: "hidden", name: "projectId", defaultValue: project},
                         {type: "date", label: "Date", name: "date", placeholder: "Ex. 2022-02-22"},
                         {type: "text", label: "Item(s)", name: "items", placeholder: "Ex. transportation, boarding"},
                         {type: "number", label: "Number or Quantity", name: "quantity", placeholder: "Ex. 2"},
-                        {type: "number", label: "cost", name: "cost", placeholder: "Ex. 10"},
+                        {type: "number", label: "Cost", name: "cost", placeholder: "Ex. 10"},
                     ]
                 } />
             )}
 
             <TableCard data={tableData} headers={headers} handleClick={() => showForm()} dataLoaded={!isLoading} />
-            {isLoading && <div className={classes.loaderContainer}>
-                <CloverLoader />
-            </div>}
+            {isLoading && (
+                <div className={classes.loaderContainer}>
+                    <CloverLoader />
+                </div>
+            )}
         </main>
     )
 }

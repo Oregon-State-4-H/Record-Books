@@ -67,7 +67,7 @@ export async function addAnimal(prevState, formData) {
         });
 
         await animal.save();
-        return animal;
+        return JSON.parse(JSON.stringify(animal));
     } catch (error) {
         console.error("addAnimal:", error);
         Error(error);
@@ -128,10 +128,10 @@ export async function getFeedDocs(projectId) {
         const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
 
-        const feed = await Feed.find({ projectId: ObjectId.createFromHexString(projectId), uid: userID });
+        const feed = await Feed.find({ projectId: projectId, uid: userID });
         return JSON.parse(JSON.stringify(feed));
     } catch (error) {
-        console.error("getFeed:", error);
+        console.error("getFeedDocs:", error);
         Error(error);
     }
 }
@@ -175,7 +175,7 @@ export async function addFeed(prevState, formData) {
         });
 
         await feed.save();
-        return feed;
+        return JSON.parse(JSON.stringify(feed));
     } catch (error) {
         console.error("addFeed:", error);
         Error(error);
@@ -202,7 +202,7 @@ export async function addFeedNoForm(feedName, projectId) {
         });
 
         await feed.save();
-        return feed;
+        return JSON.parse(JSON.stringify(feed));
     } catch (error) {
         console.error("addFeed:", error);
         Error(error);
@@ -251,7 +251,7 @@ export async function getFeedPurchaseDocs(projectId) {
         const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
 
-        const feedPurchase = await FeedPurchase.find({ projectId: ObjectId.createFromHexString(projectId), uid: userID });
+        const feedPurchase = await FeedPurchase.find({ projectId: projectId, uid: userID });
         return JSON.parse(JSON.stringify(feedPurchase));
     } catch (error) {
         console.error("getFeedPurchase:", error);
@@ -290,19 +290,21 @@ export async function addFeedPurchase(prevState, formData) {
     const session = await getSession();
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
 
+    console.log("formData", formData);
+
     try {
         const db = await connectDB();
         const feedPurchase = new FeedPurchase({
             feedId: ObjectId.createFromHexString(formData.get("feedId")),
-            purchaseDate: formData.get("purchaseDate"),
-            purchaseAmount: formData.get("purchaseAmount"),
+            datePurchased: formData.get("datePurchased"),
+            amountPurchased: formData.get("amountPurchased"),
             totalCost: formData.get("totalCost"),
             projectId: ObjectId.createFromHexString(formData.get("projectId")),
             uid: userID
         });
 
         await feedPurchase.save();
-        return feedPurchase;
+        return JSON.parse(JSON.stringify(feedPurchase));
     } catch (error) {
         console.error("addFeedPurchase:", error);
         Error(error);
@@ -405,7 +407,7 @@ export async function addDailyFeed(prevState, formData) {
         });
 
         await dailyFeed.save();
-        return dailyFeed;
+        return JSON.parse(JSON.stringify(dailyFeed));
     } catch (error) {
         console.error("addDailyFeed:", error);
         Error(error);
@@ -508,7 +510,7 @@ export async function addExpense(prevState, formData) {
         });
 
         await expense.save();
-        return expense;
+        return JSON.parse(JSON.stringify(expense));
     } catch (error) {
         console.error("addExpense:", error);
         Error(error);

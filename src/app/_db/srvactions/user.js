@@ -12,6 +12,7 @@ import { getSession } from "@auth0/nextjs-auth0";
  * @see {@link User} for object structure
  */
 export async function getUserProfile() {
+    console.log("getUserProfile");
     try {
         const session = await getSession();
         const uid = ObjectId.createFromHexString(session.user.sub.substring(6));
@@ -32,6 +33,7 @@ export async function getUserProfile() {
  * @see {@link User} for object structure
  */
 export async function updateUserProfile(prevState, formData) {
+    console.log("=== updateUserProfile");
     const session = await getSession();
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
 

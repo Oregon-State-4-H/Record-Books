@@ -45,7 +45,15 @@
             { "type": "text", "label": "Year", "name": "year", "placeholder": "Ex. 2016-17" },
             { "type": "text", "label": "Kind of Activity", "name": "activityKind", "placeholder": "Ex. Photography Clinic" },
             { "type": "text", "label": "Things Learned", "name": "thingsLearned", "placeholder": "Ex. How to take better close-ups" },
-            { "type": "select", "label": "Activity Level", "name": "level", "options": ["Local/Club", "County", "Regional", "State", "National", "International"] }
+            { "type": "select", "label": "Activity Level", "name": "level", "options": [
+                { "label": "Local/Club", "value": "Local/Club" },
+                { "label": "County", "value": "County" },
+                { "label": "Regional", "value": "Regional" },
+                { "label": "State", "value": "State" },
+                { "label": "National", "value": "National" },
+                { "label": "International", "value": "International" }
+              ]
+         }
         ]
     },
     "section4": {
@@ -60,7 +68,15 @@
             { "type": "text", "label": "Year", "name": "year", "placeholder": "Ex. 2016-17" },
             { "type": "text", "label": "Kind of Activity", "name": "activityKind", "placeholder": "Ex. Soccer Team" },
             { "type": "text", "label": "What I did and Time Spent", "name": "scope", "placeholder": "Ex. 80 practices, 20 games, 300 hourse" },
-            { "type": "select", "label": "Activity Level", "name": "level", "options": ["Local/Club", "County", "Regional", "State", "National", "International"] }
+            { "type": "select", "label": "Activity Level", "name": "level", "options": [
+                { "label": "Local/Club", "value": "Local/Club" },
+                { "label": "County", "value": "County" },
+                { "label": "Regional", "value": "Regional" },
+                { "label": "State", "value": "State" },
+                { "label": "National", "value": "National" },
+                { "label": "International", "value": "International" }
+              ]
+            }
         ]
     },
     "section5": {

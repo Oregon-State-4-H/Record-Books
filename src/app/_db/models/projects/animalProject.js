@@ -36,17 +36,17 @@ export const feedModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     }
-});
+}, { collection: 'feed' });
 
 export const feedPurchaseModel = mongoose.Schema({
     feedId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "feed"
     },
-    purchaseDate: Date,
-    purchaseAmount: Number,
+    datePurchased: Date,
+    amountPurchased: Number,
     totalCost: Number,
-    projectID: {
+    projectId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "projects"
     },
@@ -54,7 +54,7 @@ export const feedPurchaseModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     }
-});
+}, { collection: 'feedPurchases' });
 
 export const dailyFeedModel = mongoose.Schema({
     feedId: {
@@ -75,7 +75,7 @@ export const dailyFeedModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     }
-});
+}, { collection: 'dailyFeed' });
 
 export const expensesModel = mongoose.Schema({
     date: Date,
@@ -90,10 +90,10 @@ export const expensesModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "projects"
     }]
-});
+}, { collection: 'expenses' });
 
 export const Animal = mongoose.models.animals || mongoose.model("animals", animalModel);
 export const Feed = mongoose.models.feed || mongoose.model("feed", feedModel);
 export const DailyFeed = mongoose.models.dailyFeed || mongoose.model("dailyFeed", dailyFeedModel);
-export const FeedPurchase = mongoose.models.feedPurchase || mongoose.model("feedPurchase", feedPurchaseModel);
+export const FeedPurchase = mongoose.models.feedPurchases || mongoose.model("feedPurchases", feedPurchaseModel);
 export const Expenses = mongoose.models.expenses || mongoose.model("expenses", expensesModel);
