@@ -1,6 +1,14 @@
+// ./src/app/components/NavBar.jsx
 import Link from 'next/link'
 import { MdContentPaste, MdOutlineDescription, MdOutlineHome, MdOutlineAccountCircle } from "react-icons/md"
 
+/**
+ * Navbar component
+ * @param {Boolean} isBasic - Whether to show the basic landing page navbar or the dashboard navbar
+ * @param {Boolean} isAuth - Whether the user is authenticated or not
+ * @returns {JSX.Element} Navbar component
+ * @example <Navbar isBasic={true} isAuth={true}/>
+ */
 export default function Navbar(props){
   var isBasic = props.isBasic;
   var isAuth = props.isAuth;
@@ -14,7 +22,18 @@ export default function Navbar(props){
           </Link>
     
           <div className='navGroup'>
-            <Link href='/about' className='navItem'>About</Link>
+            <button onClick={() => 
+                {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                  About
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Meet the team
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Contact Us
+            </button>
             <Link href='/dashboard' className='navItem'>Go to Dashboard</Link>
           </div>
         </nav>
@@ -27,7 +46,18 @@ export default function Navbar(props){
           </Link>
     
           <div className='navGroup'>
-            <Link href='/about' className='navItem'>About</Link>
+            <button onClick={() => 
+                {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                  About
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Meet the team
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Contact Us
+            </button>
             <Link href='/api/auth/login' className='navItem'>Sign up/Sign in</Link>
           </div>
         </nav>

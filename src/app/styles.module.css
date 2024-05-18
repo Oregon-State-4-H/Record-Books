@@ -1,0 +1,281 @@
+.headerContainer {
+    position: relative;
+    height: 400px;
+}
+
+.headerImage {
+    width: 100%;
+    opacity: 0.25;
+    object-fit: cover;
+}
+
+.headerText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--txt-primary);
+}
+
+.headerText h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    color: var(--beaver-orange);
+}
+
+.headerText p {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.cardContainer {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.cardItem {
+    width: 90%;
+    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    color: var(--txt-primary);
+    transition: opacity 2s;
+}
+
+.cardItem h2 {
+    font-size: 2.5rem;
+    color: var(--beaver-orange);
+}
+
+.devicePreviewContainer {
+    width: 45%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.devicePreview {
+    object-fit: contain;
+}
+
+.cardInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center; /* Center content vertically */
+    padding: 20px; /* Optional: add padding for better spacing */
+    position: relative;
+    font-size: 1.5rem;
+    /* background-color: aquamarine; */
+}
+
+.carouselContainer {
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 100px;
+    margin-bottom: auto;
+}
+
+.carouselContainer::before,
+.carouselContainer::after {
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+
+.carouselContainer::before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), var(--bg-primary));
+}
+
+.carouselContainer::after {
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--bg-primary));
+}
+
+.carouselContainer:hover .carousel {
+    animation-play-state: paused;
+}
+  
+.carousel {
+    display: flex;
+    animation: scrollCarousel 40s linear infinite;
+}
+  
+.carouselCardItem {
+    width: 300px;
+    height: 100px;;
+    margin: 10px; /* Optional: Add some margin between cards */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--txt-primary);
+    background-color: var(--bg-secondary);
+    position: relative;
+}
+  
+.carouselCardItem img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+  
+.carouselCardInfo {
+    padding: 10px;
+    text-align: center;
+}
+
+/* newCardTag should put the text in the very top left hand cornor of the parent*/
+.newCardTag {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: var(--primary);
+    color: var(--txt-primary);
+    padding: 3px 5px;
+    border-radius: 5px 0 10px 0px;
+}
+
+  
+@keyframes scrollCarousel {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+
+
+
+
+
+
+
+
+.fade-in-left {
+    animation: fade-in-left 2s ease infinite;
+  }
+  @keyframes fade-in-left {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+}
+
+.memberCardContainer {
+    display: flex;
+    flex-direction: grid;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    animation: fadeInLeft 2s linear ;
+}
+
+@keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+}
+
+.memberCard {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid var(--beaver-orange);
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    width: 350px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--txt-primary);
+}
+
+.profilePhoto {
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.memberName {
+    color: var(--beaver-orange);
+    font-size: 1.5rem;
+}
+
+.cardSection {
+    margin-top: 15px;
+}
+
+/* member link should be at the bottom of the container and pushed
+all the way to the right */
+.memberLink {
+    color: var(--beaver-orange);
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+
+.contactForm {
+    /* background-color: var(--bg-secondary); */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    border-radius: 5px;
+}
+
+.contactForm h2 {
+    color: var(--beaver-orange);
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 850px) {
+    .cardItem {
+        flex-direction: column;
+    }
+
+    .devicePreview {
+        width: 70%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+}

@@ -4,8 +4,11 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { MdArrowBack } from "react-icons/md";
 
-
-function BackNavBtn() {
+/**
+ * Back navigation button
+ * @returns {JSX.Element}
+ */
+export default function BackNavBtn() {
   const router = useRouter();
 
   function handleClick() {
@@ -18,5 +21,3 @@ function BackNavBtn() {
     </button>
   );
 }
-
-export default BackNavBtn;

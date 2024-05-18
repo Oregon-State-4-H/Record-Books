@@ -5,11 +5,12 @@ import styles from './styles.module.css';
 import ActionBar from '@/app/components/ActionBar';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFFile from '@/app/components/reports/resume/Resume.jsx';
-import { useState, useEffect } from 'react';
-import { getResumeDocs } from '@/app/_db/srvactions/resume/resume';
+import { useState, useEffect, use } from 'react';
+import { getResumeDocs } from '@/app/_db/srvactions/resume';
 import { PDFViewer } from "@react-pdf/renderer";
 import { FaDownload } from "react-icons/fa";
 import { MdOutlinePreview } from "react-icons/md";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 
 function Card(props) {
@@ -28,6 +29,8 @@ export default function Resume() {
   const [isComplete, setIsComplete] = useState(false); // State to manage completeness
   const [resumeData, setResumeData] = useState({});
   const [showPreview, setShowPreview] = useState(false);
+  const { user, error, isLoading } = useUser();
+
 
   useEffect(() => {
     getResumeDocs().then((data) => {
@@ -35,6 +38,16 @@ export default function Resume() {
       setIsComplete(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (!user && !isLoading) {
+      redirect("../api/auth/login");
+    }
+  }, [isLoading, user]);
+
+  if (!user && !isLoading) {
+    redirect("../api/auth/login");
+  }
 
   return (
     <main>
@@ -65,7 +78,7 @@ export default function Resume() {
       { showPreview &&
         <div className={styles.overlay} onClick={() => setShowPreview(false)}>
           <div className={styles.previewContainer}>
-            <PDFViewer width="100%" height="100%">
+            <PDFViewer style={{width: '100%', height: '100%'}} >
               <PDFFile resumeData={resumeData} />
             </PDFViewer>
             <button onClick={() => setShowPreview(false)}>Close Preview</button>

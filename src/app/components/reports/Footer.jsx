@@ -31,7 +31,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Footer = () => {
+/**
+ * Footer component for 4-H reports
+ * @returns {JSX.Element}
+ */
+export default function Footer() {
   return (
     <View style={styles.footer} fixed>
         <Text style={styles.footerText}>{footerText}</Text>
@@ -39,5 +43,3 @@ const Footer = () => {
     </View>
   )
 };
-  
-export default Footer;
