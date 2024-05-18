@@ -22,7 +22,18 @@ export default function Navbar(props){
           </Link>
     
           <div className='navGroup'>
-            <Link href='/about' className='navItem'>About</Link>
+            <button onClick={() => 
+                {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                  About
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Meet the team
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Contact Us
+            </button>
             <Link href='/dashboard' className='navItem'>Go to Dashboard</Link>
           </div>
         </nav>
@@ -35,7 +46,18 @@ export default function Navbar(props){
           </Link>
     
           <div className='navGroup'>
-            <Link href='/about' className='navItem'>About</Link>
+            <button onClick={() => 
+                {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                  About
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Meet the team
+            </button>
+            <button onClick={() => 
+              {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+                Contact Us
+            </button>
             <Link href='/api/auth/login' className='navItem'>Sign up/Sign in</Link>
           </div>
         </nav>
