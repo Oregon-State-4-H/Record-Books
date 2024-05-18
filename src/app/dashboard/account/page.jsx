@@ -44,9 +44,15 @@ export default function Account() {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, [user]);
+  }, []);
 
-  if (!user) {
+  useEffect(() => {
+    if (!user && !isLoading) {
+      redirect("../api/auth/login");
+    }
+  }, [isLoading, user]);
+
+  if (!user && !isLoading) {
     redirect("../api/auth/login");
   }
 

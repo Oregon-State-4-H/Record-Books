@@ -106,7 +106,7 @@ export default function FeedInventory({ searchParams: {project} }) {
       setInvalidateData(false);
       setIsLoading(false);
     });
-  }, [invalidateData]);
+  }, [invalidateData, project]);
 
   useEffect(() => {
     getFeedDocs(project).then((data) => {
@@ -116,7 +116,7 @@ export default function FeedInventory({ searchParams: {project} }) {
       setInvalidateOptions(false);
       console.log("FeedDocs", data);
     });
-  }, [invalidateOptions]);
+  }, [invalidateOptions,project]);
 
   function invalidateDataHandler() {
     setInvalidateData(true);

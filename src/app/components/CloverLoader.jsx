@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import logo from '@/app/assets/4hlogorgb.png'; // Import your PNG image
+import logo from '@/app/assets/logo400x400.png'; // Import your PNG image
 import Image from 'next/image';
 
 const spin = keyframes`
@@ -28,7 +28,7 @@ export const Loader = styled.div`
 export function CloverLoader() {
     return (
         <div style={{position: 'relative',width: '100px', height: '100px', marginTop: '30px'}}>
-            <Image src={logo} alt="4-H Clover" style={{padding: '10px', objectFit: 'contain'}} fill />
+            <Image src={logo} alt="4-H Clover" style={{padding: '16px', objectFit: 'contain'}} fill />
             <Loader style={{borderTop: '0.2em solid #D73F09'}} />
         </div>
     )

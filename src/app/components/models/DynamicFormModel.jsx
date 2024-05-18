@@ -18,7 +18,8 @@ import { OverlayModel } from './OverlayModel';
  * @returns {JSX.Element} A form input element
  */
 export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required }) {
-  console.log("options: ", options)
+  // If type is checkbox, align the input to the start
+    
   if (type == "select") {
     if (required != undefined && required == false) {
       return (
@@ -87,12 +88,37 @@ export function StatusButton({postAction, buttonText, pendingText}){
       setSubmitStarted(true);
     } else if (submitStarted && !pending)
       postAction();
-  }, [pending]);
+  }, [pending, submitStarted, postAction]);
 
   return (
     <button type="submit" className={styles.formBtn} disabled={pending}>
       {pending ? (pendingText ? pendingText: "Submitting..." ) : (buttonText ? buttonText : "Submit")}
     </button>
+  )
+}
+
+/**
+ * An Form Model
+ * @param {object} inputs - The form input fields
+ * @param {function} inputChangeHandler - The function to handle input changes
+ * @param {function} formAction - The function to handle form submission
+ * @param {function} postSubmitAction - The function to handle what happens after form submission
+ * @param {string} submitButtonText - The text to display on the submit button
+ * @param {string} submitPendingText - The text to display on the submit button when submit action is pending
+ * @returns {JSX.Element} A model element
+ */
+export function DynamicForm({ inputs, inputChangeHandler, formAction, postSubmitAction, submitButtonText, submitPendingText}) {
+  return (
+    <form className={styles.form} action={formAction}>
+      <div className={styles.formInputs}>
+        {inputs?.map((input, index) => {
+          return <FormInput key={index} {...input} onChangeHandler={inputChangeHandler} />
+        })}
+      </div>
+      <div className={styles.formBtns}>
+        <StatusButton postAction={postSubmitAction} buttonText={submitButtonText} pendingText={submitPendingText}/>
+      </div>
+    </form>
   )
 }
 
@@ -109,7 +135,7 @@ export function StatusButton({postAction, buttonText, pendingText}){
  */
 export default function FormModel({ title, inputs, hideForm, inputChangeHandler, formAction, postSubmitAction, submitButtonText, submitPendingText}) {
   return (
-    <OverlayModel title={title} handleClose={hideForm} children={
+    <OverlayModel title={title} handleClose={hideForm} >
       <form className={styles.form} action={formAction}>
         <div className={styles.formInputs}>
           {inputs?.map((input, index) => {
@@ -120,6 +146,6 @@ export default function FormModel({ title, inputs, hideForm, inputChangeHandler,
           <StatusButton postAction={postSubmitAction} buttonText={submitButtonText} pendingText={submitPendingText}/>
         </div>
       </form>
-    }/>
+    </OverlayModel>
   )
 }

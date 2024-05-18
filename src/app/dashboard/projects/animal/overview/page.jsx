@@ -103,7 +103,7 @@ export default function Overview({ searchParams: {project} }) {
         setAnimalData(data);
         console.log(data);
       });
-    }, [invalidateData]);
+    }, [invalidateData, project]);
 
     
 

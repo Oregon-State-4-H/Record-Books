@@ -4,11 +4,12 @@ import { useEffect, useState, useRef } from "react";
 import Navbar from "./components/Navbar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styles from "./styles.module.css";
-import { DynamicForm } from "./components/models/DynamicFormModel";
-import { sendContactEmail } from "./srvActions";
-import { useFormState } from "react-dom";
+// import { DynamicForm } from "./components/models/DynamicFormModel";
+// import { sendContactEmail } from "./srvActions";
+// import { useFormState } from "react-dom";
 import Link from 'next/link'
 import Image from 'next/image'
+import { FaGithub } from "react-icons/fa";
 
 
 
@@ -49,15 +50,15 @@ export default function Home() {
   
   const [formInfo, setFormInfo] = useState(formBlueprint);
 
-  const handleChange = (e) => {
-    setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
-  }
+  // const handleChange = (e) => {
+  //   setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+  // }
 
-  const handleFormState = () => {
-    setFormInfo(formBlueprint);
-  }
+  // const handleFormState = () => {
+  //   setFormInfo(formBlueprint);
+  // }
 
-  const [formState, formAction] = useFormState(sendContactEmail, formBlueprint);
+  // const [formState, formAction] = useFormState(sendContactEmail, formBlueprint);
 
 
   let isAuth = false;
@@ -117,7 +118,7 @@ export default function Home() {
         <div className={styles.headerContainer}>
             <Image
               src="/assets/photos/Featured-Photo.jpeg"
-              alt="" fill className={styles.headerImage}
+              alt="" fill className={styles.headerImage} priority
             />
 
           <div className={styles.headerText}>
@@ -271,16 +272,28 @@ export default function Home() {
 
         {/* Contact Us */}
         <section id="contact-us" className={styles.contactForm}>
-          <h2>Sign up to receive updates</h2>
+          <h2>Contact Us</h2>
+          <p style={{fontSize: '1.5rem'}}>
+            For any questions or concerns, please contact us at 
+            <p style={{color: "var(--beaver-orange)"}}>4Hrecord.books@oregonstate.edu</p>
+          </p>
 
-          <DynamicForm inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormState} submitButtonText="Submit" submitPendingText="Submitting..." 
+          <br />
+
+          <p style={{fontSize: '1.5rem'}}> To report a bug or request a feature, please submit an issue on our GitHub.</p>
+          <Link href="https://github.com/Oregon-State-4-H/Record-Books" rel="noopener noreferrer" target="_blank" style={{display: "flex", alignItems: "center", fontSize: "1.25rem"}}>
+            View on GitHub <FaGithub />
+          </Link>
+
+
+          {/* <DynamicForm inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormState} submitButtonText="Submit" submitPendingText="Submitting..." 
             inputs={[
             { type: "text", name: "first_name", label: "First Name", placeholder: "John" },
             { type: "text", name: "last_name", label: "Last Name", placeholder: "Doe" },
             { type: "email", name: "email", label: "Email", placeholder: "name@example.com" },
             { type: "select", name: "is_involved", label: "Are you involved in 4-H?", options: [{value: "No", label: "No"}, {value: "Yes", label: "Yes"}]},
           ]}
-          />
+          /> */}
         </section>
       </main>
     </>

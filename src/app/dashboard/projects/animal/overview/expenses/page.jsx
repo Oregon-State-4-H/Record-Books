@@ -95,7 +95,7 @@ export default function Expenses({ searchParams: {project} }) {
         } catch (error) {
           console.error("Error fetching projects:", error);
         }
-      }, [invalidateData]);
+      }, [invalidateData, project]);
 
     return (
         <main>

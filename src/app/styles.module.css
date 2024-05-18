@@ -247,6 +247,10 @@ all the way to the right */
 
 .contactForm {
     /* background-color: var(--bg-secondary); */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
     padding: 20px;
     width: 60%;
     margin-left: auto;

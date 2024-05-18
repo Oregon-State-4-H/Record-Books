@@ -19,6 +19,15 @@ function TableCard({ id, data, dataLoaded }) {
   // const feed = demoData.feed;
   const [feedData, setFeedData] = useState([]);
 
+  useEffect(() => {
+    if (id) {
+      const feedData = feedData.filter((feed) => feed.animalID === id);
+      if (feedData) {
+        setFeedData(feedData);
+      }
+    }
+  }, [id, feedData]);
+
   if ((!data || data.length == 0) && dataLoaded) {
     return (
       <>
@@ -29,15 +38,6 @@ function TableCard({ id, data, dataLoaded }) {
       </>
     )
   }
-
-  useEffect(() => {
-    if (id) {
-      const feedData = feedData.filter((feed) => feed.animalID === id);
-      if (feedData) {
-        setFeedData(feedData);
-      }
-    }
-  }, [id, feedData]);
 
   return (
     <>
@@ -134,7 +134,7 @@ export default function FeedRecord({ searchParams: {id} }) {
         setAnimalData(animalData);
       }
     }
-  }, []);
+  }, [id]);
 
   return (
     <>
