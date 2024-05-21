@@ -65,9 +65,10 @@ function FormCard({ title, onClose, options }) {
 const formatDate = (date) => {
   if (!date) return '';
   const d = new Date(date);
-  const month = ('0' + (d.getMonth() + 1)).slice(-2);
-  const day = ('0' + d.getDate()).slice(-2);
-  return `${d.getFullYear()}-${month}-${day}`;
+  const year = d.getUTCFullYear();
+  const month = ('0' + (d.getUTCMonth() + 1)).slice(-2);
+  const day = ('0' + d.getUTCDate()).slice(-2);
+  return `${year}-${month}-${day}`;
 };
 
 

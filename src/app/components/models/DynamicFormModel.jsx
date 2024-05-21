@@ -20,7 +20,9 @@ import { OverlayModel } from './OverlayModel';
 export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required, step }) {
   // If type is checkbox, align the input to the start
     
-  if (type == "select") {
+  if (type == "hidden"){
+    return ( <input type="hidden" name={name} value={defaultValue} /> )
+  } else if (type == "select") {
     if (required != undefined && required == false) {
       return (
         <label className={styles.inputLabel}>{label}
@@ -52,7 +54,6 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             onChange={onChangeHandler}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            value={defaultValue}
             step={step}
           />
         </label>
@@ -66,7 +67,6 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             onChange={onChangeHandler}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            value={defaultValue}
             step={step}
             required
           />

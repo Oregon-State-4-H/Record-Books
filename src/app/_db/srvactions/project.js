@@ -91,8 +91,8 @@ export async function addProject(prevState, formData) {
             projectName: formData.get("projectName"),
             description: formData.get("description"),
             type: formData.get("type"),
-            startDate: formData.get("startDate"),
-            endDate: formData.get("endDate")
+            startDate: new Date(formData.get("startDate")).toISOString(),
+            endDate: new Date(formData.get("endDate")).toISOString(),
         });
 
         await project.save();
@@ -123,8 +123,8 @@ export async function updateProject(prevState, formData) {
         project.projectName = formData.get("projectName");
         project.description = formData.get("description");
         project.type = formData.get("type");
-        project.startDate = formData.get("startDate");
-        project.endDate = formData.get("endDate");
+        project.startDate = new Date(formData.get("startDate")).toISOString();
+        project.endDate = new Date(formData.get("endDate")).toISOString();
 
         await project.save();
 
