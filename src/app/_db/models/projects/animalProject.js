@@ -71,6 +71,10 @@ export const dailyFeedModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "feedPurchase"
     },
+    projectId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "projects"
+    },
     uid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
@@ -86,10 +90,10 @@ export const expensesModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     },
-    projects: [{
+    projectId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "projects"
-    }]
+    }
 }, { collection: 'expenses' });
 
 export const Animal = mongoose.models.animals || mongoose.model("animals", animalModel);

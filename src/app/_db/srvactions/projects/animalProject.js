@@ -290,8 +290,6 @@ export async function addFeedPurchase(prevState, formData) {
     const session = await getSession();
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
 
-    console.log("formData", formData);
-
     try {
         const db = await connectDB();
         const feedPurchase = new FeedPurchase({
@@ -497,6 +495,7 @@ export async function getExpense(expenseId) {
 export async function addExpense(prevState, formData) {
     const session = await getSession();
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    console.log("addExpense projectId: ", formData.get("projectId"));
 
     try {
         const db = await connectDB();
