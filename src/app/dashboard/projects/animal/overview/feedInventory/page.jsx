@@ -17,54 +17,72 @@ const formBlueprint = {
   amountPurchased: null,
 }
 
-function TableCard({ data, headers, dataLoaded }) {
-  console.log("=== Data for TableCard: ", data);
-  
-  if ((!data || data.length == 0) && dataLoaded) {
+function formatValue(value, format) {
+  if (!format) return value;
+
+  switch (format) {
+    case "date":
+      return new Date(value).toLocaleDateString();
+    case "currency":
+      return `$${value.toFixed(2)}`;
+    case "weight":
+      return `${value} lbs`;
+    default:
+      return value;
+  }
+}
+
+function TableCard({ data, headers, dataLoaded }) {  
+  if ((!data || data.length === 0) && dataLoaded) {
     return (
-      <>
-        <div className={classes.infoSection}>
-          <h1 className={classes.infoSectionHeader}>Hmm... your log is empty!</h1>
-          <p>{"Let's fix that! Add your first entry above."}</p>
-        </div>
-      </>
-    )
+      <div className={classes.infoSection}>
+        <h1 className={classes.infoSectionHeader}>Hmm... your log is empty!</h1>
+        <p>{"Let's fix that! Add your first entry above."}</p>
+      </div>
+    );
   }
 
   return (
-    <>
-      <table className={classes.table}>
-        <thead>
-          <tr>
-            {headers.map((header, headerID) => (
-              <th key={headerID}>{header.name}</th>
-            ))}
-          </tr>
-        </thead>
-
-        {data && (
-          <tbody>
-            {data.map((rowData, rowID) => (
-              <tr key={rowID}>
-                {headers.map((header, colID) => (
+    <table className={classes.table}>
+      <thead>
+        <tr>
+          {headers.map((header, headerID) => (
+            <th key={headerID}>{header.name}</th>
+          ))}
+        </tr>
+      </thead>
+      {data && (
+        <tbody>
+          {data.map((rowData, rowID) => (
+            <tr key={rowID}>
+              {headers.map((header, colID) => {
+                const keys = header.key.split('.');
+                let value = rowData;
+                for (const key of keys) {
+                  value = value[key];
+                }
+                const formattedValue = formatValue(value, header.format);
+                return (
                   <td key={colID}>
-                    {Array.isArray(rowData[header.key]) ? (
+                    {Array.isArray(formattedValue) ? (
                       <ul>
-                        {rowData[header.key].map((value, index) => (
-                          <li key={index}>{value}</li>
+                        {formattedValue.map((item, index) => (
+                          <li key={index}>{item}</li>
                         ))}
                       </ul>
-                    ) : rowData[header.key]}
+                    ) : formattedValue}
                   </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
-    </>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      )}
+    </table>
   );
 }
+
+
 
 export default function FeedInventory({ searchParams: {project} }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -78,11 +96,12 @@ export default function FeedInventory({ searchParams: {project} }) {
   const [invalidateOptions, setInvalidateOptions] = useState(false);
 
   const headers = [
-    {name: "Date", key: "datePurchased"},
-    {name: "Feed Type", key: "feedType"},
-    {name: "Total Cost of Purchase", key: "totalCost"},
-    {name: "Amount Purchased", key: "amountPurchased"},
+    { name: "Date", key: "datePurchased", format: "date" },
+    { name: "Feed Type", key: "feedId.name" },
+    { name: "Total Cost of Purchase", key: "totalCost", format: "currency" },
+    { name: "Amount Purchased", key: "amountPurchased", format: "weight"},
   ];
+  
 
   const handleChange = (e) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
@@ -101,7 +120,6 @@ export default function FeedInventory({ searchParams: {project} }) {
 
   useEffect(() => {
     getFeedPurchaseDocs(project).then((data) => {
-      console.log("FeedPurchaseDocs", data);
       setTableData(data);
       setInvalidateData(false);
       setIsLoading(false);
@@ -114,17 +132,8 @@ export default function FeedInventory({ searchParams: {project} }) {
         return { value: feed._id, label: feed.name }
       }))
       setInvalidateOptions(false);
-      console.log("FeedDocs", data);
     });
   }, [invalidateOptions,project]);
-
-  function invalidateDataHandler() {
-    setInvalidateData(true);
-  }
-
-  function invalidateOptionsHandler() {
-    setInvalidateOptions(true);
-  }
 
   return (
     <main>
@@ -149,8 +158,8 @@ export default function FeedInventory({ searchParams: {project} }) {
             {type: "hidden", name: "projectId", defaultValue: project},
             {type: "select", label: "Feed Type", name: "feedId", options: feedOptions},
             {type: "date", label: "Date Purchased", name: "datePurchased", placeholder: "Ex. 2022-02-22"},
-            {type: "number", label: "Total Cost of Purchase", name: "totalCost", placeholder: "Ex. 20"},
-            {type: "number", label: "Amount Purchased", name: "amountPurchased", placeholder: "Ex. 2"},
+            {type: "number", label: "Total Cost of Purchase", name: "totalCost", placeholder: "Ex. 20", step: "0.01"},
+            {type: "number", label: "Amount Purchased", name: "amountPurchased", placeholder: "Ex. 2", step: "0.01"},
           ]
         } />
       )}

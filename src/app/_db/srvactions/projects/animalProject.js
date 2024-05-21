@@ -251,7 +251,7 @@ export async function getFeedPurchaseDocs(projectId) {
         const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
 
-        const feedPurchase = await FeedPurchase.find({ projectId: projectId, uid: userID });
+        const feedPurchase = await FeedPurchase.find({ projectId: projectId, uid: userID }).populate("feedId").exec();
         return JSON.parse(JSON.stringify(feedPurchase));
     } catch (error) {
         console.error("getFeedPurchase:", error);

@@ -5,6 +5,7 @@ import styles from "./styles.module.css"
 import ActionBar from '@/app/components/ActionBar';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { redirect } from "next/navigation";
+import { useEffect } from 'react';
 
 
 function Card(props) {
@@ -21,9 +22,11 @@ function Card(props) {
 export default function Dashboard() {
   const { user, error, isLoading } = useUser();
 
-  if (!user) {
-    redirect("/api/auth/login");
-  }
+  useEffect(() => {
+    if (!user && !isLoading) {
+      redirect("/api/auth/login");
+    }
+  }, [user, isLoading]);
 
   return (
     <main>
