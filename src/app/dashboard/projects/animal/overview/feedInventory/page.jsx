@@ -32,9 +32,7 @@ function formatValue(value, format) {
   }
 }
 
-function TableCard({ data, headers, dataLoaded }) {
-  console.log("=== Data for TableCard: ", data);
-  
+function TableCard({ data, headers, dataLoaded }) {  
   if ((!data || data.length === 0) && dataLoaded) {
     return (
       <div className={classes.infoSection}>
@@ -122,7 +120,6 @@ export default function FeedInventory({ searchParams: {project} }) {
 
   useEffect(() => {
     getFeedPurchaseDocs(project).then((data) => {
-      console.log("FeedPurchaseDocs", data);
       setTableData(data);
       setInvalidateData(false);
       setIsLoading(false);
@@ -135,7 +132,6 @@ export default function FeedInventory({ searchParams: {project} }) {
         return { value: feed._id, label: feed.name }
       }))
       setInvalidateOptions(false);
-      console.log("FeedDocs", data);
     });
   }, [invalidateOptions,project]);
 
