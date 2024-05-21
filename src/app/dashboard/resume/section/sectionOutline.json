@@ -53,7 +53,7 @@
                 { "label": "National", "value": "National" },
                 { "label": "International", "value": "International" }
               ]
-         }
+            }
         ]
     },
     "section4": {
@@ -206,7 +206,15 @@
             { "type": "text", "label": "Year", "name": "year", "placeholder": "Ex. 2016-17" },
             { "type": "text", "label": "Contest/Event", "name": "contestOrEvent", "placeholder": "Ex. Science Fair" },
             { "type": "text", "label": "Recognition Received (if any)", "name": "recognitionReceived", "placeholder": "Ex. 1st Place" },
-            { "type": "select", "label": "Level of Contest/Event", "name": "level", "options": ["Local/Club", "County", "Regional", "State", "National", "International"] }
+            { "type": "select", "label": "Level of Contest/Event", "name": "level", "options": [
+                { "label": "Local/Club", "value": "Local/Club" },
+                { "label": "County", "value": "County" },
+                { "label": "Regional", "value": "Regional" },
+                { "label": "State", "value": "State" },
+                { "label": "National", "value": "National" },
+                { "label": "International", "value": "International" }
+              ]
+            }
         ]
     },
     "section13": {

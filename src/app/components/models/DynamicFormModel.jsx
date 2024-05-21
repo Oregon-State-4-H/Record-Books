@@ -17,7 +17,7 @@ import { OverlayModel } from './OverlayModel';
  * @param {boolean} required - (Optional) The input required status. Default is true.
  * @returns {JSX.Element} A form input element
  */
-export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required }) {
+export function FormInput({ type, label, name, placeholder, onChangeHandler, options, defaultValue, required, step }) {
   // If type is checkbox, align the input to the start
     
   if (type == "select") {
@@ -53,6 +53,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             placeholder={placeholder}
             defaultValue={defaultValue}
             value={defaultValue}
+            step={step}
           />
         </label>
       )
@@ -66,6 +67,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
             placeholder={placeholder}
             defaultValue={defaultValue}
             value={defaultValue}
+            step={step}
             required
           />
         </label>

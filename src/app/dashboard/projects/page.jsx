@@ -97,7 +97,7 @@ export default function Projects() {
             {type: "text", label: "Year", name: "year", placeholder: "Ex. 2021-22"},
             {type: "text", label: "Project Name", name: "projectName", placeholder: "Ex. Horses"},
             {type: "text", label: "Description", name: "description", placeholder: "Ex. Learn how to care for horses"},
-            {type: "select", label:"Project Type", name: "type", options: ["animal"]},
+            {type: "select", label:"Project Type", name: "type", options: [{label: "Animal", value: "animal"}]},
             {type: "date", label:"Start Date", name: "startDate"},
             {type: "date", label:"End Date", name: "endDate"}
           ]
