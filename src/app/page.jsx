@@ -50,17 +50,6 @@ export default function Home() {
   
   const [formInfo, setFormInfo] = useState(formBlueprint);
 
-  // const handleChange = (e) => {
-  //   setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
-  // }
-
-  // const handleFormState = () => {
-  //   setFormInfo(formBlueprint);
-  // }
-
-  // const [formState, formAction] = useFormState(sendContactEmail, formBlueprint);
-
-
   let isAuth = false;
 
   if (user) {
@@ -113,7 +102,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar isBasic={true} isAuth={isAuth} />
+      <Navbar isBasic={true} isAuth={isAuth} pageName={"home"}/>
       <main style={{margin: "0"}}>
         <div className={styles.headerContainer}>
             <Image

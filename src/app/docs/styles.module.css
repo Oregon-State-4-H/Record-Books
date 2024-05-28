@@ -1,0 +1,83 @@
+.title {
+    color: var(--beaver-orange);
+    font-size: 2em;
+    margin: 0.5em 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.sectionHeader {
+    color: var(--beaver-orange);
+    font-size: 1.75em;
+    margin: 0.5em 0;
+    font-weight: bold;
+}
+
+.sectionSubHeader {
+    color: var(--beaver-orange);
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+.sectionMinorHeader {
+    font-size: 1.25em;
+    margin: 0.5em 0;
+}
+
+.section {
+    flex: 1;
+    font-size: 1.15em;
+    color: var(--primary-text);
+}
+
+.navContainer {
+    position: fixed;
+    top: var(--nav-bar-height) + 20px;
+    width: 300px;
+    z-index: 1;
+}
+
+.navMenu {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+
+.navMenu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navMenu li {
+    margin: 10px 0;
+    cursor: pointer;
+    color: var(--beaver-orange);
+}
+
+.subList li {
+    margin-left: 20px;
+    cursor: pointer;
+    color: var(--beaver-orange);
+}
+
+.navMenu li.active {
+    font-weight: bold;
+    color: var(--primary-color); /* Assuming --primary-color is defined in your CSS variables */
+}
+
+.section {
+    margin-left: 320px; /* Adjust according to navMenu width */
+    padding: 20px;
+    font-size: 1.15em;
+    color: var(--primary-text);
+}
+.section ul li {
+    list-style-type: disc;
+    margin-left: 40px;
+}
+.section ol li {
+    list-style-type: decimal;
+    margin-left: 40px;
+}

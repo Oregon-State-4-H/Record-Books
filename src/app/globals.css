@@ -22,6 +22,7 @@
 
   --beaver-orange: #D73F09;
 
+  --nav-bar-height: 60px;
   --nav-bar-height-mob: 70px;
   --action-bar-height-mob: 50px;
 }
@@ -54,11 +55,13 @@ body {
 
 .basicNavBar {
   background: var(--primary);
+  color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  height: var(--nav-bar-height);
 }
 
 .dashNavBar {
@@ -68,6 +71,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  height: var(--nav-bar-height);
   
   @media (max-width: 480px) {
     position: fixed;
@@ -97,7 +101,6 @@ body {
   flex-direction: row;
   align-items: center;
   padding: 10px;
-  color: var(--txt-primary);
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -106,7 +109,6 @@ body {
 
 .navTitle {
   padding-left: 10px;
-  color: var(--txt-primary);
   @media (max-width: 480px) {
     display: none;
   }
@@ -150,7 +152,7 @@ main {
 }
 
 .actionBarBack {
-  color: var(--txt-primary);
+  color: white;
   @apply text-2xl;
   margin-right: 8px;
 }
