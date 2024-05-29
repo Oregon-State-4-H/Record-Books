@@ -62,8 +62,15 @@ export async function addAnimal(prevState, formData) {
     try {
         const db = await connectDB();
         const animal = new Animal({
-            projects: [{ projectId: ObjectId.createFromHexString(formData.get("projectId"))}],
-            uid: userID
+            projects: [ObjectId.createFromHexString(formData.get("projectId"))],
+            uid: userID,
+            name: formData.get("name"),
+            species: formData.get("species"),
+            animalId: formData.get("animalId"),
+            birthdate: new Date(formData.get("birthdate")).toISOString(),
+            purchaseDate: new Date(formData.get("purchaseDate")).toISOString(),
+            sireBreed: formData.get("sireBreed"),
+            damBreed: formData.get("damBreed"),
         });
 
         await animal.save();

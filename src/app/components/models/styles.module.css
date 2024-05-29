@@ -14,8 +14,8 @@
 
 .modelFrame {
     background-color: var(--bg-secondary);
-    position: absolute;
-    top: 15%;
+    position: relative;
+    top: 10%;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -25,7 +25,18 @@
     width: 60vw;
     margin-left: auto;
     margin-right: auto;
+    z-index: 1;
 }
+
+/* .modelFrame::before {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+} */
 
 #closeBtn {
     position: relative;
@@ -107,8 +118,6 @@
     font-weight: bold;
     color: var(--beaver-orange);
 }
-
-
 
 @media screen and (max-width: 480px) {
     /* Basic model styles */

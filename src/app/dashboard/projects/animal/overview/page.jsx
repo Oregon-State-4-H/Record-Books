@@ -137,11 +137,13 @@ export default function Overview({ searchParams: {project} }) {
             <div className={classes.cardContainer}>
                 <div className={classes.cardGroup}>
                     {/* ANIMAL INVENTORY AND PURCHASES */}
-                    <Card title = "Animal Inventory and Purchases" />
+                    <Link href={{pathname: "overview/animalInventory", query: {project: project}}}>
+                      <Card title = "Animal Inventory and Purchases" />
+                    </Link>
                     
                     {/* EQUIPMENT, SUPPLIES, AND FEED INVENTORY */}
                     <Link href={{pathname: "overview/supplyInventory"}}>
-                        <Card title = "Equipment, Supplies, and Feed Inventory" />
+                      <Card title = "Equipment, Supplies, and Feed Inventory" />
                     </Link>
 
                     {/* OTHER EXPENSES */}

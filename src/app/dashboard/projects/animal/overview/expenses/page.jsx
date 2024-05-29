@@ -7,8 +7,8 @@ import { useFormState, useFormStatus } from 'react-dom';
 import ActionBar from '@/app/components/ActionBar';
 import FormModel from '@/app/components/models/DynamicFormModel';
 import { addExpense, getExpense, getExpenseDocs } from '@/app/_db/srvactions/projects/animalProject';
-import CloverLoader from '@/app/components/CloverLoader';
 
+import CloverLoader from '@/app/components/CloverLoader';
 import { IoMdAdd } from "react-icons/io";
 
 const formBlueprint = {
@@ -95,7 +95,7 @@ export default function Expenses({ searchParams: {project} }) {
         } catch (error) {
           console.error("Error fetching projects:", error);
         }
-      }, [invalidateData, project]);
+    }, [invalidateData, project]);
 
     return (
         <main>
