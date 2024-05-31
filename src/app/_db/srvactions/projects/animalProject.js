@@ -119,6 +119,27 @@ export async function updateAnimal(prevState, formData) {
     }
 }
 
+export async function updateRateOfGain(prevState, formData) {
+    const session = await getSession(); 
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
+
+        animal.beginningWeight = formData.get("beginningWeight");
+        animal.beginningDate = formData.get("beginningDate");
+        animal.endingWeight = formData.get("endingWeight");
+        animal.endDate = formData.get("endDate");
+    
+        await animal.save();
+        return JSON.parse(JSON.stringify(animal));
+    } catch (error) {
+        console.error("updateRateofGain:", error);
+        Error(error);
+    }
+}
+
 
 /* ================== FEED ==================
 * Database CRUD operations for feed documents.

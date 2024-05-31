@@ -1,0 +1,55 @@
+.header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.title {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--bg-secondary);
+    /* color: var(--beaver-orange); */
+    min-width: 325px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30vw;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+.children {
+    display: flex;
+    flex-direction: column;
+}
+
+#sectionTitle {
+    color: var(--beaver-orange);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#editInfo {
+    margin-left: 5px;
+}
+
+.editInfoContainer {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+}
