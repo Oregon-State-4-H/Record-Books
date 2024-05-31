@@ -4,7 +4,6 @@ import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import demoData from '@/app/demoData.json';
 import BackNavBtn from '@/app/components/BackNavBtn';
 import { redirect } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -79,11 +78,8 @@ export default function Overview({ searchParams: {project} }) {
     const [animalData, setAnimalData] = useState(undefined);
     const [invalidateData, setInvalidateData] = useState(false);
 
-    
-
     const [formInfo, setFormInfo] = useState(ProjectInfo);
     const [formState, formAction] = useFormState(updateProject, ProjectInfo);
-    
 
     const handleChange = (e) => {
       setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
@@ -105,8 +101,6 @@ export default function Overview({ searchParams: {project} }) {
         console.log(data);
       });
     }, [invalidateData, project]);
-
-    
 
     return (
         <main>

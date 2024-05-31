@@ -3,6 +3,7 @@
 import classes from './styles.module.css';
 import { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import Link from 'next/link';
 
 import ActionBar from '@/app/components/ActionBar';
 import FormModel from '@/app/components/models/DynamicFormModel';
@@ -22,6 +23,7 @@ const formBlueprint = {
 }
 
 function Card({ data, dataLoaded }) {
+    console.log("== DATA: ", data)
     if ((!data || data.length == 0) && dataLoaded) {
         return (
             <>
@@ -35,7 +37,13 @@ function Card({ data, dataLoaded }) {
     return (
         <div className={classes.cardContainer}>
             <div className={classes.cardGroup}>
-                <div className={classes.cardTitle}>Hi</div>
+                {data?.map((animal, index) => {
+                    return (
+                        <Link href={{pathname: "animalInventory/animal", query: {project: animal.projects, animal: animal._id}}}>
+                            <div className={classes.cardTitle}>{animal.name} ({animal.species})</div>
+                        </Link>
+                    )
+                })}
             </div>
         </div>
     )

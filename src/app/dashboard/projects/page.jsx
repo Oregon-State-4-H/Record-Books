@@ -78,7 +78,7 @@ export default function Projects() {
       </button>
 
       <div className={classes.cardContainer}>
-        { projects?.map((project, index) => {
+        {projects?.map((project, index) => {
             return (
               <Link href={{pathname: "projects/" + project.type + "/overview", query: {project: project._id}}} key={index} className={classes.card}>
                 <div className={classes.cardTitle}>{project.projectName}</div>
