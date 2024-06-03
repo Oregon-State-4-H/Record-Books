@@ -2,35 +2,24 @@
 import Link from 'next/link'
 import { MdContentPaste, MdOutlineDescription, MdOutlineHome, MdOutlineAccountCircle } from "react-icons/md"
 
-function NoAuthNavItems({pageName}){
-  if (pageName == 'docs') {
-    return (
-      <>
-        <Link href='/#what-is-record-books' className='navItem'>About</Link>
-        <Link href='/#meet-the-team' className='navItem'>Meet the team</Link>
-        <Link href='/#contact-us' className='navItem'>Contact Us</Link>
-        <Link href='/docs' className='navItem'>Docs</Link>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <button onClick={() => 
-          {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
-            About
-        </button>
-        <button onClick={() => 
-          {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
-            Meet the team
-        </button>
-        <button onClick={() => 
-          {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
-            Contact Us
-        </button>
-        <Link href='/docs' className='navItem'>Docs</Link>
-      </>
-    )
-  }
+function NoAuthNavItems(){
+  return (
+    <>
+      <button onClick={() => 
+        {document.querySelector('#what-is-record-books')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+          About
+      </button>
+      <button onClick={() => 
+        {document.querySelector('#meet-the-team')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+          Meet the team
+      </button>
+      <button onClick={() => 
+        {document.querySelector('#contact-us')?.scrollIntoView({behavior: 'smooth'})}} className='navItem'>
+          Contact Us
+      </button>
+      <Link href='https://record-books-docs.vercel.app/' className='navItem' rel="noopener noreferrer" target="_blank">Docs</Link>
+    </>
+  )
 }
 
 /**
