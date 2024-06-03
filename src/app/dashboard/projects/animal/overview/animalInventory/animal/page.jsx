@@ -14,7 +14,7 @@ import { CiEdit } from "react-icons/ci";
 
 const formBlueprint = {
     endingWeight: null,
-    endingDate: null,
+    endDate: null,
     beginningWeight: null,
     beginningDate: null
 }
@@ -73,7 +73,7 @@ export default function Animal({ searchParams: {project, animal} }) {
     useEffect(() => {
         try {
             getAnimal(animal).then((data) => {
-                setCardData(data);
+                setAnimalData(data);
                 setInvalidateData(false);
                 setIsLoading(false);
             });
@@ -81,6 +81,8 @@ export default function Animal({ searchParams: {project, animal} }) {
             console.error("Error fetching animals: ", error);
         }
     }, [invalidateData, animal]);
+
+    console.log("=== animalData: ", animalData);
 
     return (
         <main>
@@ -116,10 +118,10 @@ export default function Animal({ searchParams: {project, animal} }) {
 
                 {/* RATE OF GAIN */}
                 <Card title="Animal Rate of Gain" action={() => setWeightFormCard(true)}>
-                    <CardItem label="Ending Weight" value={animalData?.endWeight} />
-                    <CardItem label="Ending Date" value={animalData?.endDate} />
                     <CardItem label="Beginning Weight" value={animalData?.beginningWeight} />
                     <CardItem label="Beginning Date" value={animalData?.beginningDate} />
+                    <CardItem label="Ending Weight" value={animalData?.endWeight} />
+                    <CardItem label="Ending Date" value={animalData?.endDate} />
                 </Card>
 
                 {weightFormCard && (
@@ -128,11 +130,11 @@ export default function Animal({ searchParams: {project, animal} }) {
                             {type: "hidden", name: "projectId", defaultValue: project},
                             {type: "hidden", name: "animalId", defaultValue: animal},
 
-                            {type: "number", label: "Ending Weight", name: "endWeight", placeholder: "Ex. 40lbs"},
-                            {type: "date", label: "Ending Date", name: "endDate", placeholder: "Ex. 2023-02-06"},
-
                             {type: "number", label: "Beginning Weight", name: "beginningWeight", placeholder: "Ex. 10lbs"},
                             {type: "date", label: "Beginning Date", name: "beginningDate", placeholder: "Ex. 2022-02-06"},
+
+                            {type: "number", label: "Ending Weight", name: "endingWeight", placeholder: "Ex. 40lbs"},
+                            {type: "date", label: "Ending Date", name: "endDate", placeholder: "Ex. 2023-02-06"},
                         ]
                     } />
                 )}
