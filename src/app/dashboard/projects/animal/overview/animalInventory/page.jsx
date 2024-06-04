@@ -39,7 +39,7 @@ function Card({ data, dataLoaded }) {
             <div className={classes.cardGroup}>
                 {data?.map((animal, index) => {
                     return (
-                        <Link href={{pathname: "animalInventory/animal", query: {project: animal.projects, animal: animal._id}}}>
+                        <Link key={index} href={{pathname: "animalInventory/animal", query: {project: animal.projects, animal: animal._id}}}>
                             <div className={classes.cardTitle}>{animal.name} ({animal.species})</div>
                         </Link>
                     )
