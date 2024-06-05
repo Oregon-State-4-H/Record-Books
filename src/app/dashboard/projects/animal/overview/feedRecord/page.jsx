@@ -8,6 +8,8 @@ import ActionBar from '@/app/components/ActionBar';
 import FormModel from '@/app/components/models/DynamicFormModel';
 import CloverLoader from '@/app/components/CloverLoader';
 
+import { getDailyFeedDocs } from '@/app/_db/srvactions/projects/animalProject';
+
 import { IoMdAdd } from "react-icons/io";
 
 const formBlueprint = {
@@ -16,7 +18,6 @@ const formBlueprint = {
 }
 
 function TableCard({ id, data, dataLoaded }) {
-  // const feed = demoData.feed;
   const [feedData, setFeedData] = useState([]);
 
   useEffect(() => {
@@ -62,53 +63,8 @@ function TableCard({ id, data, dataLoaded }) {
   )
 }
 
-function FormCard({ title, onClose, options }) {
-  const [data, setData] = useState(options[0]._id);
-
-  const onOptionChangeHandler = (event) => {
-    setData(event.target.value);
-  }
-
-  return (
-    <div className={classes.overlay}>
-      <div className={classes.formCard}>
-        <div className={classes.formHeader}>
-          <span className={classes.formTitle}>{title}</span>
-          <button className={classes.closeBtn} onClick={onClose}>X</button>
-        </div>
-
-        <label className={classes.label}>
-          Feed Type
-          <select className={classes.dropdownBtn} onChange={onOptionChangeHandler}>
-            {options.map((options, index) => {
-              return (
-                <option key={index} value={options._id}>
-                  {options.type} ({options.name})
-                </option>
-              )
-            })}
-          </select>
-        </label>
-
-        <label className={classes.label}>
-            Amount Fed
-            <input className={classes.textInputBox} type="number" onChange={event => {setValue(event.target.value)}} />
-        </label>
-
-        <label className={classes.label}>
-            Unit
-            <input className={classes.textInputBox} type="text" onChange={event => {setValue(event.target.value)}} />
-        </label>
-        
-        <button className={classes.submitBtn}>Submit</button>
-
-      </div>
-    </div>
-  )
-}
-
-export default function FeedRecord({ searchParams: {id} }) {
-  const [animalData, setAnimalData] = useState(undefined);
+export default function FeedRecord({ searchParams: {project, animal} }) {
+  const [feedData, setFeedData] = useState(undefined);
   const [showFormCard, setShowFormCard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -128,13 +84,11 @@ export default function FeedRecord({ searchParams: {id} }) {
   }
 
   useEffect(() => {
-    if (id) {
-      let animalData = animals.find((animal) => animal._id === id);
-      if (animalData) {
-        setAnimalData(animalData);
-      }
-    }
-  }, [id]);
+    getDailyFeedDocs(project, animal).then((data) => {
+      setFeedData(data);
+      setIsLoading(false);
+    });
+  }, [invalidateData]);
 
   return (
     <>
@@ -152,9 +106,12 @@ export default function FeedRecord({ searchParams: {id} }) {
         // <FormCard title="Add Feed Record" onClose={() => setShowFormCard(false)} options={animals} />
         <FormModel title="Add Feed Record" hideForm={() => setShowFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
           [
+            {type: "hidden", name: "projectId", defaultValue: project},
+            {type: "hidden", name: "animI", defaultValue: animal},
+
             {type: "select", label: "Feed Type", name:"feedType", placeholder: "Ex. hay"},
-            {type: "number", label: "Amount Fed", name: "amountFed", placeholder: "2"},
-            {type: "text", label: "Unit", name: "unit", placeholder: "lbs"},
+            {type: "number", label: "Amount Fed", name: "amountFed", placeholder: "Ex. 2"},
+            {type: "text", label: "Unit", name: "unit", placeholder: "Ex. lbs"},
           ]
         } />
       )}

@@ -30,7 +30,7 @@ function Card(props) {
     )
 }
 
-function FormCard({ title, onClose, options }) {
+function FormCard({ title, onClose, options, project }) {
   const [data, setData] = useState(options[0]?._id);
 
   const onOptionChangeHandler = (event) => {
@@ -49,13 +49,13 @@ function FormCard({ title, onClose, options }) {
           {options.map((options, index) => {
             return (
               <option key={index} value={options._id}>
-                {options.type} ({options.name})
+                {options.species} ({options.name})
               </option>
             )
           })}
         </select>
 
-        <Link href={{pathname: "overview/feedRecord", query: {id: data}}} className={classes.submitBtn} id={classes.feedRecordSubmitBtn}>Submit</Link>
+        <Link href={{pathname: "overview/feedRecord", query: {project: project, animal: data}}} className={classes.submitBtn} id={classes.feedRecordSubmitBtn}>Submit</Link>
       </div>
     </div>
   )
@@ -147,7 +147,7 @@ export default function Overview({ searchParams: {project} }) {
 
                     {/* FEED RECORD */}
                     <div onClick={() => setShowModal(true)}>
-                      <Card title = "Feed Record" />
+                      <Card title = "Feed Record" project={project} />
                     </div>
 
                     {showModal && (

@@ -22,7 +22,11 @@ function formatValue(value, format) {
 
   switch (format) {
     case "date":
-      return new Date(value).toLocaleDateString();
+      const d = new Date(value);
+      const year = d.getUTCFullYear();
+      const month = ('0' + (d.getUTCMonth() + 1)).slice(-2);
+      const day = ('0' + d.getUTCDate()).slice(-2);
+      return `${year}-${month}-${day}`;
     case "currency":
       return `$${value.toFixed(2)}`;
     case "weight":
@@ -59,7 +63,7 @@ function TableCard({ data, headers, dataLoaded }) {
                 const keys = header.key.split('.');
                 let value = rowData;
                 for (const key of keys) {
-                  value = value[key];
+                  value = value[key] ? value[key] : "";
                 }
                 const formattedValue = formatValue(value, header.format);
                 return (
@@ -114,6 +118,8 @@ export default function FeedInventory({ searchParams: {project} }) {
 
   const addFeedPrompt = () => {
     let newFeed = prompt("Please enter a new feed type");
+
+    if (!newFeed) return;
     addFeedNoForm(newFeed, project);
     setInvalidateOptions(true);
   }

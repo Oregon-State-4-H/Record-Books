@@ -7,17 +7,36 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import ActionBar from '@/app/components/ActionBar';
 import FormModel from '@/app/components/models/DynamicFormModel';
-import { updateRateOfGain, getAnimal } from '@/app/_db/srvactions/projects/animalProject';
+import { updateRateOfGain, getAnimal, updateAnimal } from '@/app/_db/srvactions/projects/animalProject';
 
 import CloverLoader from '@/app/components/CloverLoader';
 import { CiEdit } from "react-icons/ci";
 
 const formBlueprint = {
-    endingWeight: null,
-    endDate: null,
     beginningWeight: null,
-    beginningDate: null
+    beginningDate: null,
+    endWeight: null,
+    endDate: null
 }
+
+const formAnimalBlueprint = {
+    name: null,
+    birthdate: null,
+    species: null,
+    sireBreed: null,
+    damBreed: null,
+    purchaseDate: null,
+    animalCost: null
+}
+
+const formatDate = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getUTCFullYear();
+    const month = ('0' + (d.getUTCMonth() + 1)).slice(-2);
+    const day = ('0' + d.getUTCDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+};
 
 function Card({ title, action, children }) {
     return (
@@ -51,7 +70,10 @@ export default function Animal({ searchParams: {project, animal} }) {
     const [invalidateData, setInvalidateData] = useState(false);
 
     const [formInfo, setFormInfo] = useState(formBlueprint);
+    const [animalFormInfo, setAnimalFormInfo] = useState(formAnimalBlueprint);
+
     const [formState, formAction] = useFormState(updateRateOfGain, formBlueprint);
+    const [animalFormState, animalFormAction] = useFormState(updateAnimal, formAnimalBlueprint);
     
     useEffect(() => {
         getAnimal(animal).then((data) => {
@@ -63,9 +85,11 @@ export default function Animal({ searchParams: {project, animal} }) {
 
     const handleChange = (e) => {
         setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+        setAnimalFormInfo({ ...animalFormInfo, [e.target.name]: e.target.value });
     }
 
     const handleFormSubmit = () => {
+        setAnimalInfoFormCard(false);
         setWeightFormCard(false);
         setInvalidateData(true);
     }
@@ -94,14 +118,17 @@ export default function Animal({ searchParams: {project, animal} }) {
                 {/* ANIMAL INFO */}
                 <Card title="Animal Information" action={() => setAnimalInfoFormCard(true)}>
                     <CardItem label="Name" value={animalData?.name} />
-                    <CardItem label="Birth date" value={animalData?.birthdate} />
+                    <CardItem label="Birth date" value={formatDate(animalData?.birthdate)} />
                     <CardItem label="Species" value={animalData?.species} />
                     <CardItem label="Sire breed" value={animalData?.sireBreed} />
                     <CardItem label="Dam breed" value={animalData?.damBreed} />
+                    <CardItem label="Purchase date or obtained" value={formatDate(animalData?.purchaseDate)} />
+                    <CardItem label="Animal Cost" value={animalData?.animalCost} />
                 </Card>
 
-                {/* {animalInfoFormCard && (
-                    <FormModel title="Edit Rate of Gain" hideForm={() => setWeightFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
+                {/* EDIT ANIMAL INFO MODAL */}
+                {animalInfoFormCard && (
+                    <FormModel title="Edit Animal Info" hideForm={() => setAnimalInfoFormCard(false)} inputChangeHandler={handleChange} formAction={animalFormAction} postSubmitAction={handleFormSubmit} inputs={
                         [
                             {type: "hidden", name: "projectId", defaultValue: project},
                             {type: "hidden", name: "animalId", defaultValue: animal},
@@ -112,29 +139,33 @@ export default function Animal({ searchParams: {project, animal} }) {
                             {type: "text", label: "Species", name: "species", placeholder: "Ex. Sheep"},
                             {type: "text", label: "Sire Breed", name: "sireBreed", placeholder: "Ex. Sheep"},
                             {type: "text", label: "Dam Breed", name: "damBreed", placeholder: "Ex. Sheep"},
+                            
+                            {type: "date", label: "Purchase date or obtained", name: "purchaseDate", defaultValue: formatDate(animalData?.purchaseDate)},
+                            {type: "number", label: "Animal Cost", name: "animalCost", placeholder: "Ex. $100"}
                         ]
                     } />
-                )} */}
+                )}
 
                 {/* RATE OF GAIN */}
                 <Card title="Animal Rate of Gain" action={() => setWeightFormCard(true)}>
-                    <CardItem label="Beginning Weight" value={animalData?.beginningWeight} />
-                    <CardItem label="Beginning Date" value={animalData?.beginningDate} />
-                    <CardItem label="Ending Weight" value={animalData?.endWeight} />
-                    <CardItem label="Ending Date" value={animalData?.endDate} />
+                    <CardItem label="Beginning Weight" value={animalData?.beginningWeight + " lbs"} />
+                    <CardItem label="Beginning Date" value={formatDate(animalData?.beginningDate)} />
+                    <CardItem label="Ending Weight" value={animalData?.endWeight + " lbs"} />
+                    <CardItem label="Ending Date" value={formatDate(animalData?.endDate)} />
                 </Card>
 
+                {/* EDIT RATE OF GAIN INFO MODAL */}
                 {weightFormCard && (
                     <FormModel title="Edit Rate of Gain" hideForm={() => setWeightFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
                         [
                             {type: "hidden", name: "projectId", defaultValue: project},
                             {type: "hidden", name: "animalId", defaultValue: animal},
 
-                            {type: "number", label: "Beginning Weight", name: "beginningWeight", placeholder: "Ex. 10lbs"},
-                            {type: "date", label: "Beginning Date", name: "beginningDate", placeholder: "Ex. 2022-02-06"},
+                            {type: "number", label: "Beginning Weight (lbs)", name: "beginningWeight", placeholder: "Ex. 10lbs"},
+                            {type: "date", label: "Beginning Date", name: "beginningDate", defaultValue: formatDate(animalData?.beginningDate)},
 
-                            {type: "number", label: "Ending Weight", name: "endingWeight", placeholder: "Ex. 40lbs"},
-                            {type: "date", label: "Ending Date", name: "endDate", placeholder: "Ex. 2023-02-06"},
+                            {type: "number", label: "Ending Weight (lbs)", name: "endWeight", placeholder: "Ex. 40lbs"},
+                            {type: "date", label: "Ending Date", name: "endDate", defaultValue: formatDate(animalData?.endDate)},
                         ]
                     } />
                 )}

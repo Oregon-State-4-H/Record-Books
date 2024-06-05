@@ -95,24 +95,19 @@ export async function updateAnimal(prevState, formData) {
     try {
         const db = await connectDB();
         const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
-        // animal.name = formData.get("name");
-        // animal.animalType = formData.get("animalType");
-        // animal.breed = formData.get("breed");
-        // animal.birthDate = formData.get("birthDate");
-        // animal.purchaseDate = formData.get("purchaseDate");
-        // animal.purchaseAmount = formData.get("purchaseAmount");
-        // animal.purchaseCost = formData.get("purchaseCost");
-        // animal.feedCost = formData.get("feedCost");
-        // animal.totalCost = formData.get("totalCost");
-        // animal.feed = formData.get("feed");
-        // animal.feedAmount = formData.get("feedAmount");
-        // animal.feedCost = formData.get("feedCost");
-        // animal.feedDate = formData.get("feedDate");
-        // animal.feedPurchaceId = formData.get("feedPurchaceId");
-        // animal.feedId = formData.get("feedId");
+
+        console.log("updateAnimal:", formData);
+
+        animal.name = formData.get("name");
+        animal.species = formData.get("species");
+        animal.sireBreed = formData.get("sireBreed");
+        animal.damBreed = formData.get("damBreed");
+        animal.birthDate = new Date(formData.get("birthDate")).toISOString();
+        animal.purchaseDate = new Date(formData.get("purchaseDate")).toISOString();
+        animal.animalCost = formData.get("animalCost");
 
         await animal.save();
-        return animal;
+        return JSON.parse(JSON.stringify(animal));
     } catch (error) {
         console.error("updateAnimal:", error);
         Error(error);
@@ -123,14 +118,15 @@ export async function updateRateOfGain(prevState, formData) {
     const session = await getSession(); 
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
 
+    con
     try {
         const db = await connectDB();
         const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
 
         animal.beginningWeight = formData.get("beginningWeight");
-        animal.beginningDate = formData.get("beginningDate");
+        animal.beginningDate = new Date(formData.get("beginningDate")).toISOString();
         animal.endingWeight = formData.get("endingWeight");
-        animal.endDate = formData.get("endDate");
+        animal.endDate = new Date(formData.get("endDate")).toISOString();
     
         await animal.save();
         return JSON.parse(JSON.stringify(animal));

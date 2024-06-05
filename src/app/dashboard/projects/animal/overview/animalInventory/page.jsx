@@ -18,6 +18,7 @@ const formBlueprint = {
     animalId: null,
     birthdate: null,
     purchaseDate: null,
+    animalCost: null,
     sireBreed: null,
     damBreed: null,
 }
@@ -99,6 +100,7 @@ export default function AnimalInventory({ searchParams: {project} }) {
                         {type: "text", label: "Identification of animal(s)", name: "animalId", placeholder: "Ex. Male"},
                         {type: "date", label: "Birth date of animal(s)", name: "birthdate", placeholder: "Ex. 2022-02-06"},
                         {type: "date", label: "Purchase date or obtained", name: "purchaseDate", placeholder: "Ex. 2022-02-14"},
+                        {type: "number", label: "Animal Cost", name: "animalCost", placeholder: "Ex. $100"},
                         {type: "text", label: "Breed of sire", name: "sireBreed", placeholder: "Ex. Sheep"},
                         {type: "text", label: "Breed of dam", name: "damBreed", placeholder: "Ex. Sheep"},
                     ]
