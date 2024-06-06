@@ -25,6 +25,9 @@
   --nav-bar-height: 60px;
   --nav-bar-height-mob: 70px;
   --action-bar-height-mob: 50px;
+
+  --mobile-breakpoint: 480px;
+  --tablet-breakpoint: 768px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,6 +75,7 @@ body {
   align-items: center;
   padding: 10px;
   height: var(--nav-bar-height);
+  color: white;
   
   @media (max-width: 480px) {
     position: fixed;
@@ -134,6 +138,7 @@ main {
 
 .actionBar {
   display: none;
+  color: white;
 
   @media (max-width: 480px) {
     display: flex;
@@ -155,4 +160,49 @@ main {
   color: white;
   @apply text-2xl;
   margin-right: 8px;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+.pageTitle {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--txt-primary);
+  text-align: center;
+  flex-grow: 1;
+  margin: 0;
+}
+
+#headerBack {
+  padding: 10px;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  flex: 1;
+  margin-bottom: 5px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.btnGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
