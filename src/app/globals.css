@@ -206,3 +206,12 @@ main {
   justify-content: center;
   align-items: center;
 }
+
+#bookmark {
+  color: var(--beaver-orange);
+  font-size: 1.6rem;
+}
+
+#bookmark:hover {
+  color: lightgray;
+}

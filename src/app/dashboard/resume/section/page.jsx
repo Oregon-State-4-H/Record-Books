@@ -43,6 +43,7 @@ import Section14 from '@/app/components/reports/resume/Section14';
 import FormModel from '@/app/components/models/DynamicFormModel';
 import BackNavBtn from '@/app/components/BackNavBtn';
 import PDFPreviewModel from '@/app/components/models/PDFPreviewModel';
+import PageHeader from '@/app/components/PageHeader';
 
 const sectionComponents = {
   '1': Section1,
@@ -275,10 +276,7 @@ export default function Section({ searchParams: {section} }) {
   return (
     <main>
       <ActionBar title={pageTitle} />
-      <div className="pageHeader">
-        <BackNavBtn id="headerBack" />
-        <h1 className="pageTitle">{pageTitle}</h1>
-      </div>
+      <PageHeader title={pageTitle} />
 
       <div className="btnContainer">
         <div className="btnGroup">

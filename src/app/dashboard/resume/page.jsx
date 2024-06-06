@@ -9,6 +9,7 @@ import { getResumeDocs } from '@/app/_db/srvactions/resume';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { PDFDownloadButton, PDFPreviewButton } from '@/app/components/logging/ActionButton';
 import PDFPreviewModel from '@/app/components/models/PDFPreviewModel';
+import PageHeader from '@/app/components/PageHeader';
 
 
 function Card(props) {
@@ -49,9 +50,7 @@ export default function Resume() {
   return (
     <main>
       <ActionBar title="My 4-H Resume" disableBack={true} />
-      <div className="pageHeader">
-        <h1 className="pageTitle">My 4-H Resume</h1>
-      </div>
+      <PageHeader title="My 4-H Resume" disableBack={true} />
 
       <div className="btnContainer">
         <div className="btnGroup">
