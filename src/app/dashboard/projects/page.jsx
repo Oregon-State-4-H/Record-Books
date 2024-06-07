@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { addProject, getCurrentProjects } from '@/app/_db/srvactions/project';
 import CloverLoader from '@/app/components/CloverLoader';
 import { useState, useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import styles from './styles.module.css';
-import { IoMdAdd } from "react-icons/io";
-import { OverlayModel } from '@/app/components/models/OverlayModel';
 import FormModel from '@/app/components/models/DynamicFormModel';
+import PageHeader from '@/app/components/PageHeader';
+import { AddButton, LinkButton } from '@/app/components/logging/ActionButton';
 
 const Project = {
   year: null,
@@ -66,16 +66,14 @@ export default function Projects() {
   return (
     <main>
       <ActionBar title="Projects" disableBack={true} />
-      
-      <div className={classes.header}>
-        <div className={classes.title}>Current Projects</div>
-        <Link href={{pathname: "projects/previous"}} className={classes.btn} id='previousBtn'>View All Projects</Link>
-      </div>
+      <PageHeader title="Projects" disableBack={true}/>
 
-      <button id={styles.addProjectBtn} onClick={showForm}>
-        <IoMdAdd className={styles.btnIcon}/>
-        Add project
-      </button>
+      <div className='btnContainer'>
+        <div className="btnGroup" style={{marginLeft: "auto"}}>
+          <AddButton text="Add Project" handleClick={showForm} />
+          <LinkButton url="projects/previous" searchParams={{}} text="View All Projects" />
+        </div>
+      </div>
 
       <div className={classes.cardContainer}>
         {projects?.map((project, index) => {

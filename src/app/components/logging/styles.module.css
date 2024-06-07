@@ -14,10 +14,6 @@
     padding: 10px;
 }
 
-.table tr:hover {
-    background-color: var(--bg-primary);
-}
-
 .table li {
     padding: 5px;
 }

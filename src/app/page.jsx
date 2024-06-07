@@ -243,17 +243,17 @@ export default function Home() {
             <div className={styles.memberCardContainer}>
               <BioCard name="Byron Ojua-Nice" role="Project Manager, Documentation, Swiss Army Knife" 
                 linkedin="https://www.linkedin.com/in/byron-ojua-nice/" image="/assets/photos/byron_profile.jpeg"
-                bio="Placeholder bio"
+                bio="Fall 2025 grad. Computer Science major with a focus in Web and Mobile App Development"
               />
 
               <BioCard name="Michelle Nguyen" role="UI Design, Frontend Developer" 
                 linkedin="https://www.linkedin.com/in/michellehuyen/" image="/assets/photos/michelle_profile.jpeg"
-                bio="Placeholder bio"
+                bio="Spring 2024 grad. Computer Science major with a focus in Web and Mobile App Development"
               />
 
               <BioCard name="Javier Garcia Ramirez" role="Backend Developer, Database Manager" 
                 linkedin="https://www.linkedin.com/in/javi-g/" image="/assets/photos/javier_profile.jpeg"
-                bio="Placeholder bio"
+                bio="Spring 2024 grad. Computer Science major with a focus in buisness."
               />
             </div>
           </section>

@@ -2,91 +2,22 @@
 
 import classes from "./styles.module.css";
 import { useState, useEffect } from "react";
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 
 import ActionBar from "@/app/components/ActionBar";
 import FormModel from '@/app/components/models/DynamicFormModel';
 import { addFeedNoForm, getFeedDocs, getFeedPurchaseDocs, addFeedPurchase } from "@/app/_db/srvactions/projects/animalProject";
 import CloverLoader from '@/app/components/CloverLoader';
 
-import { IoMdAdd } from "react-icons/io";
+import { AddButton } from "@/app/components/logging/ActionButton";
+import PageHeader from "@/app/components/PageHeader";
+import TableCard from "@/app/components/logging/RecordTable";
 
 const formBlueprint = {
   feedType: null,
   cost: null,
   amountPurchased: null,
 }
-
-function formatValue(value, format) {
-  if (!format) return value;
-
-  switch (format) {
-    case "date":
-      const d = new Date(value);
-      const year = d.getUTCFullYear();
-      const month = ('0' + (d.getUTCMonth() + 1)).slice(-2);
-      const day = ('0' + d.getUTCDate()).slice(-2);
-      return `${year}-${month}-${day}`;
-    case "currency":
-      return `$${value.toFixed(2)}`;
-    case "weight":
-      return `${value} lbs`;
-    default:
-      return value;
-  }
-}
-
-function TableCard({ data, headers, dataLoaded }) {  
-  if ((!data || data.length === 0) && dataLoaded) {
-    return (
-      <div className={classes.infoSection}>
-        <h1 className={classes.infoSectionHeader}>Hmm... your log is empty!</h1>
-        <p>{"Let's fix that! Add your first entry above."}</p>
-      </div>
-    );
-  }
-
-  return (
-    <table className={classes.table}>
-      <thead>
-        <tr>
-          {headers.map((header, headerID) => (
-            <th key={headerID}>{header.name}</th>
-          ))}
-        </tr>
-      </thead>
-      {data && (
-        <tbody>
-          {data.map((rowData, rowID) => (
-            <tr key={rowID}>
-              {headers.map((header, colID) => {
-                const keys = header.key.split('.');
-                let value = rowData;
-                for (const key of keys) {
-                  value = value[key] ? value[key] : "";
-                }
-                const formattedValue = formatValue(value, header.format);
-                return (
-                  <td key={colID}>
-                    {Array.isArray(formattedValue) ? (
-                      <ul>
-                        {formattedValue.map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : formattedValue}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      )}
-    </table>
-  );
-}
-
-
 
 export default function FeedInventory({ searchParams: {project} }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -144,18 +75,13 @@ export default function FeedInventory({ searchParams: {project} }) {
   return (
     <main>
       <ActionBar title="Feed Inventory" disableBack={false} />
-      <div className={classes.sectionTitle}>Feed Information</div>
-
-      <div className={classes.btnContainer}>
-        <button className={classes.addInfoContainer} onClick={() => setShowFormCard(true)}>
-          <IoMdAdd />
-          Add Feed Purchases
-        </button>
-
-        <button className={classes.addInfoContainer} onClick={addFeedPrompt}>
-          <IoMdAdd />
-          Add feed
-        </button>
+      <PageHeader title="Feed Inventory" disableBack={false} />
+      
+      <div className="btnContainer" >
+        <div className="btnGroup" style={{marginLeft: "auto"}}>
+          <AddButton text="Add Feed" handleClick={addFeedPrompt} />
+          <AddButton text="Add Feed Purchases" handleClick={() => setShowFormCard(true)} />
+        </div>
       </div>
 
       {showFormCard && (
@@ -165,12 +91,17 @@ export default function FeedInventory({ searchParams: {project} }) {
             {type: "select", label: "Feed Type", name: "feedId", options: feedOptions},
             {type: "date", label: "Date Purchased", name: "datePurchased", placeholder: "Ex. 2022-02-22"},
             {type: "number", label: "Total Cost of Purchase", name: "totalCost", placeholder: "Ex. 20", step: "0.01"},
-            {type: "number", label: "Amount Purchased", name: "amountPurchased", placeholder: "Ex. 2", step: "0.01"},
+            {type: "number", label: "Amount Purchased (lbs)", name: "amountPurchased", placeholder: "Ex. 2", step: "0.01"},
           ]
         } />
       )}
 
-      <TableCard data={tableData} headers={headers} dataLoaded={!isLoading} />
+      <TableCard 
+        data={tableData} 
+        headers={headers} 
+        dataLoaded={!isLoading}
+      />
+
       {isLoading && (
         <div className={classes.loaderContainer}>
           <CloverLoader />

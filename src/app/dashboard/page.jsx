@@ -59,6 +59,7 @@ export default function Dashboard() {
           <Card title="Support 4-H" url="https://extension.oregonstate.edu/4h/support-4-h" />
         </div>
 
+        { bookmarks && bookmarks.length > 0 &&
         <div className={`${styles.summaryCard} ${styles.bookmarkCard}`}>
           <div className={styles.cardTitle}>
             <h2>Bookmarks</h2>
@@ -67,7 +68,7 @@ export default function Dashboard() {
           {bookmarks.map((bookmark, index) => {
             return <Card key={index} title={bookmark.label} url={bookmark.link} openInNewTab={false} />
           })}
-        </div>
+        </div>}
       </div>
     </main>
   )

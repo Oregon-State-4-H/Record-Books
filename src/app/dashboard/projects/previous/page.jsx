@@ -3,10 +3,10 @@
 import ActionBar from '@/app/components/ActionBar';
 import classes from './styles.module.css';
 import Link from 'next/link';
-import BackNavBtn from '@/app/components/BackNavBtn';
 import { getProjects } from '@/app/_db/srvactions/project';
 import CloverLoader from '@/app/components/CloverLoader';
 import { useState, useEffect } from 'react';
+import PageHeader from '@/app/components/PageHeader';
 
 
 export default function Projects() {
@@ -23,17 +23,19 @@ export default function Projects() {
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
-  });
+  }, []);
 
 
   return (
     <main>
       <ActionBar title="All Projects" disableBack={false} />
+
+      <PageHeader title="All Projects" />
       
-      <div className={classes.header}>
+      {/* <div className={classes.header}>
         <BackNavBtn /> 
         <div className={classes.title}>All Projects</div>
-      </div>
+      </div> */}
 
 
       <div className={classes.cardContainer}>

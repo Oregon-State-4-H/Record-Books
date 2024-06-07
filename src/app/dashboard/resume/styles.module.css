@@ -1,3 +1,9 @@
+.loaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .sectionTitle {
     padding: 10px;
     color: var(--text-primary);
@@ -21,7 +27,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin-top: 30px;
 }
 
 .cardItem {

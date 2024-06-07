@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
+    marginRight: 5,
   },
   fillableFormLabel: {
     marginRight: 5,

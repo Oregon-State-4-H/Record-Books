@@ -37,7 +37,7 @@ export function FormInput({ type, label, name, placeholder, onChangeHandler, opt
       return (
         <label className={styles.inputLabel}>{label}
           <select className={styles.inputDropdown} name={name} onChange={onChangeHandler} defaultValue={defaultValue} required>
-            {options.map((option, index) => (
+            {options?.map((option, index) => (
               <option key={index} value={option.value}>{option.label}</option>
             ))}
           </select>

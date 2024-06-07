@@ -1,3 +1,9 @@
+.loaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .animalName {
     color: var(--text-primary);
     font-size: 2rem;
