@@ -69,3 +69,77 @@ export async function updateUserProfile(prevState, formData) {
         Error(error);
     }
 }
+
+
+export async function getUserBookmarks() {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    const db = await connectDB();
+    const user = await User
+        .findOne({ _id: userID })
+        .populate("bookmarks");
+
+    if (!user) {
+        console.error("User not found");
+        return null;
+    }
+
+    return JSON.parse(JSON.stringify(user.bookmarks));
+}
+
+
+export async function addUserBookmark(link, label) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    const db = await connectDB();
+    const user = await User.findOne({ _id: userID });
+
+    if (!user) {
+        console.error("User not found");
+        return null;
+    }
+
+    const bookmarks = user.bookmarks;
+    
+
+    // Check if the link is already bookmarked
+    // Only return the bookmarks
+    if (bookmarks.find(b => b.link === link)) {
+        return JSON.parse(JSON.stringify(user.bookmarks));
+    }
+
+    bookmarks.push({
+        link: link,
+        label: label
+    });
+
+    user.bookmarks = bookmarks;
+    user.save();
+    return JSON.parse(JSON.stringify(user.bookmarks));
+}
+
+export async function removeUserBookmark(link) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    const db = await connectDB();
+    const user = await User
+        .findOne({ _id: userID })
+        .populate("bookmarks");
+
+    if (!user) {
+        console.error("User not found");
+        return null;
+    }
+
+    const bookmarks = user.bookmarks;
+    const bookmark = bookmarks.find(b => b.link === link);
+    const index = bookmarks.indexOf(bookmark);
+
+    if (index > -1) {
+        bookmarks.splice(index, 1);
+    }
+
+    user.bookmarks = bookmarks;
+    user.save();
+    return JSON.parse(JSON.stringify(user));
+}

@@ -1,125 +1,66 @@
 "use client";
 
 import classes from './styles.module.css';
-import { useState, useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useState, useEffect, use } from 'react';
+import { useFormState } from 'react-dom';
 
 import ActionBar from '@/app/components/ActionBar';
 import FormModel from '@/app/components/models/DynamicFormModel';
 import CloverLoader from '@/app/components/CloverLoader';
 
-import { IoMdAdd } from "react-icons/io";
+import { AddButton } from '@/app/components/logging/ActionButton';
+import PageHeader from '@/app/components/PageHeader';
+import TableCard from '@/app/components/logging/RecordTable';
+import { getDailyFeedDocs, addDailyFeed, getFeedDocs, getFeedPurchaseDocs } from '@/app/_db/srvactions/projects/animalProject';
 
 const formBlueprint = {
   feedType: null,
   amountFed: null,
 }
 
-function TableCard({ id, data, dataLoaded }) {
-  // const feed = demoData.feed;
-  const [feedData, setFeedData] = useState([]);
+const formatDate = (date) => {
+  if (!date) return '';
+  const d = new Date(date);
+  const year = d.getUTCFullYear();
+  const month = ('0' + (d.getUTCMonth() + 1)).slice(-2);
+  const day = ('0' + d.getUTCDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+};
 
-  useEffect(() => {
-    if (id) {
-      const feedData = feedData.filter((feed) => feed.animalID === id);
-      if (feedData) {
-        setFeedData(feedData);
-      }
-    }
-  }, [id, feedData]);
+const headers = [
+  { name: "Date", key: "feedDate", format: "date" },
+  { name: "Feed", key: "feedId.name" },
+  { name: "Amount Fed", key: "feedAmount" },
+  { name: "Feed Cost", key: "feedCost", format: "currency"},
+]
 
-  if ((!data || data.length == 0) && dataLoaded) {
-    return (
-      <>
-        <div className={classes.infoSection}>
-          <h1 className={classes.infoSectionHeader}>Hmm... your log is empty!</h1>
-          <p>{"Let's fix that! Add your first entry above."}</p>
-        </div>
-      </>
-    )
-  }
 
-  return (
-    <>
-      <table className={classes.table}>
-        <thead>
-          <tr>
-            <th>Feed Type</th>
-            <th>Amount Fed</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {feedData?.map((feedType, index) => (
-            <tr key={index}>
-              <td>{feedType.type}</td>
-              <td>{feedType.amount} {feedType.unit}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  )
-}
-
-function FormCard({ title, onClose, options }) {
-  const [data, setData] = useState(options[0]._id);
-
-  const onOptionChangeHandler = (event) => {
-    setData(event.target.value);
-  }
-
-  return (
-    <div className={classes.overlay}>
-      <div className={classes.formCard}>
-        <div className={classes.formHeader}>
-          <span className={classes.formTitle}>{title}</span>
-          <button className={classes.closeBtn} onClick={onClose}>X</button>
-        </div>
-
-        <label className={classes.label}>
-          Feed Type
-          <select className={classes.dropdownBtn} onChange={onOptionChangeHandler}>
-            {options.map((options, index) => {
-              return (
-                <option key={index} value={options._id}>
-                  {options.type} ({options.name})
-                </option>
-              )
-            })}
-          </select>
-        </label>
-
-        <label className={classes.label}>
-            Amount Fed
-            <input className={classes.textInputBox} type="number" onChange={event => {setValue(event.target.value)}} />
-        </label>
-
-        <label className={classes.label}>
-            Unit
-            <input className={classes.textInputBox} type="text" onChange={event => {setValue(event.target.value)}} />
-        </label>
-        
-        <button className={classes.submitBtn}>Submit</button>
-
-      </div>
-    </div>
-  )
-}
-
-export default function FeedRecord({ searchParams: {id} }) {
-  const [animalData, setAnimalData] = useState(undefined);
+export default function FeedRecord({ searchParams: {project, animal} }) {
   const [showFormCard, setShowFormCard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [formInfo, setFormInfo] = useState(formBlueprint);
 
-  const [formState, formAction] = useFormState(formBlueprint);
-  // const [formState, formAction] = useFormState(addFeed, formBlueprint);
+  const [formState, formAction] = useFormState(addDailyFeed, formBlueprint);
   const [invalidateData, setInvalidateData] = useState(false);
+  const [tableData, setTableData] = useState(undefined);
+  const [feedOptions, setFeedOptions] = useState(undefined);
+  const [feedPurchases, setFeedPurchases] = useState(undefined);
+  const [feedPurchaseOptions, setFeedPurchaseOptions] = useState(undefined);
+  const [filteredFeedPurchaseOptions, setFilteredFeedPurchaseOptions] = useState(undefined);
+
 
   const handleChange = (e) => {
-      setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+    setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+    if (e.target.name === "feedId") {
+      const selectedFeedType = e.target.value;
+      const newFeedPurchaseOptions = feedPurchases.filter((item) => item.feedId._id === selectedFeedType).map((item) => {
+        const price = (item.totalCost / item.amountPurchased).toFixed(2);
+        const date = formatDate(item.datePurchased);
+        return { value: item._id, label: `${item.feedId.name} - ${date} ($${price})` };
+      });
+      setFilteredFeedPurchaseOptions(newFeedPurchaseOptions);
+    }
   }
 
   const handleFormSubmit = () => {
@@ -128,41 +69,86 @@ export default function FeedRecord({ searchParams: {id} }) {
   }
 
   useEffect(() => {
-    if (id) {
-      let animalData = animals.find((animal) => animal._id === id);
-      if (animalData) {
-        setAnimalData(animalData);
-      }
+    try {
+      getDailyFeedDocs(project, animal).then((data) => {
+        var formattedData = data.map((item) => {
+          return {
+            ...item,
+            feedCost: item.feedAmount * (item.feedPurchaceId.totalCost / item.feedPurchaceId.amountPurchased)
+          }
+        });
+        setTableData(formattedData);
+        setInvalidateData(false);
+        setIsLoading(false);
+      });
+
+      getFeedDocs(project).then((data) => {
+        var opts = data?.map((item) => {
+          return {value: item._id, label: item.name}
+        });
+        setFeedOptions(opts);
+      });
+
+      getFeedPurchaseDocs(project).then((data) => {
+        setFeedPurchases(data);
+        var opts = data?.map((item) => {
+          var price = (item.totalCost / item.amountPurchased).toFixed(2);
+          var date = formatDate(item.datePurchased);
+          return {value: item.price, label: item.feedId.name + " - " + date + " ($" + price + ")"}
+        });
+        setFeedPurchaseOptions(opts);
+      });
+    } catch (error) {
+      console.error("Error fetching projects:", error);
     }
-  }, [id]);
+  }, [invalidateData]);
+
+  useEffect(() => {
+    if (feedOptions && feedOptions.length > 0 && feedPurchases) {
+      const selectedFeedType = feedOptions[0].value;
+      const newFeedPurchaseOptions = feedPurchases.filter((item) => item.feedId._id === selectedFeedType).map((item) => {
+        const price = (item.totalCost / item.amountPurchased).toFixed(2);
+        const date = formatDate(item.datePurchased);
+        return { value: item._id, label: `${item.feedId.name} - ${date} ($${price})` };
+      });
+      setFilteredFeedPurchaseOptions(newFeedPurchaseOptions);
+      setFormInfo({ ...formInfo, feedType: selectedFeedType });
+    }
+  }, [feedOptions, feedPurchases]);
 
   return (
-    <>
-      <div className={classes.animalName}>{animalData?.type} - {animalData?.name}</div>
-      
-      <div className={classes.sectionHeader}>
-        <span className={classes.sectionTitle}>Daily Feed Log</span>
-        <button className={classes.addInfoContainer} onClick={() => setShowFormCard(true)}>
-          <IoMdAdd />
-          <span id={classes.addInfo}>Add Feeding Data</span>
-        </button>
+    <main>
+      <ActionBar title="Daily Feed Log" disableBack={false} />
+      <PageHeader title="Daily Feed Log" disableBack={false} />
+
+      <div className="btnContainer">
+        <div className="btnGroup" style={{marginLeft: "auto"}}>
+          <AddButton text="Add Info" handleClick={() => setShowFormCard(true)} />
+        </div>
       </div>
 
       {showFormCard && (
-        // <FormCard title="Add Feed Record" onClose={() => setShowFormCard(false)} options={animals} />
         <FormModel title="Add Feed Record" hideForm={() => setShowFormCard(false)} inputChangeHandler={handleChange} formAction={formAction} postSubmitAction={handleFormSubmit} inputs={
           [
-            {type: "select", label: "Feed Type", name:"feedType", placeholder: "Ex. hay"},
-            {type: "number", label: "Amount Fed", name: "amountFed", placeholder: "2"},
-            {type: "text", label: "Unit", name: "unit", placeholder: "lbs"},
+            {type: "hidden", name: "projectId", defaultValue: project},
+            {type: "hidden", name: "animalId", defaultValue: animal},
+
+            {type: "date", label: "Date", name: "feedDate", placeholder: "Ex. 2021-01-01"},
+            {type: "select", label: "Feed Type", name:"feedId", placeholder: "Ex. hay", options: feedOptions},
+            {type: "select", label: "From Purchase", name:"feedPurchaceId", options: filteredFeedPurchaseOptions},
+            {type: "number", label: "Amount Fed (lbs)", name: "feedAmount", placeholder: "Ex. 2", step: "0.01"},
           ]
         } />
       )}
 
-      <TableCard id={id} data={animalData} dataLoaded={!isLoading} />
+      <TableCard
+        data={tableData}
+        headers={headers}
+        dataLoaded={!isLoading}
+      />
       {isLoading && <div className={classes.loaderContainer}>
         <CloverLoader />
       </div>}
-    </>
+    </main>
   )
 }

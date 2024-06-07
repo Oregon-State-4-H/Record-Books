@@ -1,6 +1,6 @@
 "use server"
 
-import { Animal, Feed, FeedPurchase, DailyFeed, Expenses } from "@/app/_db/models/projects/animalProject";
+import { Animal, Feed, FeedPurchase, DailyFeed, Expenses, Supplies } from "@/app/_db/models/projects/animalProject";
 import connectDB from "@/app/_db/mongodb";
 import { ObjectId } from "mongodb";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -95,24 +95,19 @@ export async function updateAnimal(prevState, formData) {
     try {
         const db = await connectDB();
         const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
-        // animal.name = formData.get("name");
-        // animal.animalType = formData.get("animalType");
-        // animal.breed = formData.get("breed");
-        // animal.birthDate = formData.get("birthDate");
-        // animal.purchaseDate = formData.get("purchaseDate");
-        // animal.purchaseAmount = formData.get("purchaseAmount");
-        // animal.purchaseCost = formData.get("purchaseCost");
-        // animal.feedCost = formData.get("feedCost");
-        // animal.totalCost = formData.get("totalCost");
-        // animal.feed = formData.get("feed");
-        // animal.feedAmount = formData.get("feedAmount");
-        // animal.feedCost = formData.get("feedCost");
-        // animal.feedDate = formData.get("feedDate");
-        // animal.feedPurchaceId = formData.get("feedPurchaceId");
-        // animal.feedId = formData.get("feedId");
+
+        console.log("updateAnimal:", formData);
+
+        animal.name = formData.get("name");
+        animal.species = formData.get("species");
+        animal.sireBreed = formData.get("sireBreed");
+        animal.damBreed = formData.get("damBreed");
+        animal.birthDate = new Date(formData.get("birthDate")).toISOString();
+        animal.purchaseDate = new Date(formData.get("purchaseDate")).toISOString();
+        animal.animalCost = formData.get("animalCost");
 
         await animal.save();
-        return animal;
+        return JSON.parse(JSON.stringify(animal));
     } catch (error) {
         console.error("updateAnimal:", error);
         Error(error);
@@ -128,9 +123,9 @@ export async function updateRateOfGain(prevState, formData) {
         const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
 
         animal.beginningWeight = formData.get("beginningWeight");
-        animal.beginningDate = formData.get("beginningDate");
-        animal.endingWeight = formData.get("endingWeight");
-        animal.endDate = formData.get("endDate");
+        animal.beginningDate = new Date(formData.get("beginningDate")).toISOString();
+        animal.endWeight = formData.get("endWeight");
+        animal.endDate = new Date(formData.get("endDate")).toISOString();
     
         await animal.save();
         return JSON.parse(JSON.stringify(animal));
@@ -382,7 +377,8 @@ export async function getDailyFeedDocs(projectId, animalId) {
         const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
         const db = await connectDB();
 
-        const dailyFeed = await DailyFeed.find({ projectId: ObjectId.createFromHexString(projectId), animalId: ObjectId.createFromHexString(animalId), uid: userID });
+        const dailyFeed = await DailyFeed.find({ projectId: projectId, animalId: animalId, uid: userID }).populate("feedId").populate("feedPurchaceId").exec();
+
         return JSON.parse(JSON.stringify(dailyFeed));
     } catch (error) {
         console.error("getDailyFeed:", error);
@@ -429,7 +425,8 @@ export async function addDailyFeed(prevState, formData) {
             feedDate: formData.get("feedDate"),
             feedAmount: formData.get("feedAmount"),
             feedPurchaceId: ObjectId.createFromHexString(formData.get("feedPurchaceId")),
-            uid: userID
+            uid: userID,
+            projectId: ObjectId.createFromHexString(formData.get("projectId"))
         });
 
         await dailyFeed.save();
@@ -540,6 +537,128 @@ export async function addExpense(prevState, formData) {
         return JSON.parse(JSON.stringify(expense));
     } catch (error) {
         console.error("addExpense:", error);
+        Error(error);
+    }
+}
+
+
+/* ================== SUPPLY INVENTORY ==================
+* Database CRUD operations for supply inventory documents.
+*/
+
+/**
+ * @async Gets all supply inventory documents for a animal project
+ * @returns {object} An array of supply inventory documents
+ * @see {@link Supplies} for object structure
+ */
+export async function getSupplyDocs(projectId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+
+        const supplies = await Supplies.find({ projectId: projectId, uid: userID });
+        return JSON.parse(JSON.stringify(supplies));
+    } catch (error) {
+        console.error("getSupplies:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Gets a supply inventory document by its ID
+ * @param {string} supplyId - The ID of the supply inventory document
+ * @returns {object} A supply inventory document
+ * @see {@link Supplies} for object structure
+ */
+export async function getSupply(supplyId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+
+        const supply = await Supplies.findOne({ _id: supplyId, uid: userID });
+        return JSON.parse(JSON.stringify(supply));
+    } catch (error) {
+        console.error("getSupply:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Add a new supply inventory document to the database
+ * @param {object} prevState Previous form state
+ * @param {object} formData Form data
+ * @returns {object} New supply inventory document object
+ * @see {@link Supplies} for object structure
+ */
+export async function addSupply(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+    console.log("addSupply projectId: ", formData.get("projectId"));
+
+    try {
+        const db = await connectDB();
+        const supply = new Supplies({
+            description: formData.get("description"),
+            startValue: formData.get("startValue"),
+            endValue: formData.get("endValue"),
+            projectId: ObjectId.createFromHexString(formData.get("projectId")),
+            uid: userID
+        });
+
+        await supply.save();
+        return JSON.parse(JSON.stringify(supply));
+    } catch (error) {
+        console.error("addSupply:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Update a supply inventory document in the database
+ * @param {object} prevState Previous form state
+ * @param {object} formData Form data
+ * @returns {object} Updated supply inventory document object
+ * @see {@link Supplies} for object structure
+ */
+export async function updateSupply(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const supply = await Supplies.findOne({ _id: formData.get("supplyId"), uid: userID });
+        // supply.description = formData.get("description");
+        // supply.startValue = formData.get("startValue");
+        // supply.endValue = formData.get("endValue");
+        // supply.projectId = formData.get("projectId");
+        // supply.uid = userID;
+
+        await supply.save();
+        return supply;
+    } catch (error) {
+        console.error("updateSupply:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a supply inventory document from the database
+ * @param {string} supplyId - The ID of the supply inventory document
+ * @returns {object} Deleted supply inventory document object
+ * @see {@link Supplies} for object structure
+ */
+export async function deleteSupply(supplyId) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const supply = await Supplies.findOneAndDelete({ _id: supplyId, uid: userID });
+        return supply;
+    } catch (error) {
+        console.error("deleteSupply:", error);
         Error(error);
     }
 }

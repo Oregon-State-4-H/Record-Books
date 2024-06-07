@@ -11,8 +11,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    color: white;
     border: none;
+    background-color: var(--bg-secondary);
     border-radius: 5px;
     padding: 5px 10px 5px 10px;
 }

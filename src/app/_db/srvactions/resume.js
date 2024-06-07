@@ -137,6 +137,60 @@ export async function addSection1(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 1 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData
+ * @returns 
+ */
+export async function updateSection1(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section1.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 1 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.grade = formData.get("grade");
+        section.clubName = formData.get("clubName");
+        section.numInClub = formData.get("numInClub");
+        section.clubLeader = formData.get("clubLeader");
+        section.meetingsHeld = formData.get("meetingsHeld");
+        section.meetingsAttended = formData.get("meetingsAttended");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection1:", error);
+        Error(error);
+    }
+
+}
+
+/**
+ * @async Delete a section 1 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection1(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section1.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection1:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 2 ==================
 * Database CRUD operations for resume Section 2 documents.
@@ -205,6 +259,55 @@ export async function addSection2(prevState, formData){
         return JSON.parse(JSON.stringify(section));
     } catch (error) {
         console.error("addSection2:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Update a section 2 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection2(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section2.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 2 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.projectName = formData.get("projectName");
+        section.projectScope = formData.get("projectScope");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection2:", error);
+        Error(error);
+    }
+
+}
+
+/**
+ * @async Delete a section 2 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean}
+ */
+export async function deleteSection2(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section2.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection2:", error);
         Error(error);
     }
 }
@@ -282,6 +385,56 @@ export async function addSection3(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 3 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection3(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section3.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 3 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.activityKind = formData.get("activityKind");
+        section.thingsLearned = formData.get("thingsLearned");
+        section.level = formData.get("level");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection3:", error);
+        Error(error);
+    }
+
+
+}
+
+/**
+ * @async Delete a section 3 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean}
+ */
+export async function deleteSection3(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section3.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection3:", error);
+        Error(error);
+    }
+}
 
 /* ================== SECTION 4 ==================
 * Database CRUD operations for resume Section 4 documents.
@@ -351,6 +504,57 @@ export async function addSection4(prevState, formData){
         return JSON.parse(JSON.stringify(section));
     } catch (error) {
         console.error("addSection4:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Update a section 4 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection4(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section4.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 4 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.activityKind = formData.get("activityKind");
+        section.scope = formData.get("scope");
+        section.level = formData.get("level");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection4:", error);
+        Error(error);
+    }
+
+
+}
+
+/**
+ * @async Delete a section 4 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean}
+ */
+export async function deleteSection4(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section4.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection4:", error);
         Error(error);
     }
 }
@@ -428,6 +632,57 @@ export async function addSection5(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 5 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection5(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section5.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 5 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.leadershipRole = formData.get("leadershipRole");
+        section.hoursSpent = formData.get("hoursSpent");
+        section.numPeopleReached = formData.get("numPeopleReached");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection5:", error);
+        Error(error);
+    }
+
+
+}
+
+/**
+ * @async Delete a section 5 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection5(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section5.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection5:", error);
+        Error(error);
+    }
+
+}
 
 /* ================== SECTION 6 ==================
 * Database CRUD operations for resume Section 6 documents.
@@ -500,6 +755,57 @@ export async function addSection6(prevState, formData){
         console.error("addSection6:", error);
         Error(error);
     }
+}
+
+/**
+ * @async Update a section 6 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection6(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section6.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 6 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.organizationName = formData.get("organizationName");
+        section.leadershipRole = formData.get("leadershipRole");
+        section.hoursSpent = formData.get("hoursSpent");
+        section.numPeopleReached = formData.get("numPeopleReached");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection6:", error);
+        Error(error);
+    }    
+}
+
+/**
+ * @async Delete a section 6 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection6(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section6.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection6:", error);
+        Error(error);
+    }
+
 }
 
 
@@ -575,6 +881,56 @@ export async function addSection7(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 7 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection7(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section7.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 7 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.clubMemberActivities = formData.get("clubMemberActivities");
+        section.hoursSpent = formData.get("hoursSpent");
+        section.numPeopleReached = formData.get("numPeopleReached");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection7:", error);
+        Error(error);
+    }    
+}
+
+/**
+ * @async Delete a section 7 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection7(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section7.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection7:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 8 ==================
 * Database CRUD operations for resume Section 8 documents.
@@ -646,6 +1002,58 @@ export async function addSection8(prevState, formData){
         console.error("addSection8:", error);
         Error(error);
     }
+}
+
+/**
+ * @async Update a section 8 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection8(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section8.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 8 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.individualGroupActivities = formData.get("individualGroupActivities");
+        section.hoursSpent = formData.get("hoursSpent");
+        section.numPeopleReached = formData.get("numPeopleReached");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection8:", error);
+        Error(error);
+    }
+
+
+}
+
+/**
+ * @async Delete a section 8 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection8(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section8.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection8:", error);
+        Error(error);
+    }
+
 }
 
 
@@ -723,6 +1131,58 @@ export async function addSection9(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 9 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection9(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section9.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 9 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.communicationType = formData.get("communicationType");
+        section.topic = formData.get("topic");
+        section.timesGiven = formData.get("timesGiven");
+        section.location = formData.get("location");
+        section.audienceSize = formData.get("audienceSize");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection9:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a section 9 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection9(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section9.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection9:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 10 ==================
 * Database CRUD operations for resume Section 10 documents.
@@ -798,6 +1258,58 @@ export async function addSection10(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 10 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection10(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section10.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 10 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.communicationType = formData.get("communicationType");
+        section.topic = formData.get("topic");
+        section.timesGiven = formData.get("timesGiven");
+        section.location = formData.get("location");
+        section.audienceSize = formData.get("audienceSize");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection10:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a section 10 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection10(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section10.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection10:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 11 ==================
 * Database CRUD operations for resume Section 11 documents.
@@ -869,6 +1381,56 @@ export async function addSection11(prevState, formData){
         console.error("addSection11:", error);
         Error(error);
     }
+}
+
+/**
+ * @async Update a section 11 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection11(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section11.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 11 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.eventAndLevel = formData.get("eventAndLevel");
+        section.exhibitsOrDivision = formData.get("exhibitsOrDivision");
+        section.ribbonOrPlacings = formData.get("ribbonOrPlacings");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection11:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a section 11 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection11(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section11.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection11:", error);
+        Error(error);
+    }
+
 }
 
 
@@ -944,6 +1506,56 @@ export async function addSection12(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 12 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection12(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section12.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 12 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.contestOrEvent = formData.get("contestOrEvent");
+        section.recognitionReceived = formData.get("recognitionReceived");
+        section.level = formData.get("level");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection12:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a section 12 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection12(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section12.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection12:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 13 ==================
 * Database CRUD operations for resume Section 13 documents.
@@ -1015,6 +1627,55 @@ export async function addSection13(prevState, formData){
     }
 }
 
+/**
+ * @async Update a section 13 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection13(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section13.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 13 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.recognitionType = formData.get("recognitionType");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection13:", error);
+        Error(error);
+    }
+
+}
+
+/**
+ * @async Delete a section 13 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection13(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section13.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection13:", error);
+        Error(error);
+    }
+
+}
+
 
 /* ================== SECTION 14 ==================
 * Database CRUD operations for resume Section 14 documents.
@@ -1084,4 +1745,52 @@ export async function addSection14(prevState, formData){
         console.error("addSection14:", error);
         Error(error);
     }
+}
+
+/**
+ * @async Update a section 14 document in the database.
+ * @param {*} prevState 
+ * @param {*} formData 
+ * @returns 
+ */
+export async function updateSection14(prevState, formData) {
+    const session = await getSession();
+    const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+
+    try {
+        const db = await connectDB();
+        const section = await Section14.findOne({ _id: formData.get("id"), uid: userID });
+        if (!section) {
+            console.error("Section 14 document not found");
+            return null;
+        }
+
+        section.year = formData.get("year");
+        section.recognitionType = formData.get("recognitionType");
+
+        await section.save();
+
+        return JSON.parse(JSON.stringify(section));
+    } catch (error) {
+        console.error("updateSection14:", error);
+        Error(error);
+    }
+}
+
+/**
+ * @async Delete a section 14 document from the database.
+ * @param {string} docId MongoDB document id
+ * @returns {Boolean} 
+ */
+export async function deleteSection14(docId) {
+    try {
+        const session = await getSession();
+        const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
+        const db = await connectDB();
+        return await Section14.deleteOne({ _id: docId, uid: userID });
+    } catch (error) {
+        console.error("deleteSection14:", error);
+        Error(error);
+    }
+
 }

@@ -1,3 +1,9 @@
+.loaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .sectionHeader {
     position: relative;
     display: flex;

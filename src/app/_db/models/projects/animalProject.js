@@ -69,7 +69,7 @@ export const dailyFeedModel = mongoose.Schema({
     feedAmount: Number,
     feedPurchaceId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "feedPurchase"
+        ref: "feedPurchases"
     },
     projectId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -96,8 +96,23 @@ export const expensesModel = mongoose.Schema({
     }
 }, { collection: 'expenses' });
 
+export const suppliesModel = mongoose.Schema({
+    description: String,
+    startValue: Number,
+    endValue: Number,
+    projectId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "projects"
+    },
+    uid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
+}, { collection: 'supplies' });
+
 export const Animal = mongoose.models.animals || mongoose.model("animals", animalModel);
 export const Feed = mongoose.models.feed || mongoose.model("feed", feedModel);
 export const DailyFeed = mongoose.models.dailyFeed || mongoose.model("dailyFeed", dailyFeedModel);
 export const FeedPurchase = mongoose.models.feedPurchases || mongoose.model("feedPurchases", feedPurchaseModel);
 export const Expenses = mongoose.models.expenses || mongoose.model("expenses", expensesModel);
+export const Supplies = mongoose.models.supplies || mongoose.model("supplies", suppliesModel);

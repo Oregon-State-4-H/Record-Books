@@ -3,19 +3,17 @@
 import Link from 'next/link';
 import styles from './styles.module.css';
 import ActionBar from '@/app/components/ActionBar';
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFFile from '@/app/components/reports/resume/Resume.jsx';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { getResumeDocs } from '@/app/_db/srvactions/resume';
-import { PDFViewer } from "@react-pdf/renderer";
-import { FaDownload } from "react-icons/fa";
-import { MdOutlinePreview } from "react-icons/md";
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { PDFDownloadButton, PDFPreviewButton } from '@/app/components/logging/ActionButton';
+import PDFPreviewModel from '@/app/components/models/PDFPreviewModel';
+import PageHeader from '@/app/components/PageHeader';
 
 
 function Card(props) {
   var title = props.title;
-  var url = props.url;
   var section = props.section;
 
   return (
@@ -52,38 +50,23 @@ export default function Resume() {
   return (
     <main>
       <ActionBar title="My 4-H Resume" disableBack={true} />
+      <PageHeader title="My 4-H Resume" disableBack={true} />
 
-      { isComplete &&
-        <div className={styles.documentContainer}>
-          <button className={styles.pdfBtn} onClick={() => setShowPreview(true)}>
-            <MdOutlinePreview className={styles.pdfIcon} />
-            Preview Resume
-          </button>
-
-          <PDFDownloadLink className={styles.pdfBtn} document={<PDFFile resumeData={resumeData} />} fileName={"My 4-H Resume.pdf"}>
-            {({loading}) => (loading ? 
-              (<>
-                <FaDownload className={styles.pdfIcon} />
-                <button>Loading Document...</button> 
-              </>) : (
-              <>
-                <FaDownload className={styles.pdfIcon} style={{fontSize: "1.25rem"}} />
-                <button>Download Resume</button>
-              </> )
-            )}
-          </PDFDownloadLink>
+      <div className="btnContainer">
+        <div className="btnGroup">
+          { isComplete &&
+            <>
+              <PDFPreviewButton text="Preview Resume" handleClick={() => setShowPreview(true)} />
+              <PDFDownloadButton text="Download Resume" document={<PDFFile resumeData={resumeData} />} fileName={"My 4-H Resume.pdf"} />
+            </>
+          }
         </div>
-      }
+      </div>
 
       { showPreview &&
-        <div className={styles.overlay} onClick={() => setShowPreview(false)}>
-          <div className={styles.previewContainer}>
-            <PDFViewer style={{width: '100%', height: '100%'}} >
-              <PDFFile resumeData={resumeData} />
-            </PDFViewer>
-            <button onClick={() => setShowPreview(false)}>Close Preview</button>
-          </div>
-        </div>
+        <PDFPreviewModel title="My 4-H Resume Preview" handleClose={() => setShowPreview(false)} >
+          <PDFFile resumeData={resumeData} />
+        </PDFPreviewModel>
       }
 
       <div className={styles.sectionsContainer}>
