@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRight: 1,
     borderTop: 1,
     fontSize: 11,
-    // height: 40,
+    height: 40,
   },
   border: {
     borderRight: 1,
@@ -146,6 +146,7 @@ export default function DailyFeed({ data }) {
 
   return (
     <Page size="LETTER" style={[ReportStyles.body, {padding: 20, paddingHorizontal: 25, paddingVertical: 25}]}>
+      <Text style={ReportStyles.h1}>Daily Feed Record for Market Animals</Text>
       <View style={styles.header}>
         <Image src="/assets/photos/4hlogo.png" style={styles.logo}/>
         <Text style={[ReportStyles.h1, {fontWeight: "bold"}]}>Daily Feed Record for Market Animals</Text>
