@@ -121,15 +121,15 @@ export default function Animal({ searchParams: {project, animal} }) {
           <CardItem label="Sire breed" value={animalData?.sireBreed} />
           <CardItem label="Dam breed" value={animalData?.damBreed} />
           <CardItem label="Purchase date or obtained" value={formatDate(animalData?.purchaseDate)} />
-          <CardItem label="Animal Cost" value={animalData?.animalCost} />
+          <CardItem label="Animal Cost" value={"$" + animalData?.animalCost} />
         </Card>
 
 
         {/* RATE OF GAIN */}
         <Card title="Animal Rate of Gain" action={() => setWeightFormCard(true)}>
-          <CardItem label="Beginning Weight" value={animalData?.beginningWeight + " lbs"} />
+          <CardItem label="Beginning Weight" value={animalData?.beginningWeight ? animalData?.beginningWeight + " lbs" : ""} />
           <CardItem label="Beginning Date" value={formatDate(animalData?.beginningDate)} />
-          <CardItem label="Ending Weight" value={animalData?.endWeight + " lbs"} />
+          <CardItem label="Ending Weight" value={animalData?.endWeight ? animalData?.endWeight + " lbs" : ""} />
           <CardItem label="Ending Date" value={formatDate(animalData?.endDate)} />
         </Card>
       </div>
@@ -161,11 +161,11 @@ export default function Animal({ searchParams: {project, animal} }) {
             {type: "hidden", name: "projectId", defaultValue: project},
             {type: "hidden", name: "animalId", defaultValue: animal},
 
-            {type: "number", label: "Beginning Weight (lbs)", name: "beginningWeight", placeholder: "Ex. 10lbs"},
+            {type: "number", label: "Beginning Weight (lbs)", name: "beginningWeight", placeholder: "Ex. 10", defaultValue: animalData?.beginningWeight},
             {type: "date", label: "Beginning Date", name: "beginningDate", defaultValue: formatDate(animalData?.beginningDate)},
 
-            {type: "number", label: "Ending Weight (lbs)", name: "endWeight", placeholder: "Ex. 40lbs"},
-            {type: "date", label: "Ending Date", name: "endDate", defaultValue: formatDate(animalData?.endDate)},
+            {type: "number", label: "Ending Weight (lbs)", name: "endWeight", placeholder: "Ex. 40", required: false, defaultValue: animalData?.endWeight},
+            {type: "date", label: "Ending Date", name: "endDate", defaultValue: formatDate(animalData?.endDate), required: false}
           ]
         } />
       )}

@@ -71,6 +71,7 @@ export async function addAnimal(prevState, formData) {
             purchaseDate: new Date(formData.get("purchaseDate")).toISOString(),
             sireBreed: formData.get("sireBreed"),
             damBreed: formData.get("damBreed"),
+            animalCost: formData.get("animalCost")
         });
 
         await animal.save();
@@ -117,15 +118,17 @@ export async function updateAnimal(prevState, formData) {
 export async function updateRateOfGain(prevState, formData) {
     const session = await getSession(); 
     const userID = ObjectId.createFromHexString(session.user.sub.substring(6));
-
+    console.log("updateRateOfGain:", formData);
     try {
         const db = await connectDB();
         const animal = await Animal.findOne({ _id: formData.get("animalId"), uid: userID });
 
         animal.beginningWeight = formData.get("beginningWeight");
         animal.beginningDate = new Date(formData.get("beginningDate")).toISOString();
-        animal.endWeight = formData.get("endWeight");
-        animal.endDate = new Date(formData.get("endDate")).toISOString();
+        if (formData.get("endWeight") !== "")
+            animal.endWeight = formData.get("endWeight");
+        if (formData.get("endDate") !== "")
+            animal.endDate = new Date(formData.get("endDate")).toISOString();
     
         await animal.save();
         return JSON.parse(JSON.stringify(animal));

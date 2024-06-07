@@ -4,6 +4,18 @@
     justify-content: center;
 }
 
+.filter {
+    padding: 10px;
+    background-color: var(--bg-secondary);
+    width: 250px;
+    border-radius: 5px;    
+    color: var(--text-primary);
+}
+
+#monthFilter {
+    background-color: var(--bg-secondary);
+}
+
 .animalName {
     color: var(--text-primary);
     font-size: 2rem;
